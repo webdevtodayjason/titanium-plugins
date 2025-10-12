@@ -93,10 +93,74 @@ Required for voice features:
 - OpenAI API key (GPT-5 models)
 - ElevenLabs API key (voice synthesis)
 
-### Recommended
+### Recommended MCP Servers
 
-- Pieces OS (for `/catchup` functionality)
-- Pieces CLI with MCP configured
+The Titanium Toolkit works best with these MCP servers configured:
+
+#### 1. **Pieces** (Required for /catchup)
+**Purpose**: Long-term memory and workflow context
+**Source**: https://pieces.app
+```bash
+pip3 install --upgrade pieces-cli
+pieces mcp setup claude_code --stdio
+```
+
+#### 2. **shadcn-ui-server**
+**Purpose**: UI component library integration
+**Source**: https://github.com/heilgar/shadcn-ui-mcp-server
+```bash
+claude mcp add shadcn-ui-server --scope user --transport stdio -- npx @heilgar/shadcn-ui-mcp-server
+```
+
+#### 3. **vibe-check**
+**Purpose**: Meta-mentor AI oversight, prevents tunnel vision
+**Source**: https://github.com/PV-Bhat/vibe-check-mcp-server
+```bash
+npm install -g @pv-bhat/vibe-check-mcp
+# Configure API keys in ~/.vibe-check/.env
+```
+
+#### 4. **playwright**
+**Purpose**: Browser automation and testing
+**Source**: https://github.com/microsoft/playwright
+```bash
+claude mcp add playwright --scope user --transport stdio -- npx @playwright/mcp@latest
+```
+
+#### 5. **ElevenLabs MCP**
+**Purpose**: Text-to-speech via MCP tools
+**Source**: https://elevenlabs.io
+```bash
+claude mcp add ElevenLabs --scope user --transport stdio --env ELEVENLABS_API_KEY=your_key -- uvx elevenlabs-mcp@latest
+```
+
+#### 6. **context7**
+**Purpose**: Up-to-date library documentation
+**Source**: https://context7.com
+```bash
+claude mcp add context7 --scope user --transport http --header "CONTEXT7_API_KEY: your_key" -- https://mcp.context7.com/mcp
+```
+
+#### 7. **pypi**
+**Purpose**: Python package queries and information
+**Source**: https://github.com/loonghao/pypi-query-mcp-server
+```bash
+claude mcp add pypi --scope user --transport stdio -- uvx pypi-query-mcp-server
+```
+
+#### 8. **youtube-transcript**
+**Purpose**: Extract transcripts from YouTube videos
+**Source**: https://github.com/jkawamoto/mcp-youtube-transcript
+```bash
+claude mcp add youtube-transcript --scope user --transport stdio -- uvx --from git+https://github.com/jkawamoto/mcp-youtube-transcript mcp-youtube-transcript
+```
+
+**Verify MCP servers:**
+```bash
+claude mcp list
+```
+
+All should show ✓ Connected.
 
 ## Contributing
 
