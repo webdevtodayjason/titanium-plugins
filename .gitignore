@@ -1,0 +1,35 @@
+# API Keys and Secrets
+.env
+.env.local
+*.key
+*.pem
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.uv/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Temporary
+tmp/
+temp/
+*.tmp

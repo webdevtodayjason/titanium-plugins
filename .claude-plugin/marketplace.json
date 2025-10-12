@@ -1,0 +1,17 @@
+{
+  "name": "titanium-plugins",
+  "description": "Professional Claude Code plugins from Titanium Computing featuring voice-enhanced AI workflows",
+  "owner": {
+    "name": "Jason Brashear",
+    "email": "jason@webdevtoday.com",
+    "url": "https://github.com/webdevtodayjason"
+  },
+  "homepage": "https://github.com/webdevtodayjason/titanium-plugins",
+  "plugins": [
+    {
+      "name": "titanium-toolkit",
+      "source": "./plugins/titanium-toolkit",
+      "description": "Complete development toolkit with voice announcements, 16 builder agents, and Pieces integration"
+    }
+  ]
+}

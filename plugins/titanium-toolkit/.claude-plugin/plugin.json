@@ -1,0 +1,23 @@
+{
+  "name": "titanium-toolkit",
+  "version": "1.0.0",
+  "description": "Professional development toolkit with voice-enhanced AI workflows, 16 specialized builder agents, Pieces LTM integration, and GPT-5-powered ElevenLabs announcements.",
+  "author": {
+    "name": "Jason Brashear",
+    "email": "jason@webdevtoday.com",
+    "url": "https://github.com/webdevtodayjason"
+  },
+  "homepage": "https://github.com/webdevtodayjason/titanium-plugins",
+  "repository": "https://github.com/webdevtodayjason/titanium-plugins",
+  "license": "MIT",
+  "keywords": [
+    "voice-announcements",
+    "elevenlabs",
+    "ai-powered",
+    "development-toolkit",
+    "pieces-integration",
+    "workflow-automation",
+    "gpt-5",
+    "titanium-computing"
+  ]
+}
