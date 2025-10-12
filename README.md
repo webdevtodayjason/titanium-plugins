@@ -50,6 +50,74 @@ Select "Browse Plugins" to see available options.
 
 Restart Claude Code to activate.
 
+## Complete Workflow
+
+Titanium Toolkit integrates seamlessly with other development tools for a complete workflow:
+
+### End-to-End Development Process
+
+**Phase 1: Requirements & Planning (BMAD)**
+```bash
+# Install BMAD for PRD creation
+cd ~
+npx bmad-method install --directory ~/bmad --ide claude-code
+
+# Use BMAD agents to create:
+# - Product briefs
+# - PRDs (Product Requirements Documents)
+# - Epic breakdowns
+# - User stories
+```
+
+**Phase 2: Implementation (Titanium Toolkit + compounding-engineering)**
+```bash
+# Execute the BMAD-generated PRD using compounding-engineering's /work command
+/compounding-engineering:work ~/bmad/output/project-prd.md
+
+# Titanium Toolkit's 16 builder agents handle implementation:
+# - @api-developer creates backend
+# - @frontend-developer builds UI
+# - @test-runner ensures quality
+# - Voice announcements keep you informed throughout
+```
+
+**Phase 3: Review & Quality (compounding-engineering)**
+```bash
+# Multi-agent parallel review
+/compounding-engineering:review
+
+# Specialized reviewers check:
+# - @kieran-rails-reviewer (Rails conventions)
+# - @security-sentinel (security vulnerabilities)
+# - @performance-oracle (performance issues)
+# - @architecture-strategist (system design)
+```
+
+**Phase 4: Iteration & Learning (Pieces + Voice)**
+```bash
+# Pieces captures all learnings
+# Voice summaries on session end
+# /catchup retrieves context for next session
+```
+
+### Workflow Benefits
+
+**Complete Coverage:**
+- BMAD → Requirements
+- Titanium Toolkit → Implementation
+- compounding-engineering → Quality Review
+- Pieces → Context Retention
+
+**Voice-Enhanced:**
+- Real-time feedback during implementation
+- Session summaries of accomplishments
+- Smart notifications when input needed
+
+**Context-Aware:**
+- `/catchup` recovers project state
+- Pieces LTM remembers everything
+- Never lose track of work in progress
+
 ## Plugin Features
 
 ### Voice System
