@@ -172,45 +172,31 @@ graph TD
 
 16 specialized agents organized by function:
 
-```mermaid
-graph TB
-    subgraph Development["🛠️ Development (3)"]
-        D1[@api-developer]
-        D2[@frontend-developer]
-        D3[@devops-engineer]
-    end
+**Development (3 agents):**
+- @api-developer - Backend API development
+- @frontend-developer - Modern frontend development
+- @devops-engineer - CI/CD and deployment
 
-    subgraph Quality["✅ Quality & Testing (4)"]
-        Q1[@code-reviewer]
-        Q2[@debugger]
-        Q3[@test-runner]
-        Q4[@tdd-specialist]
-        Q5[@security-scanner]
-    end
+**Quality & Testing (5 agents):**
+- @code-reviewer - Code review specialist
+- @debugger - Error analysis
+- @test-runner - Automated testing
+- @tdd-specialist - Test-driven development
+- @security-scanner - Security vulnerabilities
 
-    subgraph Documentation["📝 Documentation (2)"]
-        DC1[@doc-writer]
-        DC2[@api-documenter]
-    end
+**Documentation (2 agents):**
+- @doc-writer - Technical documentation
+- @api-documenter - API docs (OpenAPI/Swagger)
 
-    subgraph Planning["📋 Planning & Architecture (3)"]
-        P1[@product-manager]
-        P2[@project-planner]
-        P3[@meta-agent]
-    end
+**Planning & Architecture (3 agents):**
+- @product-manager - Requirements gathering
+- @project-planner - Project breakdown
+- @meta-agent - Creates new custom agents
 
-    subgraph Specialized["⚡ Specialized (3)"]
-        S1[@refactor]
-        S2[@marketing-writer]
-        S3[@shadcn-ui-builder]
-    end
-
-    style Development fill:#2196F3,stroke:#1565C0,color:#fff
-    style Quality fill:#4CAF50,stroke:#2E7D32,color:#fff
-    style Documentation fill:#FF9800,stroke:#E65100,color:#fff
-    style Planning fill:#9C27B0,stroke:#6A1B9A,color:#fff
-    style Specialized fill:#00BCD4,stroke:#00838F,color:#fff
-```
+**Specialized (3 agents):**
+- @refactor - Code refactoring
+- @marketing-writer - Marketing content
+- @shadcn-ui-builder - UI/UX with shadcn
 
 Access any agent via `@agent-name` mention
 
