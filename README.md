@@ -108,6 +108,23 @@ npx bmad-method install --directory ~/bmad --ide claude-code
 - compounding-engineering → Quality Review
 - Pieces → Context Retention
 
+```mermaid
+graph LR
+    A[BMAD<br/>Requirements] -->|PRD & User Stories| B[Titanium Toolkit<br/>Implementation]
+    B -->|Code Changes| C[compounding-engineering<br/>Quality Review]
+    C -->|Approved| D[Pieces<br/>Context Retention]
+    D -->|/catchup| A
+
+    B -.->|Voice Feedback| E[ElevenLabs<br/>Announcements]
+    C -.->|GPT-5 Summaries| E
+
+    style A fill:#4CAF50,stroke:#2E7D32,color:#fff
+    style B fill:#2196F3,stroke:#1565C0,color:#fff
+    style C fill:#FF9800,stroke:#E65100,color:#fff
+    style D fill:#9C27B0,stroke:#6A1B9A,color:#fff
+    style E fill:#F44336,stroke:#C62828,color:#fff
+```
+
 **Voice-Enhanced:**
 - Real-time feedback during implementation
 - Session summaries of accomplishments
@@ -128,16 +145,74 @@ All plugins in this marketplace feature intelligent voice feedback:
 - **GPT-5 Summaries**: Context-aware announcements
 - **Smart Notifications**: Know exactly what Claude needs
 
+```mermaid
+graph TD
+    A[Claude Tool Execution] --> B{Tool Type}
+    B -->|Write/Edit/Task| C[GPT-5 nano<br/>3-7 word summary]
+    B -->|Session End| D[GPT-5 mini<br/>1-2 sentence summary]
+    B -->|Notification| E[GPT-5 nano<br/>Context-aware alert]
+
+    C --> F[ElevenLabs Sarah Voice]
+    D --> F
+    E --> G[Alert Sound + Voice]
+    G --> F
+
+    F -->|Success| H[Audio Output]
+    F -->|Failure| I[macOS say Fallback]
+    I --> H
+
+    style C fill:#FFB74D,stroke:#F57C00,color:#000
+    style D fill:#FFB74D,stroke:#F57C00,color:#000
+    style E fill:#FFB74D,stroke:#F57C00,color:#000
+    style F fill:#E91E63,stroke:#AD1457,color:#fff
+    style H fill:#4CAF50,stroke:#2E7D32,color:#fff
+```
+
 ### Builder Agents
 
-16 specialized agents for:
-- API development
-- Frontend development
-- DevOps and deployment
-- Code quality and review
-- Testing and debugging
-- Documentation
-- Planning and architecture
+16 specialized agents organized by function:
+
+```mermaid
+graph TB
+    subgraph Development["🛠️ Development (3)"]
+        D1[@api-developer]
+        D2[@frontend-developer]
+        D3[@devops-engineer]
+    end
+
+    subgraph Quality["✅ Quality & Testing (4)"]
+        Q1[@code-reviewer]
+        Q2[@debugger]
+        Q3[@test-runner]
+        Q4[@tdd-specialist]
+        Q5[@security-scanner]
+    end
+
+    subgraph Documentation["📝 Documentation (2)"]
+        DC1[@doc-writer]
+        DC2[@api-documenter]
+    end
+
+    subgraph Planning["📋 Planning & Architecture (3)"]
+        P1[@product-manager]
+        P2[@project-planner]
+        P3[@meta-agent]
+    end
+
+    subgraph Specialized["⚡ Specialized (3)"]
+        S1[@refactor]
+        S2[@marketing-writer]
+        S3[@shadcn-ui-builder]
+    end
+
+    style Development fill:#2196F3,stroke:#1565C0,color:#fff
+    style Quality fill:#4CAF50,stroke:#2E7D32,color:#fff
+    style Documentation fill:#FF9800,stroke:#E65100,color:#fff
+    style Planning fill:#9C27B0,stroke:#6A1B9A,color:#fff
+    style Specialized fill:#00BCD4,stroke:#00838F,color:#fff
+```
+
+Access any agent via `@agent-name` mention
 
 ### Context Management
 
