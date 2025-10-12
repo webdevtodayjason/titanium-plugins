@@ -329,20 +329,67 @@ claude mcp list
 
 All should show ✓ Connected.
 
-## Contributing
+## For Different Audiences
 
-Want to contribute a plugin to this marketplace?
+### For Marketplace Users
 
+**Discover and use plugins:**
+- Browse the marketplace with `/plugin`
+- Install titanium-toolkit for voice-enhanced development
+- Test features before committing to workflows
+- Report issues and suggest improvements
+
+**Share with your team:**
+- Help colleagues discover voice announcements
+- Set up team-wide installations
+- Share workflows that leverage the toolkit
+
+### For Plugin Developers
+
+**Contribute to this marketplace:**
 1. Fork this repository
 2. Create your plugin in `plugins/your-plugin-name/`
 3. Follow the [plugin structure guidelines](https://docs.claude.com/en/docs/claude-code/plugins)
-4. Submit a pull request
+4. Include comprehensive README with:
+   - Prerequisites and dependencies
+   - API key requirements
+   - Installation instructions
+   - Usage examples
+5. Submit a pull request
+
+**Best practices:**
+- Use semantic versioning
+- Document all dependencies
+- Never commit API keys
+- Test thoroughly before submitting
+- Provide clear usage examples
+
+### For Organizations
+
+**Private deployment:**
+- Fork titanium-plugins for internal use
+- Customize agents for your tech stack
+- Add company-specific voice preferences
+- Configure team-wide MCP servers
+
+**Governance:**
+- Establish plugin approval process
+- Review API key management policies
+- Set up internal marketplace for approved plugins
+- Create training materials for voice system adoption
+
+**Team rollout:**
+- Start with `/catchup` for context management
+- Gradually introduce voice announcements
+- Train on builder agents for common tasks
+- Monitor usage and gather feedback
 
 ## Support
 
 - **Issues**: https://github.com/webdevtodayjason/titanium-plugins/issues
 - **Discussions**: https://github.com/webdevtodayjason/titanium-plugins/discussions
 - **Company**: [Titanium Computing](https://titaniumcomputing.com)
+- **Discord**: Join [Claude Developers Discord](https://anthropic.com/discord)
 
 ## Credits
 
