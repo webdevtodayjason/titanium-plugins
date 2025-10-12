@@ -240,6 +240,30 @@ Required for voice features:
 
 The Titanium Toolkit works best with these MCP servers configured:
 
+```mermaid
+graph TB
+    CC[Claude Code]
+
+    CC --> P[Pieces<br/>Long-term Memory]
+    CC --> S[shadcn-ui<br/>UI Components]
+    CC --> V[vibe-check<br/>Meta-mentor]
+    CC --> PW[playwright<br/>Browser Testing]
+    CC --> E[ElevenLabs<br/>TTS Tools]
+    CC --> C7[context7<br/>Library Docs]
+    CC --> PY[pypi<br/>Python Packages]
+    CC --> YT[youtube-transcript<br/>Video Transcripts]
+
+    P -.-> |"/catchup"| TC[Titanium Toolkit]
+    S -.-> |UI Tools| TC
+    V -.-> |Oversight| TC
+
+    style CC fill:#673AB7,stroke:#4527A0,color:#fff
+    style P fill:#9C27B0,stroke:#6A1B9A,color:#fff
+    style TC fill:#2196F3,stroke:#1565C0,color:#fff
+    style V fill:#FF5722,stroke:#D84315,color:#fff
+    style E fill:#E91E63,stroke:#AD1457,color:#fff
+```
+
 #### 1. **Pieces** (Required for /catchup)
 **Purpose**: Long-term memory and workflow context
 **Source**: https://pieces.app
