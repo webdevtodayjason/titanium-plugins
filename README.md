@@ -19,7 +19,7 @@ Before using Titanium Toolkit, you'll need these installed:
 
 ### Required API Keys
 
-Create a file at `~/.env` (full path: `/Users/yourusername/.env`):
+Create a file at `~/.env` (full path: `/Users/yourusername/.env` on macOS/Linux, `C:\Users\yourusername\.env` on Windows):
 
 ```bash
 # Create the file
@@ -27,13 +27,25 @@ cat > ~/.env << 'EOF'
 # Required for voice announcements
 OPENAI_API_KEY=your_openai_key_here
 ELEVENLABS_API_KEY=your_elevenlabs_key_here
+
+# Optional MCP server API keys
+CONTEXT7_API_KEY=ctx7sk-your_key_here
+GEMINI_API_KEY=your_gemini_key_here
+OPENROUTER_API_KEY=your_openrouter_key_here
 EOF
 
-# Secure the file
+# Secure the file (macOS/Linux)
 chmod 600 ~/.env
 ```
 
-Replace `your_openai_key_here` and `your_elevenlabs_key_here` with your actual API keys.
+**Required Keys:**
+- `OPENAI_API_KEY` - For GPT-5 summaries (get from https://platform.openai.com/api-keys)
+- `ELEVENLABS_API_KEY` - For voice synthesis (get from https://elevenlabs.io/app/settings/api-keys)
+
+**Optional Keys (for enhanced MCP functionality):**
+- `CONTEXT7_API_KEY` - Faster library documentation lookups (get from https://context7.com)
+- `GEMINI_API_KEY` - For vibe-check meta-mentor (get from https://makersuite.google.com/app/apikey)
+- `OPENROUTER_API_KEY` - Additional LLM options (get from https://openrouter.ai/keys)
 
 ### MCP Server Prerequisites
 
