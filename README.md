@@ -126,6 +126,7 @@ To get the latest features and fixes:
 4. Press **`u`** to update
 5. Press **Enter** to apply changes
 6. You'll see: `✔ Updated 1 marketplace`
+7. **Restart Claude Code** to load the updates
 
 Updates are pulled directly from GitHub, so you always get the latest improvements!
 
