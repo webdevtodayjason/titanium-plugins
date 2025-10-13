@@ -107,6 +107,8 @@ npx bmad-method install --directory ~/bmad --ide claude-code
 # - User stories
 ```
 
+📖 **[BMAD Quick Start Guide](./docs/BMAD_QUICKSTART.md)** - Complete guide to creating PRDs with BMAD
+
 **Phase 2: Implementation (Titanium Toolkit + compounding-engineering)**
 ```bash
 # Execute the BMAD-generated PRD using compounding-engineering's /work command
