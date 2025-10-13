@@ -39,16 +39,11 @@ Replace `your_openai_key_here` and `your_elevenlabs_key_here` with your actual A
 
 Each MCP server requires its underlying application to be installed:
 
-| MCP Server | Required Application | Installation |
-|------------|---------------------|--------------|
-| **Pieces** | Pieces OS + Pieces CLI | Download from https://pieces.app |
-| vibe-check | Node.js 20+ | `npm install -g @pv-bhat/vibe-check-mcp` |
-| playwright | Node.js 20+ | Installed via npx automatically |
-| ElevenLabs | Python + uv | Installed via uvx automatically |
-| pypi | Python + uv | Installed via uvx automatically |
-| youtube-transcript | Python + uv | Installed via uvx automatically |
-| shadcn-ui | Node.js 20+ | Installed via npx automatically |
-| context7 | None (HTTP) | Just needs API key |
+| MCP Server | Setup Required | Instructions |
+|------------|----------------|--------------|
+| **Pieces** | Pieces OS + CLI | [Pieces Installation Guide](./docs/PIECES_INSTALLATION.md) |
+| **vibe-check** | API keys in `~/.vibe-check/.env` | Create file with GEMINI_API_KEY, OPENAI_API_KEY, or OPENROUTER_API_KEY |
+| **context7** | API key as header | Configure manually: `claude mcp add context7 --scope user --transport http --header "CONTEXT7_API_KEY: your_key" -- https://mcp.context7.com/mcp` |
 
 📖 **[Detailed Pieces Installation Guide](./docs/PIECES_INSTALLATION.md)** - Step-by-step for all platforms
 
@@ -303,11 +298,20 @@ Required for voice features:
 - OpenAI API key (GPT-5 models)
 - ElevenLabs API key (voice synthesis)
 
-### Recommended MCP Servers
+### Bundled MCP Servers
 
-The Titanium Toolkit works best with these MCP servers configured.
+**All 8 MCP servers are automatically configured when you install titanium-toolkit!**
 
-**IMPORTANT**: Each MCP server requires its underlying application/service to be installed and running:
+However, some require additional setup:
+
+**No Additional Setup (Work automatically):**
+- shadcn-ui-server
+- playwright
+- ElevenLabs MCP
+- pypi
+- youtube-transcript
+
+**Require Prerequisites:**
 
 | MCP Server | Required Application | Installation |
 |------------|---------------------|--------------|

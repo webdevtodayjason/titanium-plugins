@@ -7,6 +7,57 @@
         "mcp",
         "start"
       ]
+    },
+    "shadcn-ui-server": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@heilgar/shadcn-ui-mcp-server"
+      ]
+    },
+    "vibe-check": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@pv-bhat/vibe-check-mcp",
+        "start",
+        "--stdio"
+      ]
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ]
+    },
+    "ElevenLabs": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "elevenlabs-mcp@latest"
+      ]
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "pypi": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "pypi-query-mcp-server"
+      ]
+    },
+    "youtube-transcript": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/jkawamoto/mcp-youtube-transcript",
+        "mcp-youtube-transcript"
+      ]
     }
   }
 }
