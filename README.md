@@ -200,6 +200,39 @@ graph TD
 
 Access any agent via `@agent-name` mention
 
+### Reviewer Agents (from compounding-engineering)
+
+When you install compounding-engineering alongside titanium-toolkit, you get 17 additional specialized review agents:
+
+**Code Review (3 agents):**
+- @kieran-rails-reviewer - Strict Rails conventions and best practices
+- @kieran-python-reviewer - Strict Python conventions
+- @kieran-typescript-reviewer - Strict TypeScript conventions
+
+**Quality & Security (4 agents):**
+- @security-sentinel - Security vulnerability scanning
+- @code-simplicity-reviewer - Identifies overcomplicated code
+- @data-integrity-guardian - Database and data validation
+- @pattern-recognition-specialist - Design patterns and anti-patterns
+
+**Architecture & Performance (3 agents):**
+- @architecture-strategist - System design decisions
+- @performance-oracle - Performance optimization
+- @every-style-editor - Every.to style guide compliance
+
+**Research & Analysis (4 agents):**
+- @best-practices-researcher - Gathers external best practices
+- @framework-docs-researcher - Library and framework documentation
+- @git-history-analyzer - Code evolution and archeology
+- @repo-research-analyst - Repository structure analysis
+
+**Workflow Support (3 agents):**
+- @pr-comment-resolver - Addresses PR feedback
+- @feedback-codifier - Learns from review patterns
+- @dhh-rails-reviewer - Rails review from DHH's perspective
+
+**Total: 33 agents** (16 builders + 17 reviewers) = Complete development pipeline
+
 ### Context Management
 
 **Pieces Integration:**
