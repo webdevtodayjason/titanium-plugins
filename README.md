@@ -19,13 +19,21 @@ Before using Titanium Toolkit, you'll need these installed:
 
 ### Required API Keys
 
-Add these to `~/.env`:
+Create a file at `~/.env` (full path: `/Users/yourusername/.env`):
 
 ```bash
+# Create the file
+cat > ~/.env << 'EOF'
 # Required for voice announcements
 OPENAI_API_KEY=your_openai_key_here
 ELEVENLABS_API_KEY=your_elevenlabs_key_here
+EOF
+
+# Secure the file
+chmod 600 ~/.env
 ```
+
+Replace `your_openai_key_here` and `your_elevenlabs_key_here` with your actual API keys.
 
 ### MCP Server Prerequisites
 
