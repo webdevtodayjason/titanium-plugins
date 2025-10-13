@@ -257,7 +257,20 @@ Required for voice features:
 
 ### Recommended MCP Servers
 
-The Titanium Toolkit works best with these MCP servers configured:
+The Titanium Toolkit works best with these MCP servers configured.
+
+**IMPORTANT**: Each MCP server requires its underlying application/service to be installed and running:
+
+| MCP Server | Required Application | Installation |
+|------------|---------------------|--------------|
+| Pieces | Pieces OS + Pieces CLI | Download from https://pieces.app |
+| vibe-check | Node.js 20+ | `npm install -g @pv-bhat/vibe-check-mcp` |
+| playwright | Node.js 20+ | Installed via npx automatically |
+| ElevenLabs | Python + uv | Installed via uvx automatically |
+| pypi | Python + uv | Installed via uvx automatically |
+| youtube-transcript | Python + uv | Installed via uvx automatically |
+| shadcn-ui | Node.js 20+ | Installed via npx automatically |
+| context7 | None (HTTP) | Just needs API key |
 
 ```mermaid
 graph TB
@@ -283,21 +296,25 @@ graph TB
     style E fill:#E91E63,stroke:#AD1457,color:#fff
 ```
 
-#### 1. **Pieces** (Bundled with plugin ✨)
+#### 1. **Pieces** (Required for /catchup)
 **Purpose**: Long-term memory and workflow context
 **Source**: https://pieces.app
 
-**Automatically configured when you install titanium-toolkit!**
+**Prerequisites:**
+1. Download and install Pieces OS: https://pieces.app
+2. Install Pieces CLI:
+   ```bash
+   pip3 install --upgrade pieces-cli
+   ```
+3. Ensure Pieces OS is running (launch the Desktop app)
+4. Enable LTM in Pieces settings
 
-You only need to:
+**Setup:**
 ```bash
-# Install Pieces CLI
-pip3 install --upgrade pieces-cli
-
-# Ensure Pieces OS is running (Desktop app)
+pieces mcp setup claude_code --stdio
 ```
 
-The plugin's `.mcp.json` handles the MCP configuration automatically.
+Verify: `claude mcp list` should show "Pieces: ✓ Connected"
 
 #### 2. **shadcn-ui-server**
 **Purpose**: UI component library integration
