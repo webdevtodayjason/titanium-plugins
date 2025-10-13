@@ -90,16 +90,20 @@ ELEVENLABS_API_KEY=your_elevenlabs_key_here
 
 ### Recommended MCP Servers
 
-For full functionality, install these MCP servers:
+**Pieces MCP is included automatically** when you install this plugin!
+
+For additional functionality, install these optional MCP servers:
 
 ```bash
-# Pieces LTM (for /catchup command)
-pip3 install --upgrade pieces-cli
-pieces mcp setup claude_code --stdio
-
 # Optional but recommended
 claude mcp add playwright --scope user --transport stdio -- npx @playwright/mcp@latest
 claude mcp add pypi --scope user --transport stdio -- uvx pypi-query-mcp-server
+claude mcp add vibe-check --scope user --transport stdio -- node /path/to/vibe-check-mcp
+```
+
+**Note**: Pieces MCP requires Pieces OS to be running and the Pieces CLI to be installed:
+```bash
+pip3 install --upgrade pieces-cli
 ```
 
 ## Installation
