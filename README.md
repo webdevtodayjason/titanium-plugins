@@ -44,8 +44,21 @@ chmod 600 ~/.env
 
 **Optional Keys (for enhanced MCP functionality):**
 - `CONTEXT7_API_KEY` - Faster library documentation lookups (get from https://context7.com)
-- `GEMINI_API_KEY` - For vibe-check meta-mentor (get from https://makersuite.google.com/app/apikey)
-- `OPENROUTER_API_KEY` - Additional LLM options (get from https://openrouter.ai/keys)
+
+**Note about vibe-check**: vibe-check uses a SEPARATE config file at `~/.vibe-check/.env`:
+```bash
+# Create vibe-check config
+mkdir -p ~/.vibe-check
+cat > ~/.vibe-check/.env << 'EOF'
+GEMINI_API_KEY=your_gemini_key_here
+OPENAI_API_KEY=your_openai_key_here
+OPENROUTER_API_KEY=your_openrouter_key_here
+DEFAULT_LLM_PROVIDER=gemini
+EOF
+chmod 600 ~/.vibe-check/.env
+```
+
+At least ONE of these keys is required for vibe-check to work.
 
 ### MCP Server Prerequisites
 
