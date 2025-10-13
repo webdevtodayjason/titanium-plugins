@@ -250,13 +250,21 @@ graph TB
     style E fill:#E91E63,stroke:#AD1457,color:#fff
 ```
 
-#### 1. **Pieces** (Required for /catchup)
+#### 1. **Pieces** (Bundled with plugin ✨)
 **Purpose**: Long-term memory and workflow context
 **Source**: https://pieces.app
+
+**Automatically configured when you install titanium-toolkit!**
+
+You only need to:
 ```bash
+# Install Pieces CLI
 pip3 install --upgrade pieces-cli
-pieces mcp setup claude_code --stdio
+
+# Ensure Pieces OS is running (Desktop app)
 ```
+
+The plugin's `.mcp.json` handles the MCP configuration automatically.
 
 #### 2. **shadcn-ui-server**
 **Purpose**: UI component library integration
