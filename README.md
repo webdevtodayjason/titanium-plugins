@@ -6,6 +6,44 @@
 
 A curated marketplace of Claude Code plugins designed for professional development workflows. Features voice-enhanced AI assistance, comprehensive builder agents, and seamless context management.
 
+## Prerequisites
+
+Before using Titanium Toolkit, you'll need these installed:
+
+### Required Software
+
+- **Claude Code** 2.0.14+
+- **Python** 3.11+ (for voice hooks)
+- **uv** (Python package manager) - https://docs.astral.sh/uv/
+- **Node.js** 20+ (for MCP servers)
+
+### Required API Keys
+
+Add these to `~/.env`:
+
+```bash
+# Required for voice announcements
+OPENAI_API_KEY=your_openai_key_here
+ELEVENLABS_API_KEY=your_elevenlabs_key_here
+```
+
+### MCP Server Prerequisites
+
+Each MCP server requires its underlying application to be installed:
+
+| MCP Server | Required Application | Installation |
+|------------|---------------------|--------------|
+| **Pieces** | Pieces OS + Pieces CLI | Download from https://pieces.app |
+| vibe-check | Node.js 20+ | `npm install -g @pv-bhat/vibe-check-mcp` |
+| playwright | Node.js 20+ | Installed via npx automatically |
+| ElevenLabs | Python + uv | Installed via uvx automatically |
+| pypi | Python + uv | Installed via uvx automatically |
+| youtube-transcript | Python + uv | Installed via uvx automatically |
+| shadcn-ui | Node.js 20+ | Installed via npx automatically |
+| context7 | None (HTTP) | Just needs API key |
+
+📖 **[Detailed Pieces Installation Guide](./docs/PIECES_INSTALLATION.md)** - Step-by-step for all platforms
+
 ## Available Plugins
 
 ### Titanium Toolkit
