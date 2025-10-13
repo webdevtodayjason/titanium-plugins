@@ -116,6 +116,19 @@ Select "Browse Plugins" to see available options.
 
 Restart Claude Code to activate.
 
+### 4. Update to Latest Version
+
+To get the latest features and fixes:
+
+1. Run `/plugin`
+2. Select **"4. Manage marketplace"**
+3. Select **titanium-plugins**
+4. Press **`u`** to update
+5. Press **Enter** to apply changes
+6. You'll see: `✔ Updated 1 marketplace`
+
+Updates are pulled directly from GitHub, so you always get the latest improvements!
+
 ## Complete Workflow
 
 Titanium Toolkit integrates seamlessly with other development tools for a complete workflow:
