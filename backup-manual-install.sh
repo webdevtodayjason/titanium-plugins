@@ -104,7 +104,7 @@ cp -r $BACKUP_DIR/utils/* ~/.claude/hooks/utils/
 After this backup:
 1. Remove manual installations (run cleanup script)
 2. Restart Claude Code
-3. Add marketplace: /plugin marketplace add /Users/sem/code/titanium-plugins
+3. Add marketplace: /plugin marketplace add $REPO_ROOT
 4. Install plugin: /plugin install titanium-toolkit@titanium-plugins
 5. Restart Claude Code again
 6. Test: /bmad:start or /titanium:plan

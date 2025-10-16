@@ -103,7 +103,7 @@ def validate_prd(file_path: str) -> Dict:
         Validation results dict
     """
     try:
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
     except Exception as e:
         return {
@@ -178,7 +178,7 @@ def validate_architecture(file_path: str) -> Dict:
         Validation results dict
     """
     try:
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
     except Exception as e:
         return {
@@ -240,7 +240,7 @@ def validate_epic(file_path: str) -> Dict:
         Validation results dict
     """
     try:
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
     except Exception as e:
         return {
@@ -493,7 +493,7 @@ def main():
             sys.exit(1)
 
     except Exception as e:
-        print(f"Error: {str(e)}", file=sys.stderr)
+        print(f"Error: {e!s}", file=sys.stderr)
         sys.exit(1)
 
 

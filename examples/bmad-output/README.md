@@ -50,10 +50,11 @@ This folder contains example output from the BMAD document generation system.
 
 This shows you what `/bmad:start` will generate for your project.
 
-Run the command yourself:
-```bash
-cd your-project
-/bmad:start
-```
+**To generate your own BMAD backlog**:
 
-Answer the interactive questions, and you'll get similar comprehensive documentation for your specific project.
+1. In Claude Code, navigate to your project
+2. Run the slash command: `/bmad:start`
+3. Answer the interactive questions
+4. Get similar comprehensive documentation for your project
+
+**Note**: `/bmad:start` is a slash command in Claude Code (not a shell command). Type it in the Claude Code prompt.

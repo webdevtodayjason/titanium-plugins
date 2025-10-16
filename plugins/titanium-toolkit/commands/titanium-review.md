@@ -118,7 +118,13 @@ Provide findings with:
 - Vulnerability type
 - File and line number
 - Risk description
-- Remediation steps"
+- Remediation steps
+
+Severity mapping for aggregation:
+- Critical → Critical (must fix)
+- High → Important (should fix)
+- Medium → Nice-to-have (optional)
+- Low → Nice-to-have (optional)"
 ```
 
 ### Agent 3: Test Coverage Specialist
