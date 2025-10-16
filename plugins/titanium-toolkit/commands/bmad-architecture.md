@@ -60,7 +60,7 @@ ls bmad-backlog/research/*.md 2>/dev/null || echo "No research found"
 Use bmad_generator.py utility:
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py architecture "bmad-backlog/prd/prd.md" "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py architecture "bmad-backlog/prd/prd.md" "$(pwd)"
 ```
 
 This creates `bmad-backlog/architecture/architecture.md` (1000-1500 lines).
@@ -113,7 +113,7 @@ Approve this stack, or specify alternatives?
 ### Step 5: Validate Architecture
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_validator.py architecture "bmad-backlog/architecture/architecture.md"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_validator.py architecture "bmad-backlog/architecture/architecture.md"
 ```
 
 **Check validation results**:

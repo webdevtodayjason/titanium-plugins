@@ -27,7 +27,7 @@ Create a comprehensive product brief that serves as the foundation for PRD gener
 Use the bmad_generator.py utility:
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py brief "{{user_idea}}" "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py brief "{{user_idea}}" "$(pwd)"
 ```
 
 This creates `bmad-backlog/product-brief.md` with all required sections.

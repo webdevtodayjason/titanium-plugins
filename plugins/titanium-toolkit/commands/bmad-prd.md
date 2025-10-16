@@ -35,7 +35,7 @@ If user chooses option 2, gather requirements through questions.
 Use the bmad_generator.py utility:
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py prd "bmad-backlog/product-brief.md" "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py prd "bmad-backlog/product-brief.md" "$(pwd)"
 ```
 
 This generates `bmad-backlog/prd/prd.md` with complete PRD structure (500-1000 lines).
@@ -138,7 +138,7 @@ Generate research prompts? (yes/no/specific topics)
 **To regenerate**:
 ```bash
 # Add context to brief or provide directly
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py prd "bmad-backlog/product-brief.md" "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py prd "bmad-backlog/product-brief.md" "$(pwd)"
 ```
 
 ### Step 6: Validate PRD Structure
@@ -146,7 +146,7 @@ uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py prd "bmad-backlog/produ
 Use validator to check completeness:
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_validator.py prd "bmad-backlog/prd/prd.md"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_validator.py prd "bmad-backlog/prd/prd.md"
 ```
 
 **Check results**:

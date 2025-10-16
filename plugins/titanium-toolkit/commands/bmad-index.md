@@ -51,7 +51,7 @@ Please generate epics first:
 Use utility:
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py index "bmad-backlog/epics/" "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py index "bmad-backlog/epics/" "$(pwd)"
 ```
 
 This scans all EPIC-*.md files and generates `bmad-backlog/STORY-INDEX.md`.

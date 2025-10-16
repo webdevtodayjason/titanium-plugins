@@ -42,7 +42,7 @@ This command will:
 Use the plan_parser.py utility to generate the plan:
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/workflow/plan_parser.py .titanium/requirements.md "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/workflow/plan_parser.py .titanium/requirements.md "$(pwd)"
 ```
 
 This will:
