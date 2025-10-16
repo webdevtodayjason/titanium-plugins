@@ -12,10 +12,19 @@ Before using Titanium Toolkit, you'll need these installed:
 
 ### Required Software
 
+<<<<<<< Updated upstream
 - **Claude Code** 2.0.14+
 - **Python** 3.11+ (for voice hooks)
 - **uv** (Python package manager) - https://docs.astral.sh/uv/
 - **Node.js** 20+ (for MCP servers)
+=======
+```
+Requirements → Plan → Implementation → Review → Done
+     ↓           ↓           ↓            ↓        ↓
+  Claude     vibe-check   Agents    3 Reviewers  Pieces
+ Haiku 4.5                                    CodeRabbit
+```
+>>>>>>> Stashed changes
 
 ### Required API Keys
 
@@ -149,7 +158,25 @@ npx bmad-method install --directory ~/bmad --ide claude-code
 # - User stories
 ```
 
+<<<<<<< Updated upstream
 📖 **[BMAD Quick Start Guide](./docs/BMAD_QUICKSTART.md)** - Complete guide to creating PRDs with BMAD
+=======
+**What it does**:
+- Uses Claude Haiku 4.5 to break down requirements
+- Assigns tasks to appropriate agents
+- Estimates time
+- Validates with vibe-check AI
+- Stores plan in Pieces LTM
+- Saves to `.titanium/plan.json`
+
+**Output**: "Plan created with 3 epics, 8 stories, 12 tasks. Estimated: 4 hours"
+
+---
+
+### `/titanium:work` - Execute Workflow
+
+Orchestrates the complete implementation workflow with quality gates.
+>>>>>>> Stashed changes
 
 **Phase 2: Implementation (Titanium Toolkit + compounding-engineering)**
 ```bash
@@ -207,10 +234,14 @@ graph LR
     style E fill:#F44336,stroke:#C62828,color:#fff
 ```
 
+<<<<<<< Updated upstream
 **Voice-Enhanced:**
 - Real-time feedback during implementation
 - Session summaries of accomplishments
 - Smart notifications when input needed
+=======
+Cost: ~$0.05 per workflow (Claude Haiku + voice + vibe-check)
+>>>>>>> Stashed changes
 
 **Context-Aware:**
 - `/catchup` recovers project state
@@ -326,10 +357,18 @@ When you install compounding-engineering alongside titanium-toolkit, you get 17 
 
 ### Software
 
+<<<<<<< Updated upstream
 - Claude Code 2.0.14+
 - Python 3.11+
 - uv (Python package manager)
 - Node.js 20+
+=======
+- **Claude Code** 2.0.14+
+- **Python** 3.11+
+- **uv** - Python package manager ([install guide](https://docs.astral.sh/uv/))
+- **Anthropic API Key** - For Claude planning and BMAD generation
+- **OpenAI API Key** - For GPT-5 voice summaries
+>>>>>>> Stashed changes
 
 ### API Keys
 
@@ -350,6 +389,7 @@ However, some require additional setup:
 - pypi
 - youtube-transcript
 
+<<<<<<< Updated upstream
 **Require Prerequisites:**
 
 | MCP Server | Required Application | Installation |
@@ -362,6 +402,36 @@ However, some require additional setup:
 | youtube-transcript | Python + uv | Installed via uvx automatically |
 | shadcn-ui | Node.js 20+ | Installed via npx automatically |
 | context7 | None (HTTP) | Just needs API key |
+=======
+### Required: Anthropic Claude (For Planning & BMAD)
+
+**What it's used for**:
+- BMAD document generation (Brief, PRD, Architecture, Epics)
+- Implementation planning (breaking down requirements)
+- Uses Claude Haiku 4.5 (2x faster, 50% cheaper than GPT-4)
+- Uses Claude Sonnet 4.5 for architecture (complex technical tasks)
+
+```bash
+# Add to ~/.env
+echo 'ANTHROPIC_API_KEY=sk-ant-your-key-here' >> ~/.env
+chmod 600 ~/.env
+```
+
+Get key: https://console.anthropic.com/settings/keys
+
+**Optional model customization**:
+```bash
+# Override default models (optional)
+echo 'ANTHROPIC_LARGE_MODEL=claude-sonnet-4-5-20250929' >> ~/.env
+echo 'ANTHROPIC_SMALL_MODEL=claude-haiku-4-5-20251001' >> ~/.env
+```
+
+### Required: OpenAI (For Voice Summaries)
+
+**What it's used for**:
+- Voice announcement text generation (GPT-5 nano/mini)
+- Creates concise summaries for voice synthesis
+>>>>>>> Stashed changes
 
 ```mermaid
 graph TB
@@ -402,7 +472,12 @@ graph TB
 
 **Setup:**
 ```bash
+<<<<<<< Updated upstream
 pieces mcp setup claude_code --stdio
+=======
+# Add to ~/.env
+echo 'OPENAI_API_KEY=sk-your-key-here' >> ~/.env
+>>>>>>> Stashed changes
 ```
 
 Verify: `claude mcp list` should show "Pieces: ✓ Connected"
@@ -436,9 +511,55 @@ claude mcp add playwright --scope user --transport stdio -- npx @playwright/mcp@
 claude mcp add ElevenLabs --scope user --transport stdio --env ELEVENLABS_API_KEY=your_key -- uvx elevenlabs-mcp@latest
 ```
 
+<<<<<<< Updated upstream
 #### 6. **context7**
 **Purpose**: Up-to-date library documentation
 **Source**: https://context7.com
+=======
+**Interactive workflow creates**:
+- Product Brief (vision and goals)
+- PRD (comprehensive requirements)
+- Architecture (technical design with code)
+- Epic files (user stories with acceptance criteria)
+- Story Index (summary for sprint planning)
+
+**Output**: Complete `bmad-backlog/` folder ready for implementation.
+
+### The BMAD Commands
+
+**`/bmad:start`** - Complete guided workflow
+- Creates all documents in one session
+- Interactive questions guide you
+- 30-45 minutes
+- Cost: ~$0.22
+
+**`/bmad:brief`** - Product brief only
+**`/bmad:prd`** - PRD only
+**`/bmad:architecture`** - Architecture only
+**`/bmad:epic`** - Single epic (add new or regenerate)
+**`/bmad:index`** - Story index summary
+**`/bmad:research`** - Research prompt generator
+
+### Complete Workflow
+
+```
+Empty folder → /bmad:start → /titanium:plan → /titanium:work → Production Code
+   (0 min)        (45 min)       (2 min)          (15 hours)         (1 week)
+```
+
+**Cost**: $0.11 (BMAD with Haiku) + $0.20 (implementation) = **~$0.31 for complete MVP**
+
+**50% cost savings** using Claude Haiku 4.5!
+
+---
+
+## Troubleshooting
+
+### "uv: command not found"
+
+UV is required to run Python scripts. Install it:
+
+>>>>>>> Stashed changes
 ```bash
 claude mcp add context7 --scope user --transport http --header "CONTEXT7_API_KEY: your_key" -- https://mcp.context7.com/mcp
 ```
@@ -534,7 +655,19 @@ Created by Jason Brashear (Titanium Computing)
 - [Every's Compounding Engineering](https://github.com/EveryInc/every-marketplace) - Workflow patterns and methodology
 - [BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) - Planning and requirements framework
 
+<<<<<<< Updated upstream
 Special thanks to the Claude Code team at Anthropic for building an incredible platform.
+=======
+**Powered by**:
+- [Claude Code](https://claude.ai/code) by Anthropic
+- [ElevenLabs](https://elevenlabs.io) - Voice synthesis
+- [Anthropic Claude](https://anthropic.com) - Haiku 4.5 (planning/BMAD) and Sonnet 4.5 (architecture)
+- [OpenAI GPT-5](https://openai.com) - Voice summaries
+- [Pieces](https://pieces.app) - Long-term memory
+- [vibe-check](https://github.com/PV-Bhat/vibe-check-mcp-server) - AI quality gates
+
+---
+>>>>>>> Stashed changes
 
 ## License
 
