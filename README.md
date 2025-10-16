@@ -427,7 +427,7 @@ Titanium includes 8 MCP servers for enhanced capabilities:
 - **pypi** - Python packages
 - **youtube-transcript** - Video transcripts
 
-Most work automatically. See [MCP Setup Guide](./docs/MCP_SETUP.md) for details.
+Most work automatically through the `.mcp.json` configuration included with the plugin.
 
 ---
 
