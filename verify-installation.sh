@@ -57,21 +57,35 @@ echo ""
 echo "🔑 Checking API Keys..."
 echo ""
 
-# Check OpenAI API key (required)
-if [ -f ~/.env ] && grep -q "OPENAI_API_KEY" ~/.env; then
-    OPENAI_KEY=$(grep "OPENAI_API_KEY" ~/.env | cut -d= -f2)
-    if [ -n "$OPENAI_KEY" ] && [ "$OPENAI_KEY" != "your_openai_key_here" ]; then
-        echo -e "${GREEN}✅ OPENAI_API_KEY found${NC} in ~/.env"
+# Check Anthropic API key (required for planning and BMAD)
+if [ -f ~/.env ] && grep -q "ANTHROPIC_API_KEY" ~/.env; then
+    ANTHROPIC_KEY=$(grep "ANTHROPIC_API_KEY" ~/.env | cut -d= -f2)
+    if [ -n "$ANTHROPIC_KEY" ] && [ "$ANTHROPIC_KEY" != "sk-ant-your-key-here" ]; then
+        echo -e "${GREEN}✅ ANTHROPIC_API_KEY found${NC} in ~/.env"
     else
-        echo -e "${RED}❌ OPENAI_API_KEY not set${NC} in ~/.env"
-        echo "   Required for /titanium:plan command"
+        echo -e "${RED}❌ ANTHROPIC_API_KEY not set${NC} in ~/.env"
+        echo "   Required for /titanium:plan and /bmad:start"
         ERRORS=$((ERRORS + 1))
     fi
 else
-    echo -e "${RED}❌ ~/.env not found or no OPENAI_API_KEY${NC}"
-    echo "   Required for /titanium:plan command"
-    echo "   Create: echo 'OPENAI_API_KEY=sk-your-key' >> ~/.env"
+    echo -e "${RED}❌ ~/.env not found or no ANTHROPIC_API_KEY${NC}"
+    echo "   Required for /titanium:plan and /bmad:start"
+    echo "   Create: echo 'ANTHROPIC_API_KEY=sk-ant-your-key' >> ~/.env"
     ERRORS=$((ERRORS + 1))
+fi
+
+# Check OpenAI API key (required for voice summaries)
+if [ -f ~/.env ] && grep -q "OPENAI_API_KEY" ~/.env; then
+    OPENAI_KEY=$(grep "OPENAI_API_KEY" ~/.env | cut -d= -f2)
+    if [ -n "$OPENAI_KEY" ] && [ "$OPENAI_KEY" != "your_openai_key_here" ]; then
+        echo -e "${GREEN}✅ OPENAI_API_KEY found${NC} in ~/.env (for voice summaries)"
+    else
+        echo -e "${YELLOW}⚠️  OPENAI_API_KEY not set${NC} (voice will use simple text)"
+        WARNINGS=$((WARNINGS + 1))
+    fi
+else
+    echo -e "${YELLOW}⚠️  OPENAI_API_KEY not found${NC} (voice will use simple text)"
+    WARNINGS=$((WARNINGS + 1))
 fi
 
 # Check ElevenLabs API key (optional)

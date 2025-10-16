@@ -15,7 +15,8 @@ Titanium Toolkit orchestrates complete development workflows using AI agents. It
 ```
 Requirements → Plan → Implementation → Review → Done
      ↓           ↓           ↓            ↓        ↓
-  GPT-4      vibe-check   Agents    3 Reviewers  Pieces
+  Claude     vibe-check   Agents    3 Reviewers  Pieces
+ Haiku 4.5                                    CodeRabbit
 ```
 
 ---
@@ -136,7 +137,7 @@ Analyzes requirements and creates a detailed plan with epics, stories, tasks, an
 ```
 
 **What it does**:
-- Uses GPT-4 to break down requirements
+- Uses Claude Haiku 4.5 to break down requirements
 - Assigns tasks to appropriate agents
 - Estimates time
 - Validates with vibe-check AI
@@ -260,7 +261,7 @@ Works across sessions - resume anytime with `/catchup`.
 # → Shows completed workflow details
 ```
 
-Cost: ~$0.10 per workflow (GPT-4 + voice + vibe-check)
+Cost: ~$0.05 per workflow (Claude Haiku + voice + vibe-check)
 
 ---
 
@@ -271,7 +272,8 @@ Cost: ~$0.10 per workflow (GPT-4 + voice + vibe-check)
 - **Claude Code** 2.0.14+
 - **Python** 3.11+
 - **uv** - Python package manager ([install guide](https://docs.astral.sh/uv/))
-- **OpenAI API Key** - For GPT-4 planning ($0.01 per plan)
+- **Anthropic API Key** - For Claude planning and BMAD generation
+- **OpenAI API Key** - For GPT-5 voice summaries
 
 ### Recommended (Better Experience)
 
@@ -293,17 +295,38 @@ Cost: ~$0.10 per workflow (GPT-4 + voice + vibe-check)
 
 ## API Keys Setup
 
-### Required: OpenAI (For GPT-4)
+### Required: Anthropic Claude (For Planning & BMAD)
 
 **What it's used for**:
 - BMAD document generation (Brief, PRD, Architecture, Epics)
 - Implementation planning (breaking down requirements)
-- Voice summaries (GPT-4o-mini for concise announcements)
+- Uses Claude Haiku 4.5 (2x faster, 50% cheaper than GPT-4)
+- Uses Claude Sonnet 4.5 for architecture (complex technical tasks)
+
+```bash
+# Add to ~/.env
+echo 'ANTHROPIC_API_KEY=sk-ant-your-key-here' >> ~/.env
+chmod 600 ~/.env
+```
+
+Get key: https://console.anthropic.com/settings/keys
+
+**Optional model customization**:
+```bash
+# Override default models (optional)
+echo 'ANTHROPIC_LARGE_MODEL=claude-sonnet-4-5-20250929' >> ~/.env
+echo 'ANTHROPIC_SMALL_MODEL=claude-haiku-4-5-20251001' >> ~/.env
+```
+
+### Required: OpenAI (For Voice Summaries)
+
+**What it's used for**:
+- Voice announcement text generation (GPT-5 nano/mini)
+- Creates concise summaries for voice synthesis
 
 ```bash
 # Add to ~/.env
 echo 'OPENAI_API_KEY=sk-your-key-here' >> ~/.env
-chmod 600 ~/.env
 ```
 
 Get key: https://platform.openai.com/api-keys
@@ -496,7 +519,9 @@ Empty folder → /bmad:start → /titanium:plan → /titanium:work → Productio
    (0 min)        (45 min)       (2 min)          (15 hours)         (1 week)
 ```
 
-**Cost**: $0.22 (BMAD) + $0.40 (implementation) = **~$0.62 for complete MVP**
+**Cost**: $0.11 (BMAD with Haiku) + $0.20 (implementation) = **~$0.31 for complete MVP**
+
+**50% cost savings** using Claude Haiku 4.5!
 
 ---
 
@@ -651,7 +676,8 @@ Created by **Jason Brashear** - [Titanium Computing](https://titaniumcomputing.c
 **Powered by**:
 - [Claude Code](https://claude.ai/code) by Anthropic
 - [ElevenLabs](https://elevenlabs.io) - Voice synthesis
-- [OpenAI GPT-4](https://openai.com) - Plan generation
+- [Anthropic Claude](https://anthropic.com) - Haiku 4.5 (planning/BMAD) and Sonnet 4.5 (architecture)
+- [OpenAI GPT-5](https://openai.com) - Voice summaries
 - [Pieces](https://pieces.app) - Long-term memory
 - [vibe-check](https://github.com/PV-Bhat/vibe-check-mcp-server) - AI quality gates
 
