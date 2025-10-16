@@ -20,12 +20,24 @@ titanium-plugins/
 ├── LICENSE                        # MIT License
 ├── README.md                      # Public documentation
 ├── CLAUDE.md                      # This file - Claude's development guide
+├── verify-installation.sh         # Installation verification script
+├── docs/                          # Technical documentation
+│   ├── ORCHESTRATION_PLAN.md     # Complete architecture
+│   ├── BMAD_GENERATION_PLAN.md   # BMAD system design
+│   ├── BMAD_RESEARCH_SYSTEM.md   # Research workflow
+│   ├── DEPENDENCIES.md           # UV and dependencies
+│   └── TESTING_GUIDE.md          # Testing procedures
+├── examples/                      # Example outputs
+│   └── bmad-output/              # Sample BMAD documents
 └── plugins/
-    └── titanium-toolkit/          # The flagship plugin
+    └── titanium-toolkit/          # The flagship plugin (v2.1.0)
         ├── .claude-plugin/
         │   └── plugin.json        # Plugin manifest
         ├── agents/                # 16 builder agents
-        ├── commands/              # Slash commands
+        ├── commands/              # Slash commands (13 total)
+        │   ├── catchup.md        # Pieces context recovery
+        │   ├── titanium-*        # 5 orchestration commands
+        │   └── bmad-*            # 7 BMAD document generation commands
         ├── hooks/                 # Voice system hooks
         │   ├── hooks.json         # Hook configuration
         │   ├── post_tool_use_elevenlabs.py
@@ -33,6 +45,13 @@ titanium-plugins/
         │   ├── notification.py
         │   ├── subagent_stop.py
         │   └── utils/
+        │       ├── workflow/      # Orchestration utilities
+        │       │   ├── workflow_state.py
+        │       │   └── plan_parser.py
+        │       ├── bmad/          # BMAD generation utilities
+        │       │   ├── bmad_generator.py
+        │       │   ├── bmad_validator.py
+        │       │   └── research_generator.py
         │       ├── tts/           # Text-to-speech utilities
         │       └── llm/           # LLM helper scripts
         ├── LICENSE
@@ -191,17 +210,48 @@ Update version in:
 - `plugins/titanium-toolkit/.claude-plugin/plugin.json`
 - Git tag: `git tag v1.0.1`
 
-### Integration with Other Tools
+### Built-in BMAD System (v2.1.0)
 
-**BMAD-METHOD:**
-- Users install BMAD separately for PRD creation
+**BMAD document generation is now built into titanium-toolkit!**
+
+**7 BMAD Commands:**
+- `/bmad:start` - Complete guided workflow (Brief → PRD → Architecture → Epics)
+- `/bmad:brief` - Product brief generation
+- `/bmad:prd` - PRD generation
+- `/bmad:architecture` - Architecture document
+- `/bmad:epic` - Single epic generation
+- `/bmad:index` - Story index summary
+- `/bmad:research` - Research prompt generator
+
+**BMAD Utilities:**
+- `bmad_generator.py` - GPT-4 powered document generation
+- `bmad_validator.py` - Structure validation
+- `research_generator.py` - Research prompt templates
+
+**Workflow:**
+```
+Empty folder → /bmad:start → bmad-backlog/ folder created
+             → /titanium:plan → .titanium/plan.json created
+             → /titanium:work → Implementation complete
+```
+
+**Output folder:**
+```
+bmad-backlog/
+├── product-brief.md
+├── prd/
+│   └── prd.md
+├── architecture/
+│   └── architecture.md
+├── epics/
+│   └── EPIC-*.md
+└── STORY-INDEX.md
+```
+
+**External BMAD-METHOD (optional):**
+- Users can still use external BMAD tool if preferred
 - Output: `~/bmad/output/*.md` files
-- These feed into `/compounding-engineering:work` command
-
-**compounding-engineering plugin:**
-- Users install from Every's marketplace
-- Provides `/work`, `/review`, `/plan` commands
-- Uses titanium-toolkit's agents for implementation
+- Compatible with titanium commands
 
 **Pieces:**
 - Required for `/catchup` command
@@ -281,6 +331,26 @@ EOF
 git add plugins/titanium-toolkit/commands/new-command.md
 git commit -m "feat: Add /new-command for [purpose]"
 git push
+```
+
+### Test BMAD Commands
+
+```bash
+# Test brief generation
+cd /tmp/test-bmad
+/bmad:brief "Your project idea"
+
+# Verify output
+ls bmad-backlog/product-brief.md
+
+# Test complete workflow
+/bmad:start
+# Answer interactive questions
+# Verify complete backlog created
+
+# Test utilities directly
+uv run plugins/titanium-toolkit/hooks/utils/bmad/bmad_generator.py brief "idea" "$(pwd)"
+uv run plugins/titanium-toolkit/hooks/utils/bmad/bmad_validator.py prd "bmad-backlog/prd/prd.md"
 ```
 
 ### Fix Voice Hook Issue

@@ -491,23 +491,23 @@ def generate_findings_template(topic: str, project_path: str) -> str:
 **Environment Variables**:
 ```bash
 # Add to .env.example
-{VENDOR}_API_KEY=your_key_here
-{VENDOR}_BASE_URL=https://api.vendor.com
+{{VENDOR}}_API_KEY=your_key_here
+{{VENDOR}}_BASE_URL=https://api.vendor.com
 ```
 
 **Code Configuration**:
 ```python
 # Example configuration
-from {package} import Client
+from {{package}} import Client
 
-client = Client(api_key=os.getenv('{VENDOR}_API_KEY'))
+client = Client(api_key=os.getenv('{{VENDOR}}_API_KEY'))
 ```
 
 ### Basic Usage Example
 
 ```python
 # Example usage from documentation
-{code example if available}
+{{code example if available}}
 ```
 
 ---
