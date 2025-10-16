@@ -8,6 +8,10 @@
 
 set -e
 
+# Determine repository root from script location
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="${SCRIPT_DIR}"
+
 echo "🧹 Cleaning up manual Titanium Toolkit installation..."
 echo ""
 echo "⚠️  WARNING: This will remove titanium and BMAD files from ~/.claude/"
@@ -72,7 +76,7 @@ echo ""
 echo "Next steps:"
 echo "  1. Restart Claude Code"
 echo "  2. Add marketplace:"
-echo "     /plugin marketplace add /Users/sem/code/titanium-plugins"
+echo "     /plugin marketplace add ${REPO_ROOT}"
 echo "  3. Install plugin:"
 echo "     /plugin install titanium-toolkit@titanium-plugins"
 echo "  4. Restart Claude Code again"

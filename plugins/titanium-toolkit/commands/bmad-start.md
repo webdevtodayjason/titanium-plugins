@@ -78,9 +78,45 @@ Options:
 What would you like to do?
 ```
 
-**If option 1**: Confirm destruction, delete bmad-backlog/, continue
-**If option 2**: Skip to Phase 5 (epic generation)
-**If option 3**: Exit
+**If option 1 chosen**:
+```
+🛑 DESTRUCTIVE ACTION WARNING
+
+This will permanently DELETE the entire bmad-backlog/ folder including:
+- Product Brief
+- PRD
+- Architecture
+- All Epic files
+- Story Index
+- Research findings
+
+This CANNOT be undone.
+
+To confirm deletion, type exactly: DELETE
+
+Type DELETE to confirm, or anything else to cancel:
+```
+
+Wait for user input.
+
+**If user types exactly "DELETE"** (case-sensitive):
+```bash
+rm -rf bmad-backlog/
+```
+- Announce: "bmad-backlog/ deleted. Starting fresh..."
+- Continue to Step 1.3
+
+**If user types anything else**:
+```
+❌ Deletion cancelled. Existing backlog preserved.
+
+Returning to options menu...
+```
+- Go back to showing the 3 options
+- Wait for user to choose option 2 or 3
+
+**If option 2**: Skip to Phase 6 (epic generation)
+**If option 3**: Exit gracefully
 
 **If no bmad-backlog/**:
 - Continue to Step 1.3
