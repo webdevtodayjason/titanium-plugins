@@ -1,7 +1,7 @@
 {
   "name": "titanium-toolkit",
-  "version": "1.0.0",
-  "description": "Professional development toolkit with voice-enhanced AI workflows, 16 specialized builder agents, Pieces LTM integration, and GPT-5-powered ElevenLabs announcements.",
+  "version": "2.1.0",
+  "description": "Complete AI-powered development workflow: BMAD document generation (Brief/PRD/Architecture/Epics), workflow orchestration (plan/work/review), 16 specialized agents, voice announcements, and vibe-check quality gates. From idea to production in 1 week.",
   "author": {
     "name": "Jason Brashear",
     "email": "jason@webdevtoday.com",
@@ -11,13 +11,15 @@
   "repository": "https://github.com/webdevtodayjason/titanium-plugins",
   "license": "MIT",
   "keywords": [
+    "bmad-methodology",
+    "workflow-orchestration",
     "voice-announcements",
-    "elevenlabs",
     "ai-powered",
     "development-toolkit",
     "pieces-integration",
-    "workflow-automation",
-    "gpt-5",
+    "vibe-check",
+    "gpt-4",
+    "elevenlabs",
     "titanium-computing"
   ]
 }
