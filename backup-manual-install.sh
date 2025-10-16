@@ -29,7 +29,7 @@ BACKED_UP=0
 if ls ~/.claude/commands/titanium-* 1> /dev/null 2>&1; then
     echo "📄 Backing up titanium commands..."
     mkdir -p "$BACKUP_DIR/commands"
-    cp ~/.claude/commands/titanium-* "$BACKUP_DIR/commands/"
+    cp -a ~/.claude/commands/titanium-* "$BACKUP_DIR/commands/"
     TITANIUM_CMD_COUNT=$(ls ~/.claude/commands/titanium-* 2>/dev/null | wc -l)
     echo "   ✅ Backed up $TITANIUM_CMD_COUNT titanium command(s)"
     BACKED_UP=$((BACKED_UP + TITANIUM_CMD_COUNT))
@@ -39,7 +39,7 @@ fi
 if ls ~/.claude/commands/bmad-* 1> /dev/null 2>&1; then
     echo "📄 Backing up BMAD commands..."
     mkdir -p "$BACKUP_DIR/commands"
-    cp ~/.claude/commands/bmad-* "$BACKUP_DIR/commands/"
+    cp -a ~/.claude/commands/bmad-* "$BACKUP_DIR/commands/"
     BMAD_CMD_COUNT=$(ls ~/.claude/commands/bmad-* 2>/dev/null | wc -l)
     echo "   ✅ Backed up $BMAD_CMD_COUNT BMAD command(s)"
     BACKED_UP=$((BACKED_UP + BMAD_CMD_COUNT))
