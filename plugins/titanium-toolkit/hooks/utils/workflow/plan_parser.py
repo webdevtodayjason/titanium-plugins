@@ -3,14 +3,14 @@
 # requires-python = ">=3.11"
 # dependencies = [
 #     "python-dotenv",
-#     "openai",
+#     "anthropic",
 # ]
 # ///
 
 """
 Plan Parser Utility
 
-Uses GPT-4 to break down requirements into structured implementation plans.
+Uses Claude Haiku 4.5 to break down requirements into structured implementation plans.
 Creates .titanium/plan.json with epics, stories, tasks, and agent assignments.
 
 Usage:
@@ -31,9 +31,29 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
+def get_claude_model(task_type: str = "default") -> str:
+    """
+    Get Claude model based on task complexity.
+
+    Args:
+        task_type: "complex" for large model, "default" for small model
+
+    Returns:
+        Model name string
+    """
+    load_dotenv()
+
+    if task_type == "complex":
+        # Use large model (Sonnet) for complex tasks
+        return os.getenv("ANTHROPIC_LARGE_MODEL", "claude-sonnet-4-5-20250929")
+    else:
+        # Use small model (Haiku) for faster tasks
+        return os.getenv("ANTHROPIC_SMALL_MODEL", "claude-haiku-4-5-20251001")
+
+
 def parse_requirements_to_plan(requirements_text: str, project_path: str) -> dict:
     """
-    Use GPT-4 to break down requirements into structured plan.
+    Use Claude Haiku 4.5 to break down requirements into structured plan.
 
     Args:
         requirements_text: Requirements document text
@@ -45,22 +65,22 @@ def parse_requirements_to_plan(requirements_text: str, project_path: str) -> dic
     # Load environment variables
     load_dotenv()
 
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
-        print("Error: OPENAI_API_KEY not found in environment variables", file=sys.stderr)
-        print("Please add your OpenAI API key to ~/.env file:", file=sys.stderr)
-        print("OPENAI_API_KEY=sk-your-key-here", file=sys.stderr)
+        print("Error: ANTHROPIC_API_KEY not found in environment variables", file=sys.stderr)
+        print("Please add your Anthropic API key to ~/.env file:", file=sys.stderr)
+        print("ANTHROPIC_API_KEY=sk-ant-your-key-here", file=sys.stderr)
         sys.exit(1)
 
     try:
-        from openai import OpenAI
-        client = OpenAI(api_key=api_key)
+        from anthropic import Anthropic
+        client = Anthropic(api_key=api_key)
     except ImportError:
-        print("Error: openai package not installed", file=sys.stderr)
+        print("Error: anthropic package not installed", file=sys.stderr)
         print("This should be handled by uv automatically.", file=sys.stderr)
         sys.exit(1)
 
-    # Build GPT-4 prompt
+    # Build Claude prompt
     prompt = f"""Analyze these requirements and create a structured implementation plan.
 
 Requirements:
@@ -124,15 +144,18 @@ Guidelines:
 Return ONLY valid JSON, no markdown code blocks, no explanations."""
 
     try:
-        # Call GPT-4
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=[{"role": "user", "content": prompt}],
+        # Get model (configurable via env var, defaults to Haiku)
+        model = get_claude_model("default")  # Use small model for planning (fast)
+
+        # Call Claude
+        response = client.messages.create(
+            model=model,
             max_tokens=2000,
-            temperature=0.3  # Lower temperature for more deterministic planning
+            temperature=0.3,  # Lower temperature for deterministic planning
+            messages=[{"role": "user", "content": prompt}]
         )
 
-        plan_json = response.choices[0].message.content.strip()
+        plan_json = response.content[0].text.strip()
 
         # Clean up markdown code blocks if present
         if plan_json.startswith("```json"):
@@ -167,11 +190,11 @@ Return ONLY valid JSON, no markdown code blocks, no explanations."""
         return plan
 
     except json.JSONDecodeError as e:
-        print(f"Error: GPT-4 returned invalid JSON: {e}", file=sys.stderr)
+        print(f"Error: Claude returned invalid JSON: {e}", file=sys.stderr)
         print(f"Response was: {plan_json[:200]}...", file=sys.stderr)
         sys.exit(1)
     except Exception as e:
-        print(f"Error calling GPT-4: {e}", file=sys.stderr)
+        print(f"Error calling Claude API: {e}", file=sys.stderr)
         sys.exit(1)
 
 

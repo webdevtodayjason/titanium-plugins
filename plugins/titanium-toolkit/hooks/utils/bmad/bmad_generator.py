@@ -3,14 +3,14 @@
 # requires-python = ">=3.11"
 # dependencies = [
 #     "python-dotenv",
-#     "openai",
+#     "anthropic",
 # ]
 # ///
 
 """
 BMAD Document Generator Utility
 
-Generates BMAD methodology documents using GPT-4:
+Generates BMAD methodology documents using Claude Haiku 4.5:
 - Product Brief
 - PRD (Product Requirements Document)
 - Architecture Document
@@ -41,6 +41,26 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 
+def get_claude_model(task_type: str = "default") -> str:
+    """
+    Get Claude model based on task complexity.
+
+    Args:
+        task_type: "complex" for large model (Sonnet), "default" for small model (Haiku)
+
+    Returns:
+        Model name string
+    """
+    load_dotenv()
+
+    if task_type == "complex":
+        # Use large model (Sonnet 4.5) for complex tasks
+        return os.getenv("ANTHROPIC_LARGE_MODEL", "claude-sonnet-4-5-20250929")
+    else:
+        # Use small model (Haiku 4.5) for faster tasks
+        return os.getenv("ANTHROPIC_SMALL_MODEL", "claude-haiku-4-5-20251001")
+
+
 def generate_brief(idea: str, project_path: str) -> str:
     """
     Generate Product Brief from high-level idea.
@@ -54,13 +74,15 @@ def generate_brief(idea: str, project_path: str) -> str:
     """
     load_dotenv()
 
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
-        print("Error: OPENAI_API_KEY not found", file=sys.stderr)
+        print("Error: ANTHROPIC_API_KEY not found", file=sys.stderr)
+        print("Please add your Anthropic API key to ~/.env file:", file=sys.stderr)
+        print("ANTHROPIC_API_KEY=sk-ant-your-key-here", file=sys.stderr)
         sys.exit(1)
 
-    from openai import OpenAI
-    client = OpenAI(api_key=api_key)
+    from anthropic import Anthropic
+    client = Anthropic(api_key=api_key)
 
     current_date = datetime.now().strftime("%B %d, %Y")
 
@@ -244,14 +266,17 @@ This Product Brief provides the foundation for creating a comprehensive PRD. Nex
 Be comprehensive but concise. Infer reasonable defaults based on the idea. Format as clean markdown."""
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=[{"role": "user", "content": prompt}],
+        # Use Haiku for brief generation (documentation task, fast)
+        model = get_claude_model("default")
+
+        response = client.messages.create(
+            model=model,
             max_tokens=3000,
-            temperature=0.4
+            temperature=0.4,
+            messages=[{"role": "user", "content": prompt}]
         )
 
-        brief_content = response.choices[0].message.content.strip()
+        brief_content = response.content[0].text.strip()
 
         # Save to file
         brief_path = Path(project_path) / "bmad-backlog" / "product-brief.md"
@@ -280,9 +305,11 @@ def generate_prd(brief_path: str, project_path: str) -> str:
     """
     load_dotenv()
 
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
-        print("Error: OPENAI_API_KEY not found", file=sys.stderr)
+        print("Error: ANTHROPIC_API_KEY not found", file=sys.stderr)
+        print("Please add your Anthropic API key to ~/.env file:", file=sys.stderr)
+        print("ANTHROPIC_API_KEY=sk-ant-your-key-here", file=sys.stderr)
         sys.exit(1)
 
     # Read brief
@@ -293,8 +320,8 @@ def generate_prd(brief_path: str, project_path: str) -> str:
         print(f"Error reading brief: {e}", file=sys.stderr)
         sys.exit(1)
 
-    from openai import OpenAI
-    client = OpenAI(api_key=api_key)
+    from anthropic import Anthropic
+    client = Anthropic(api_key=api_key)
 
     current_date = datetime.now().strftime("%B %d, %Y")
 
@@ -591,14 +618,17 @@ IMPORTANT GUIDELINES:
 8. Format as clean markdown with proper headers"""
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=[{"role": "user", "content": prompt}],
+        # Use Haiku for PRD generation (documentation task)
+        model = get_claude_model("default")
+
+        response = client.messages.create(
+            model=model,
             max_tokens=4000,
-            temperature=0.3
+            temperature=0.3,
+            messages=[{"role": "user", "content": prompt}]
         )
 
-        prd_content = response.choices[0].message.content.strip()
+        prd_content = response.content[0].text.strip()
 
         # Save to file
         prd_path = Path(project_path) / "bmad-backlog" / "prd" / "prd.md"
@@ -663,9 +693,9 @@ def generate_architecture(prd_path: str, project_path: str) -> str:
     """
     load_dotenv()
 
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
-        print("Error: OPENAI_API_KEY not found", file=sys.stderr)
+        print("Error: ANTHROPIC_API_KEY not found", file=sys.stderr)
         sys.exit(1)
 
     # Read PRD
@@ -676,8 +706,8 @@ def generate_architecture(prd_path: str, project_path: str) -> str:
         print(f"Error reading PRD: {e}", file=sys.stderr)
         sys.exit(1)
 
-    from openai import OpenAI
-    client = OpenAI(api_key=api_key)
+    from anthropic import Anthropic
+    client = Anthropic(api_key=api_key)
 
     current_date = datetime.now().strftime("%B %d, %Y")
     project_name = extract_project_name(prd_content)
@@ -836,14 +866,17 @@ services/
 Generate this first part comprehensively. Include specific tech stack based on PRD requirements. Be detailed. Next, I'll request part 2 with Data Architecture, Security, etc."""
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=[{"role": "user", "content": prompt}],
+        # Use Sonnet for architecture (complex technical task with code examples)
+        model = get_claude_model("complex")
+
+        response = client.messages.create(
+            model=model,
             max_tokens=4000,
-            temperature=0.3
+            temperature=0.3,
+            messages=[{"role": "user", "content": prompt}]
         )
 
-        arch_part1 = response.choices[0].message.content.strip()
+        arch_part1 = response.content[0].text.strip()
 
         # Generate Part 2
         prompt_part2 = f"""Continue the Architecture Document. This is PART 2.
@@ -981,14 +1014,15 @@ CREATE TABLE embeddings (
 
 Be comprehensive. Include real code examples. Be specific with costs."""
 
-        response_part2 = client.chat.completions.create(
-            model="gpt-4o",
-            messages=[{"role": "user", "content": prompt_part2}],
+        # Use same model for part 2
+        response_part2 = client.messages.create(
+            model=model,
             max_tokens=4000,
-            temperature=0.3
+            temperature=0.3,
+            messages=[{"role": "user", "content": prompt_part2}]
         )
 
-        arch_part2 = response_part2.choices[0].message.content.strip()
+        arch_part2 = response_part2.content[0].text.strip()
 
         # Combine parts
         arch_content = arch_part1 + "\n\n" + arch_part2
@@ -1022,9 +1056,9 @@ def generate_epic(prd_path: str, arch_path: str, epic_number: int, project_path:
     """
     load_dotenv()
 
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
-        print("Error: OPENAI_API_KEY not found", file=sys.stderr)
+        print("Error: ANTHROPIC_API_KEY not found", file=sys.stderr)
         sys.exit(1)
 
     # Read PRD and Architecture
@@ -1037,8 +1071,8 @@ def generate_epic(prd_path: str, arch_path: str, epic_number: int, project_path:
         print(f"Error reading documents: {e}", file=sys.stderr)
         sys.exit(1)
 
-    from openai import OpenAI
-    client = OpenAI(api_key=api_key)
+    from anthropic import Anthropic
+    client = Anthropic(api_key=api_key)
 
     current_date = datetime.now().strftime("%B %d, %Y")
 
@@ -1176,14 +1210,17 @@ IMPORTANT:
 - Make acceptance criteria specific and testable"""
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=[{"role": "user", "content": prompt}],
+        # Use Haiku for epic generation (documentation)
+        model = get_claude_model("default")
+
+        response = client.messages.create(
+            model=model,
             max_tokens=4000,
-            temperature=0.3
+            temperature=0.3,
+            messages=[{"role": "user", "content": prompt}]
         )
 
-        epic_content = response.choices[0].message.content.strip()
+        epic_content = response.content[0].text.strip()
 
         # Extract epic title for filename
         title_match = re.search(r'EPIC-\d+:\s*(.+)', epic_content)
