@@ -293,7 +293,12 @@ Cost: ~$0.10 per workflow (GPT-4 + voice + vibe-check)
 
 ## API Keys Setup
 
-### Required: OpenAI (GPT-4 for planning)
+### Required: OpenAI (For GPT-4)
+
+**What it's used for**:
+- BMAD document generation (Brief, PRD, Architecture, Epics)
+- Implementation planning (breaking down requirements)
+- Voice summaries (GPT-4o-mini for concise announcements)
 
 ```bash
 # Add to ~/.env
@@ -303,7 +308,11 @@ chmod 600 ~/.env
 
 Get key: https://platform.openai.com/api-keys
 
-### Recommended: ElevenLabs (Voice)
+### Recommended: ElevenLabs (For Voice Synthesis)
+
+**What it's used for**:
+- High-quality voice announcements (ElevenLabs "Sarah" voice)
+- Text-to-speech for workflow progress
 
 ```bash
 # Add to ~/.env
@@ -312,7 +321,7 @@ echo 'ELEVENLABS_API_KEY=your-key-here' >> ~/.env
 
 Get key: https://elevenlabs.io/app/settings/api-keys
 
-Without this, voice uses macOS `say` (still works, just different voice).
+**Fallback**: Without this key, voice uses macOS `say` command (still works, just different voice quality).
 
 ### Recommended: vibe-check (Quality Gates)
 
