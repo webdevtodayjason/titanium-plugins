@@ -257,7 +257,7 @@ Be comprehensive but concise. Infer reasonable defaults based on the idea. Forma
         brief_path = Path(project_path) / "bmad-backlog" / "product-brief.md"
         brief_path.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(brief_path, 'w') as f:
+        with open(brief_path, 'w', encoding='utf-8', newline='\n') as f:
             f.write(brief_content)
 
         return brief_content
@@ -287,7 +287,7 @@ def generate_prd(brief_path: str, project_path: str) -> str:
 
     # Read brief
     try:
-        with open(brief_path, 'r') as f:
+        with open(brief_path, 'r', encoding='utf-8') as f:
             brief_content = f.read()
     except Exception as e:
         print(f"Error reading brief: {e}", file=sys.stderr)
@@ -604,7 +604,7 @@ IMPORTANT GUIDELINES:
         prd_path = Path(project_path) / "bmad-backlog" / "prd" / "prd.md"
         prd_path.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(prd_path, 'w') as f:
+        with open(prd_path, 'w', encoding='utf-8', newline='\n') as f:
             f.write(prd_content)
 
         return prd_content
@@ -670,7 +670,7 @@ def generate_architecture(prd_path: str, project_path: str) -> str:
 
     # Read PRD
     try:
-        with open(prd_path, 'r') as f:
+        with open(prd_path, 'r', encoding='utf-8') as f:
             prd_content = f.read()
     except Exception as e:
         print(f"Error reading PRD: {e}", file=sys.stderr)
@@ -997,7 +997,7 @@ Be comprehensive. Include real code examples. Be specific with costs."""
         arch_path = Path(project_path) / "bmad-backlog" / "architecture" / "architecture.md"
         arch_path.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(arch_path, 'w') as f:
+        with open(arch_path, 'w', encoding='utf-8', newline='\n') as f:
             f.write(arch_content)
 
         return arch_content
@@ -1029,9 +1029,9 @@ def generate_epic(prd_path: str, arch_path: str, epic_number: int, project_path:
 
     # Read PRD and Architecture
     try:
-        with open(prd_path, 'r') as f:
+        with open(prd_path, 'r', encoding='utf-8') as f:
             prd_content = f.read()
-        with open(arch_path, 'r') as f:
+        with open(arch_path, 'r', encoding='utf-8') as f:
             arch_content = f.read()
     except Exception as e:
         print(f"Error reading documents: {e}", file=sys.stderr)
@@ -1194,7 +1194,7 @@ IMPORTANT:
         epic_path = Path(project_path) / "bmad-backlog" / "epics" / f"EPIC-{epic_number:03d}-{epic_slug}.md"
         epic_path.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(epic_path, 'w') as f:
+        with open(epic_path, 'w', encoding='utf-8', newline='\n') as f:
             f.write(epic_content)
 
         return epic_content
@@ -1251,7 +1251,7 @@ def generate_index(epics_dir: str, project_path: str) -> str:
     total_points = 0
 
     for epic_file in epic_files:
-        with open(epic_file, 'r') as f:
+        with open(epic_file, 'r', encoding='utf-8') as f:
             content = f.read()
 
         # Extract epic number and name
@@ -1281,7 +1281,13 @@ def generate_index(epics_dir: str, project_path: str) -> str:
 
     # Generate index
     current_date = datetime.now().strftime("%B %d, %Y")
-    project_name = extract_project_name(open(epic_files[0]).read()) if epic_files else "Project"
+
+    # Extract project name from first epic (with proper file handling)
+    if epic_files:
+        with open(epic_files[0], 'r', encoding='utf-8') as f:
+            project_name = extract_project_name(f.read())
+    else:
+        project_name = "Project"
 
     index_content = f"""# {project_name} - Story Index
 
@@ -1334,7 +1340,7 @@ For detailed story breakdown, see individual epic files in `epics/` directory.
     # Save to file
     index_path = Path(project_path) / "bmad-backlog" / "STORY-INDEX.md"
 
-    with open(index_path, 'w') as f:
+    with open(index_path, 'w', encoding='utf-8', newline='\n') as f:
         f.write(index_content)
 
     return index_content

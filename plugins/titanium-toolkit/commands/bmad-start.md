@@ -436,6 +436,23 @@ Present vibe-check assessment.
 
 ### Step 7.3: Store Complete Backlog in Pieces
 
+**First, build explicit file list** (Pieces doesn't expand wildcards):
+
+```bash
+# Use Glob to find all epic files
+Glob bmad-backlog/epics/EPIC-*.md
+```
+
+Store the results, then build files array.
+
+**If research was completed**:
+```bash
+# Find research files
+Glob bmad-backlog/research/RESEARCH-*.md
+```
+
+**Then call Pieces with explicit paths**:
+
 ```
 mcp__Pieces__create_pieces_memory(
   summary_description: "Complete BMAD backlog for {{project}}",
@@ -466,12 +483,32 @@ Ready for implementation with /titanium:plan bmad-backlog/epics/EPIC-001-*.md",
     "bmad-backlog/product-brief.md",
     "bmad-backlog/prd/prd.md",
     "bmad-backlog/architecture/architecture.md",
-    "bmad-backlog/epics/*.md",
+    "{{list each epic file from Glob results}}",
     "bmad-backlog/STORY-INDEX.md",
-    "bmad-backlog/research/*.md" (if research completed)
+    "{{list each research file from Glob results if research completed}}"
   ],
   project: "$(pwd)"
 )
+```
+
+**Example with explicit paths**:
+```
+files: [
+  "bmad-backlog/product-brief.md",
+  "bmad-backlog/prd/prd.md",
+  "bmad-backlog/architecture/architecture.md",
+  "bmad-backlog/epics/EPIC-001-foundation.md",
+  "bmad-backlog/epics/EPIC-002-core-features.md",
+  "bmad-backlog/epics/EPIC-003-advanced.md",
+  "bmad-backlog/epics/EPIC-004-polish.md",
+  "bmad-backlog/STORY-INDEX.md"
+]
+```
+
+**If research completed, add**:
+```
+  "bmad-backlog/research/RESEARCH-data-vendors-prompt.md",
+  "bmad-backlog/research/RESEARCH-data-vendors-findings.md"
 ```
 
 ### Step 7.4: Present Complete Summary
