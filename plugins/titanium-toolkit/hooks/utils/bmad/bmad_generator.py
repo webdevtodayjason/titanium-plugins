@@ -1386,43 +1386,67 @@ def main():
 
     try:
         if command == "brief":
+            if len(sys.argv) < 4:
+                print("Error: brief command requires <idea> <project_path>", file=sys.stderr)
+                print("Usage: bmad_generator.py brief \"idea\" \"$(pwd)\"", file=sys.stderr)
+                sys.exit(1)
             idea = sys.argv[2]
             project_path = sys.argv[3]
-            content = generate_brief(idea, project_path)
-            print(f"✅ Product brief generated: bmad-backlog/product-brief.md")
+            generate_brief(idea, project_path)
+            print("✅ Product brief generated: bmad-backlog/product-brief.md")
 
         elif command == "prd":
+            if len(sys.argv) < 4:
+                print("Error: prd command requires <brief_path> <project_path>", file=sys.stderr)
+                print("Usage: bmad_generator.py prd bmad-backlog/product-brief.md \"$(pwd)\"", file=sys.stderr)
+                sys.exit(1)
             brief_path = sys.argv[2]
             project_path = sys.argv[3]
-            content = generate_prd(brief_path, project_path)
-            print(f"✅ PRD generated: bmad-backlog/prd/prd.md")
+            generate_prd(brief_path, project_path)
+            print("✅ PRD generated: bmad-backlog/prd/prd.md")
 
         elif command == "architecture":
+            if len(sys.argv) < 4:
+                print("Error: architecture command requires <prd_path> <project_path>", file=sys.stderr)
+                print("Usage: bmad_generator.py architecture bmad-backlog/prd/prd.md \"$(pwd)\"", file=sys.stderr)
+                sys.exit(1)
             prd_path = sys.argv[2]
             project_path = sys.argv[3]
-            content = generate_architecture(prd_path, project_path)
-            print(f"✅ Architecture generated: bmad-backlog/architecture/architecture.md")
+            generate_architecture(prd_path, project_path)
+            print("✅ Architecture generated: bmad-backlog/architecture/architecture.md")
 
         elif command == "epic":
+            if len(sys.argv) < 6:
+                print("Error: epic command requires <prd_path> <arch_path> <epic_num> <project_path>", file=sys.stderr)
+                print("Usage: bmad_generator.py epic bmad-backlog/prd/prd.md bmad-backlog/architecture/architecture.md 1 \"$(pwd)\"", file=sys.stderr)
+                sys.exit(1)
             prd_path = sys.argv[2]
             arch_path = sys.argv[3]
-            epic_num = int(sys.argv[4])
+            try:
+                epic_num = int(sys.argv[4])
+            except ValueError:
+                print(f"Error: epic_num must be an integer, got: {sys.argv[4]}", file=sys.stderr)
+                sys.exit(1)
             project_path = sys.argv[5]
-            content = generate_epic(prd_path, arch_path, epic_num, project_path)
+            generate_epic(prd_path, arch_path, epic_num, project_path)
             print(f"✅ Epic {epic_num} generated")
 
         elif command == "index":
+            if len(sys.argv) < 4:
+                print("Error: index command requires <epics_dir> <project_path>", file=sys.stderr)
+                print("Usage: bmad_generator.py index bmad-backlog/epics/ \"$(pwd)\"", file=sys.stderr)
+                sys.exit(1)
             epics_dir = sys.argv[2]
             project_path = sys.argv[3]
-            content = generate_index(epics_dir, project_path)
-            print(f"✅ Story index generated: bmad-backlog/STORY-INDEX.md")
+            generate_index(epics_dir, project_path)
+            print("✅ Story index generated: bmad-backlog/STORY-INDEX.md")
 
         else:
             print(f"Error: Unknown command: {command}", file=sys.stderr)
             sys.exit(1)
 
     except Exception as e:
-        print(f"Error: {str(e)}", file=sys.stderr)
+        print(f"Error: {e!s}", file=sys.stderr)
         sys.exit(1)
 
 
