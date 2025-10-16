@@ -459,7 +459,7 @@ my-project/
 
 ---
 
-## The 5 Commands
+## The 6 Titanium Commands
 
 ### 1. `/titanium:getting-started` (This Guide)
 **Use when**: Learning the system

@@ -120,6 +120,8 @@ def validate_prd(file_path: str) -> Dict:
         "Feature Requirements",
         "User Stories",
         "Technical Requirements",
+        "Data Requirements",
+        "AI/ML Requirements",
         "Design Requirements",
         "Go-to-Market Strategy",
         "Risks & Mitigation",

@@ -11,8 +11,8 @@ This folder contains example output from the BMAD document generation system.
 
 - `product-brief.md` - High-level vision and goals
 - `prd/prd.md` - Complete Product Requirements Document (5 epics, comprehensive requirements)
-- `$(pwd)/bmad-backlog/architecture/architecture.md` - Technical architecture
 - `epics/EPIC-001-foundation.md` - Foundation epic with user stories
+- Architecture document (not included in examples due to size)
 
 ## What This Shows
 
@@ -31,12 +31,14 @@ This folder contains example output from the BMAD document generation system.
 - Go-to-market strategy
 - Risks and open questions
 
-**Architecture**:
+**Architecture** (not included - typically 1000-1500 lines):
 - System overview
 - Tech stack recommendations
-- Component details
-- Database schemas
-- Infrastructure plan
+- Component details with code examples
+- Database schemas (SQL CREATE TABLE statements)
+- Infrastructure and deployment plans
+- Security architecture
+- Monitoring and observability
 
 **Epic** File:
 - Epic header with metadata

@@ -1282,12 +1282,35 @@ def generate_index(epics_dir: str, project_path: str) -> str:
     # Generate index
     current_date = datetime.now().strftime("%B %d, %Y")
 
-    # Extract project name from first epic (with proper file handling)
-    if epic_files:
-        with open(epic_files[0], 'r', encoding='utf-8') as f:
-            project_name = extract_project_name(f.read())
-    else:
-        project_name = "Project"
+    # Extract project name (prioritize PRD > Brief > Epic, avoid file leaks)
+    project_name = "Project"  # Default
+
+    # Try PRD first
+    prd_file = Path(project_path) / "bmad-backlog" / "prd" / "prd.md"
+    if prd_file.exists():
+        try:
+            with open(prd_file, 'r', encoding='utf-8') as f:
+                project_name = extract_project_name(f.read())
+        except Exception:
+            pass
+
+    # If no name from PRD, try Brief
+    if project_name == "Project":
+        brief_file = Path(project_path) / "bmad-backlog" / "product-brief.md"
+        if brief_file.exists():
+            try:
+                with open(brief_file, 'r', encoding='utf-8') as f:
+                    project_name = extract_project_name(f.read())
+            except Exception:
+                pass
+
+    # If still no name, fall back to first epic
+    if project_name == "Project" and epic_files:
+        try:
+            with open(epic_files[0], 'r', encoding='utf-8') as f:
+                project_name = extract_project_name(f.read())
+        except Exception:
+            pass
 
     index_content = f"""# {project_name} - Story Index
 

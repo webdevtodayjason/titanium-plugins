@@ -95,25 +95,27 @@ def update_phase(project_path: str, phase_name: str, status: str = "in_progress"
     state["current_phase"] = phase_name
     state["status"] = status
 
-    # Create phase entry
-    phase_entry = {
-        "name": phase_name,
-        "status": status,
-        "started_at": datetime.now().isoformat()
-    }
-
-    if status == "completed":
-        phase_entry["completed_at"] = datetime.now().isoformat()
-
     # Update or add phase
     phase_exists = False
     for i, p in enumerate(state["phases"]):
         if p["name"] == phase_name:
-            state["phases"][i] = {**p, **phase_entry}
+            # Preserve original started_at when updating existing phase
+            state["phases"][i]["status"] = status
+            # Only add completed_at if completing and doesn't already exist
+            if status == "completed" and "completed_at" not in state["phases"][i]:
+                state["phases"][i]["completed_at"] = datetime.now().isoformat()
             phase_exists = True
             break
 
     if not phase_exists:
+        # Create new phase entry with current timestamp
+        phase_entry = {
+            "name": phase_name,
+            "status": status,
+            "started_at": datetime.now().isoformat()
+        }
+        if status == "completed":
+            phase_entry["completed_at"] = datetime.now().isoformat()
         state["phases"].append(phase_entry)
 
     # Atomic write

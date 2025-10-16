@@ -71,205 +71,79 @@ This enables parallel execution for faster reviews.
 ### Agent 1: Code Reviewer
 
 ```
-Task(
-  description: "Code quality review",
-  prompt: "Review all code changes for quality, readability, and best practices.
+[Task 1]: @code-reviewer
+Prompt: "Review all code changes for quality, readability, and best practices.
 
-Files to review:
-[list all files from Step 1]
+Focus on:
+- Code quality and maintainability
+- DRY principles
+- SOLID principles
+- Error handling
+- Code organization
+- Comments and documentation
 
-Review Focus Areas:
+Files to review: [list all modified files]
 
-1. **Code Quality**:
-   - Readability and clarity
-   - Naming conventions
-   - Code organization
-   - Function/method length
-   - Complexity (cyclomatic complexity)
+Provide findings categorized by severity:
+- Critical: Must fix before deployment
+- Important: Should fix soon
+- Nice-to-have: Optional improvements
 
-2. **Best Practices**:
-   - DRY (Don't Repeat Yourself)
-   - SOLID principles
-   - Design patterns appropriate use
-   - Separation of concerns
-
-3. **Error Handling**:
-   - Try-catch blocks where needed
-   - Error messages clear and actionable
-   - No swallowed exceptions
-   - Proper error propagation
-
-4. **Performance**:
-   - Obvious performance issues
-   - Unnecessary iterations
-   - Memory leaks potential
-   - Database query efficiency
-
-5. **Maintainability**:
-   - Comments where needed (not obvious code)
-   - Documentation for public APIs
-   - TODO/FIXME appropriately marked
-   - Code smells identified
-
-Output Format:
-
-For each finding, provide:
-```
-Category: [Code Quality | Best Practices | Error Handling | Performance | Maintainability]
-Severity: [Critical | Important | Nice-to-have]
-File: path/to/file.ext:line
-Issue: [Clear description of the issue]
-Example: [Show the problematic code if helpful]
-Recommendation: [How to fix it]
-```
-
-Categorize findings by severity:
-- **Critical**: Code that will cause bugs or serious issues
-- **Important**: Should be fixed but won't break functionality
-- **Nice-to-have**: Improvements for better code quality
-
-Provide at least 3 findings, or state 'No significant issues found' if code quality is excellent.",
-  subagent_type: "code-reviewer"
-)
+For each finding, specify:
+- File and line number
+- Issue description
+- Recommendation"
 ```
 
 ### Agent 2: Security Scanner
 
 ```
-Task(
-  description: "Security vulnerability scan",
-  prompt: "Scan for security vulnerabilities and security best practices violations.
+[Task 2]: @security-scanner
+Prompt: "Scan for security vulnerabilities and security best practices.
 
-Files to review:
-[list all files from Step 1]
+Focus on:
+- Input validation
+- SQL injection risks
+- XSS vulnerabilities
+- Authentication/authorization issues
+- Secrets in code
+- Dependency vulnerabilities
+- HTTPS enforcement
+- Rate limiting
 
-Security Review Focus:
+Files to review: [list all modified files]
 
-1. **Input Validation**:
-   - All user inputs validated
-   - Type checking in place
-   - Length limits enforced
-   - Sanitization for special characters
-
-2. **Injection Vulnerabilities**:
-   - SQL injection risks
-   - NoSQL injection risks
-   - Command injection
-   - XSS (Cross-Site Scripting)
-
-3. **Authentication & Authorization**:
-   - Auth checks present where needed
-   - Password handling secure (hashing, not storing plain)
-   - Token validation proper
-   - Session management secure
-
-4. **Sensitive Data**:
-   - No secrets in code (API keys, passwords)
-   - No PII logged
-   - Encryption for sensitive data
-   - Secure data transmission (HTTPS)
-
-5. **Dependencies**:
-   - Known vulnerable dependencies
-   - Outdated packages
-   - Unnecessary dependencies
-
-6. **API Security**:
-   - Rate limiting in place
-   - CORS configured properly
-   - Input size limits
-   - Timeout configurations
-
-Output Format:
-
-For each vulnerability, provide:
-```
-Vulnerability: [Name of vulnerability type]
-Severity: [Critical | High | Medium | Low]
-File: path/to/file.ext:line
-Description: [What the vulnerability is]
-Risk: [What could happen if exploited]
-Remediation: [Step-by-step fix]
-References: [OWASP or CVE links if applicable]
-```
-
-Prioritize by severity:
-- **Critical**: Immediate exploitation possible, data breach risk
-- **High**: Requires specific conditions but serious impact
-- **Medium**: Harder to exploit but still concerning
-- **Low**: Best practice violations, minimal immediate risk
-
-Provide detailed findings or state 'No security vulnerabilities found' if secure.",
-  subagent_type: "security-scanner"
-)
+Provide findings with:
+- Severity (Critical/High/Medium/Low)
+- Vulnerability type
+- File and line number
+- Risk description
+- Remediation steps"
 ```
 
 ### Agent 3: Test Coverage Specialist
 
 ```
-Task(
-  description: "Test coverage analysis",
-  prompt: "Check test coverage and test quality for the reviewed code.
+[Task 3]: @tdd-specialist
+Prompt: "Check test coverage and test quality.
 
-Source files to review:
-[list source files]
+Focus on:
+- Test coverage percentage
+- Edge cases covered
+- Integration tests
+- Unit tests
+- E2E tests (if applicable)
+- Test quality and assertions
+- Mock usage
+- Test organization
 
-Test files to review:
-[list test files]
+Files to review: [list all test files and source files]
 
-Test Review Focus:
-
-1. **Coverage Analysis**:
-   - Calculate approximate coverage percentage
-   - Identify untested functions/methods
-   - Find untested branches
-   - Note missing edge cases
-
-2. **Test Quality**:
-   - Assertions are meaningful
-   - Tests are isolated (no interdependencies)
-   - Mocks used appropriately
-   - Tests are readable and maintainable
-
-3. **Test Types**:
-   - Unit tests present
-   - Integration tests where needed
-   - E2E tests for critical flows
-   - Error case tests
-
-4. **Test Organization**:
-   - Tests well organized
-   - Descriptive test names
-   - Proper setup/teardown
-   - Test data management
-
-5. **Missing Tests**:
-   - Authentication flows
-   - Error conditions
-   - Boundary conditions
-   - Permission checks
-
-Output Format:
-
-For each finding, provide:
-```
-Category: [Coverage Gap | Test Quality | Missing Tests | Test Organization]
-Severity: [Critical | Important | Nice-to-have]
-File: path/to/file.ext
-Issue: [What's missing or problematic]
-Impact: [Why this matters]
-Recommendation: [What tests to add or how to improve]
-Example: [Show example test if helpful]
-```
-
-Categorize by severity:
-- **Critical**: Core functionality with no tests, security-critical code untested
-- **Important**: Important features with incomplete coverage, error paths untested
-- **Nice-to-have**: Could improve coverage but not critical
-
-Provide coverage estimate (e.g., '~75% coverage') and detailed findings.",
-  subagent_type: "tdd-specialist"
-)
+Provide findings on:
+- Coverage gaps
+- Missing test cases
+- Test quality issues
+- Recommendations for improvement"
 ```
 
 ---

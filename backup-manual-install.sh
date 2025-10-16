@@ -8,6 +8,10 @@
 
 set -e
 
+# Determine repository root from script location
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="${SCRIPT_DIR}"
+
 echo "🔄 Backing up manual Titanium Toolkit installation..."
 echo ""
 
@@ -122,7 +126,7 @@ echo "Next steps:"
 echo "  1. Run: ./cleanup-manual-install.sh"
 echo "  2. Restart Claude Code"
 echo "  3. Install from marketplace:"
-echo "     /plugin marketplace add /Users/sem/code/titanium-plugins"
+echo "     /plugin marketplace add ${REPO_ROOT}"
 echo "     /plugin install titanium-toolkit@titanium-plugins"
 echo "  4. Restart Claude Code"
 echo "  5. Test: /bmad:start"
