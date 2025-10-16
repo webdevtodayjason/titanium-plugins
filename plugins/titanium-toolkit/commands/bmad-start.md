@@ -184,7 +184,7 @@ Generating Product Brief...
 
 Run:
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py brief "{{user_idea}}" "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py brief "{{user_idea}}" "$(pwd)"
 ```
 
 Creates: `bmad-backlog/product-brief.md`
@@ -214,7 +214,7 @@ Approve brief, or refine specific sections? (approve/refine/regenerate)
 ### Step 2.5: Validate Brief
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_validator.py brief "bmad-backlog/product-brief.md"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_validator.py brief "bmad-backlog/product-brief.md"
 ```
 
 If invalid, fix and regenerate.
@@ -233,7 +233,7 @@ This will take about 1-2 minutes (large document).
 
 Run:
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py prd "bmad-backlog/product-brief.md" "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py prd "bmad-backlog/product-brief.md" "$(pwd)"
 ```
 
 Creates: `bmad-backlog/prd/prd.md` (500-1000 lines)
@@ -270,7 +270,7 @@ Epic structure look good? (yes/refine)
 ### Step 3.3: Validate PRD
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_validator.py prd "bmad-backlog/prd/prd.md"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_validator.py prd "bmad-backlog/prd/prd.md"
 ```
 
 Check validation, fix if needed.
@@ -356,7 +356,7 @@ This will take 2-3 minutes (comprehensive document with code examples).
 
 Run:
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py architecture "bmad-backlog/prd/prd.md" "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py architecture "bmad-backlog/prd/prd.md" "$(pwd)"
 ```
 
 Creates: `bmad-backlog/architecture/architecture.md` (1000-1500 lines)
@@ -390,7 +390,7 @@ Tech stack approval? (yes/changes)
 ### Step 5.3: Validate Architecture
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_validator.py architecture "bmad-backlog/architecture/architecture.md"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_validator.py architecture "bmad-backlog/architecture/architecture.md"
 ```
 
 Ensure all sections present, fix if needed.
@@ -419,7 +419,7 @@ Generating all {{N}} epic files...
 For each epic (sequential):
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py epic "bmad-backlog/prd/prd.md" "bmad-backlog/architecture/architecture.md" {{epic_num}} "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py epic "bmad-backlog/prd/prd.md" "bmad-backlog/architecture/architecture.md" {{epic_num}} "$(pwd)"
 ```
 
 Show progress:
@@ -436,7 +436,7 @@ Generating epics...
 After all epics:
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py index "bmad-backlog/epics/" "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py index "bmad-backlog/epics/" "$(pwd)"
 ```
 
 Creates: `bmad-backlog/STORY-INDEX.md`
@@ -448,7 +448,7 @@ Creates: `bmad-backlog/STORY-INDEX.md`
 ### Step 7.1: Validate Complete Backlog
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_validator.py all "bmad-backlog/"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_validator.py all "bmad-backlog/"
 ```
 
 Check all documents valid.

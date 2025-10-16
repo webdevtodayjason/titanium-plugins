@@ -55,12 +55,12 @@ ls .titanium/plan.json
 ### 1.3 Initialize Workflow State
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/workflow/workflow_state.py init "$(pwd)" "development" "User's stated goal"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/workflow/workflow_state.py init "$(pwd)" "development" "User's stated goal"
 ```
 
 **Example**:
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/workflow/workflow_state.py init "$(pwd)" "development" "Implement user authentication system"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/workflow/workflow_state.py init "$(pwd)" "development" "Implement user authentication system"
 ```
 
 This creates `.titanium/workflow-state.json` to track progress.
@@ -95,7 +95,7 @@ This creates `.titanium/workflow-state.json` to track progress.
 Use the plan_parser.py utility:
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/workflow/plan_parser.py .titanium/requirements.md "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/workflow/plan_parser.py .titanium/requirements.md "$(pwd)"
 ```
 
 This creates `.titanium/plan.json` with structured plan.
@@ -177,7 +177,7 @@ Use TodoWrite tool to create this list.
 ### 2.6 Update State
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/workflow/workflow_state.py update_phase "$(pwd)" "planning" "completed"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/workflow/workflow_state.py update_phase "$(pwd)" "planning" "completed"
 ```
 
 ### 2.7 Store Plan in Pieces
@@ -219,7 +219,7 @@ Wait for user confirmation before continuing.
 ### 3.1 Update State
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/workflow/workflow_state.py update_phase "$(pwd)" "implementation" "in_progress"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/workflow/workflow_state.py update_phase "$(pwd)" "implementation" "in_progress"
 ```
 
 ### 3.2 Execute Tasks Sequentially
@@ -576,7 +576,7 @@ Continue to Phase 4 (Review).
 ### 4.1 Update State
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/workflow/workflow_state.py update_phase "$(pwd)" "review" "in_progress"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/workflow/workflow_state.py update_phase "$(pwd)" "review" "in_progress"
 ```
 
 ### 4.2 Launch Review Agents in Parallel
@@ -800,7 +800,7 @@ Would you like me to fix the critical issues now?
 ### 5.1 Mark Workflow Complete
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/workflow/workflow_state.py complete "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/workflow/workflow_state.py complete "$(pwd)"
 ```
 
 ### 5.2 Create Final Session Memory

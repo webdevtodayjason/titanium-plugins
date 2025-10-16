@@ -24,7 +24,7 @@ This command will:
 ### Check Workflow State File
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/workflow/workflow_state.py get "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/workflow/workflow_state.py get "$(pwd)"
 ```
 
 **If workflow exists**:

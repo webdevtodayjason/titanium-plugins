@@ -106,7 +106,7 @@ Read bmad-backlog/architecture/architecture.md
 Use utility:
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py epic "bmad-backlog/prd/prd.md" "bmad-backlog/architecture/architecture.md" {{epic_number}} "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py epic "bmad-backlog/prd/prd.md" "bmad-backlog/architecture/architecture.md" {{epic_number}} "$(pwd)"
 ```
 
 This creates: `bmad-backlog/epics/EPIC-{num:03d}-{slug}.md`
@@ -170,7 +170,7 @@ Review epic? (yes/no)
 ### Step 6: Validate Epic
 
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_validator.py epic "bmad-backlog/epics/EPIC-{{num}}-{{name}}.md"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_validator.py epic "bmad-backlog/epics/EPIC-{{num}}-{{name}}.md"
 ```
 
 Check:
@@ -193,7 +193,7 @@ Regenerating index...
 
 Run:
 ```bash
-uv run {{PLUGIN_DIR}}/hooks/utils/bmad/bmad_generator.py index "bmad-backlog/epics/" "$(pwd)"
+uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py index "bmad-backlog/epics/" "$(pwd)"
 ```
 
 Show:
