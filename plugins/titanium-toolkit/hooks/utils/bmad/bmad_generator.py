@@ -616,15 +616,36 @@ IMPORTANT GUIDELINES:
 
 def extract_project_name(content: str) -> str:
     """Extract project name from document header."""
-    # Look for "# Project Brief: NAME" or "# PRD: NAME" patterns
-    match = re.search(r'#\s+(?:Product Brief|PRD|Project):\s*(.+)', content)
-    if match:
-        return match.group(1).strip()
 
-    # Look for "## NAME -" pattern
-    match = re.search(r'##\s+(.+?)\s+-', content)
-    if match:
-        return match.group(1).strip()
+    # Pattern 1: Look for "# Product Requirements Document (PRD)" followed by "## ProjectName"
+    prd_h1_match = re.search(r'(?m)^#\s+Product Requirements Document(?:\s+\(PRD\))?', content)
+    if prd_h1_match:
+        # Found PRD header, now find the next H2 line
+        after_prd = content[prd_h1_match.end():]
+        h2_match = re.search(r'(?m)^##\s+(.+?)(?:\s+-\s+|\s*$)', after_prd)
+        if h2_match:
+            return h2_match.group(1).strip()
+
+    # Pattern 2: Look for "# Product Brief: NAME" or "# Architecture Document"
+    title_match = re.search(r'(?m)^#\s+(?:Product Brief|Architecture Document|PRD|Project):\s*(.+)', content)
+    if title_match:
+        return title_match.group(1).strip()
+
+    # Pattern 3: Look for standalone H1 with project name
+    h1_match = re.search(r'(?m)^#\s+([^#\n]+?)(?:\s+-\s+|\s*$)', content)
+    if h1_match:
+        title = h1_match.group(1).strip()
+        # Skip generic headers
+        if title not in ['Product Requirements Document', 'Architecture Document', 'Product Brief', 'PRD']:
+            return title
+
+    # Pattern 4: Look for H2 with project name (fallback)
+    h2_match = re.search(r'(?m)^##\s+(.+?)(?:\s+-\s+|\s*$)', content)
+    if h2_match:
+        title = h2_match.group(1).strip()
+        # Skip generic headers
+        if title not in ['Executive Summary', 'Table of Contents', 'Overview']:
+            return title
 
     return "Project"
 
