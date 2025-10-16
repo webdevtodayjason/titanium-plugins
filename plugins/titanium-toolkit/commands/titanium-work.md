@@ -368,7 +368,206 @@ Move to next task in TodoWrite list. Repeat steps A-G.
 
 ### 3.3 After All Tasks Complete
 
-Once all implementation tasks are done, proceed to Phase 4 (Review).
+Once all implementation tasks are done, proceed to Phase 3.5 (CodeRabbit Analysis - if available) or Phase 4 (Review).
+
+---
+
+## Phase 3.5: CodeRabbit Analysis (Optional)
+
+**This phase is optional** - only runs if CodeRabbit CLI is installed.
+
+### 3.5.1 Check for CodeRabbit CLI
+
+```bash
+command -v coderabbit >/dev/null 2>&1 || echo "CodeRabbit not installed"
+```
+
+**If CodeRabbit NOT found**:
+- Skip to Phase 4 (3-Agent Review)
+- Workflow continues normally
+
+**If CodeRabbit found**:
+- Continue to 3.5.2
+
+### 3.5.2 Offer CodeRabbit Analysis
+
+```
+🤖 CodeRabbit CLI Detected
+
+Run CodeRabbit analysis before review?
+
+CodeRabbit catches:
+- Race conditions in concurrent code
+- Memory leaks and resource leaks
+- Security vulnerabilities
+- Logic errors and edge cases
+- Performance issues
+
+Duration: 7-30 minutes (runs in background)
+Cost: Uses your CodeRabbit account (free or paid tier)
+
+Run CodeRabbit? (yes/no)
+```
+
+**If no**: Skip to Phase 4 (3-Agent Review)
+**If yes**: Continue
+
+### 3.5.3 Run CodeRabbit in Background
+
+```bash
+# Run with --prompt-only for AI-optimized output
+coderabbit --prompt-only --type uncommitted
+```
+
+Use Bash tool with `run_in_background: true`
+
+Show user:
+```
+🤖 CodeRabbit Analyzing...
+
+Running in background (7-30 minutes typical).
+I'll check progress periodically.
+
+You can ask "Is CodeRabbit done?" anytime.
+```
+
+### 3.5.4 Wait for Completion
+
+Check periodically (every 2-3 minutes) using BashOutput tool.
+
+Show progress updates:
+```
+CodeRabbit analyzing... (5 minutes elapsed)
+CodeRabbit analyzing... (10 minutes elapsed)
+CodeRabbit analyzing... (15 minutes elapsed)
+```
+
+When complete:
+```
+✅ CodeRabbit analysis complete! ([X] minutes)
+```
+
+### 3.5.5 Parse and Present Findings
+
+Read CodeRabbit --prompt-only output.
+
+Present summary:
+```
+🤖 CodeRabbit Findings
+
+📊 Issues Detected:
+- 🔴 Critical: [X]
+- 🟠 High: [Y]
+- 🟡 Medium: [Z]
+- 🟢 Low: [W]
+
+Critical Issues:
+1. Race condition in src/auth.ts:45
+   - Shared state access without synchronization
+   - Fix: Add mutex or use atomic operations
+
+2. Memory leak in src/websocket.ts:123
+   - Event listener not removed on disconnect
+   - Fix: Add cleanup in disconnect handler
+
+High Priority Issues:
+1. SQL injection in src/api/users.ts:67
+   - User input in raw SQL query
+   - Fix: Use parameterized queries
+
+[List all critical and high issues]
+
+Would you like me to fix these?
+1. Fix critical and high (recommended)
+2. Fix critical only
+3. Skip fixes, just document
+4. Cancel
+```
+
+### 3.5.6 Apply Fixes (if requested)
+
+**For each critical/high issue**:
+1. Locate the problematic code (file:line from CodeRabbit)
+2. Read CodeRabbit's suggested fix
+3. Implement the fix
+4. Run relevant tests
+5. Mark as fixed in TodoWrite
+
+Show progress:
+```
+Applying CodeRabbit fixes...
+
+✅ Fixed: Race condition in auth.ts
+   - Added mutex for shared state access
+   - Tests passing
+
+✅ Fixed: Memory leak in websocket.ts
+   - Added event listener cleanup
+   - Verified no leaks
+
+✅ Fixed: SQL injection in users.ts
+   - Converted to parameterized query
+   - Tests passing
+
+⏳ Fixing: Error handling in api.ts...
+```
+
+### 3.5.7 Optional Verification
+
+After fixes applied:
+```
+CodeRabbit fixes complete!
+
+Fixed: [X] critical, [Y] high priority issues
+
+Re-run CodeRabbit to verify? (yes/no)
+```
+
+**If yes**:
+```bash
+coderabbit --prompt-only --type uncommitted
+```
+
+Check that:
+- No new critical issues introduced
+- Fixes resolved the original issues
+- No regression
+
+Show result:
+```
+✅ Verification complete!
+
+Original issues: Resolved
+New issues: None
+Safe to proceed.
+```
+
+**If no**: Skip verification
+
+### 3.5.8 Store CodeRabbit Findings
+
+```
+mcp__Pieces__create_pieces_memory(
+  summary_description: "CodeRabbit analysis for [files]",
+  summary: "CodeRabbit CLI analysis complete. Found: [X] critical, [Y] high, [Z] medium, [W] low issues. Critical issues: [list each]. High issues: [list each]. Fixes applied: [summary of fixes]. Duration: [X] minutes. Verified: [yes/no]. Ready for 3-agent review validation.",
+  files: [
+    "list all reviewed and fixed files"
+  ],
+  project: "$(pwd)"
+)
+```
+
+### 3.5.9 Proceed to 3-Agent Review
+
+```
+CodeRabbit phase complete!
+
+Proceeding to 3-agent review for validation...
+```
+
+Continue to Phase 4 (Review).
+
+**Note**: 3-agent review will validate CodeRabbit fixes and catch anything CodeRabbit missed.
 
 ---
 

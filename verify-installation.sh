@@ -169,6 +169,28 @@ else
 fi
 
 echo ""
+echo "🤖 Checking Optional: CodeRabbit CLI..."
+echo ""
+
+# Check CodeRabbit (optional but recommended)
+if command -v coderabbit &> /dev/null; then
+    CR_VERSION=$(coderabbit --version 2>&1 | head -1 || echo "installed")
+    echo -e "${GREEN}✅ CodeRabbit CLI installed${NC} ($CR_VERSION)"
+
+    # Check auth status
+    if coderabbit auth status 2>&1 | grep -qi "authenticated\|logged in"; then
+        echo -e "${GREEN}   ✅ Authenticated${NC} (enhanced reviews enabled)"
+    else
+        echo -e "${YELLOW}   ⚠️  Not authenticated${NC} (run: coderabbit auth login for enhanced reviews)"
+    fi
+else
+    echo -e "${YELLOW}⚠️  CodeRabbit CLI not found${NC} (optional but recommended)"
+    echo "   Install: curl -fsSL https://cli.coderabbit.ai/install.sh | sh"
+    echo "   Provides: Deep static analysis, race condition detection, memory leak detection"
+    WARNINGS=$((WARNINGS + 1))
+fi
+
+echo ""
 echo "=============================================="
 echo ""
 

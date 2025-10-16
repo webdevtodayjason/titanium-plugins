@@ -279,6 +279,10 @@ Cost: ~$0.10 per workflow (GPT-4 + voice + vibe-check)
   - Fallback: Uses macOS `say` if not available
 - **Pieces OS + CLI** - For memory and context ([installation guide](./docs/PIECES_INSTALLATION.md))
 - **vibe-check** - For AI quality gates (almost free with Gemini)
+- **CodeRabbit CLI** - For deep static analysis (race conditions, memory leaks)
+  - Install: `curl -fsSL https://cli.coderabbit.ai/install.sh | sh`
+  - Catches issues agents might miss
+  - Free and paid tiers available
 
 ### Optional (Enhanced Features)
 
@@ -414,6 +418,16 @@ AI oversight prevents mistakes:
 - Checks progress after each task
 - Catches issues early
 - Suggests improvements
+
+### CodeRabbit Deep Analysis
+
+Static analysis that catches subtle issues:
+- Race conditions in concurrent code
+- Memory and resource leaks
+- Security vulnerabilities
+- Logic errors and edge cases
+- Runs between implementation and review
+- Optional but recommended
 
 ### MCP Servers
 
