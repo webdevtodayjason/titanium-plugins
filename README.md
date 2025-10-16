@@ -431,21 +431,49 @@ Most work automatically. See [MCP Setup Guide](./docs/MCP_SETUP.md) for details.
 
 ---
 
-## Coming Soon
+## BMAD Document Generation
 
-### BMAD Document Generation
+**Built-in BMAD methodology** for creating project documentation - no external BMAD installation needed!
 
-Future slash commands to create project documents:
-- `/bmad:brief` - Generate project brief
-- `/bmad:prd` - Generate Product Requirements Document
-- `/bmad:epic` - Generate epic breakdown
-- `/bmad:story` - Generate user stories
+### Start a Brand New Project
 
-**Vision**: Complete workflow from idea to implementation
+```bash
+# Empty folder → Complete backlog in 45 minutes
+/bmad:start
+```
+
+**Interactive workflow creates**:
+- Product Brief (vision and goals)
+- PRD (comprehensive requirements)
+- Architecture (technical design with code)
+- Epic files (user stories with acceptance criteria)
+- Story Index (summary for sprint planning)
+
+**Output**: Complete `bmad-backlog/` folder ready for implementation.
+
+### The BMAD Commands
+
+**`/bmad:start`** - Complete guided workflow
+- Creates all documents in one session
+- Interactive questions guide you
+- 30-45 minutes
+- Cost: ~$0.22
+
+**`/bmad:brief`** - Product brief only
+**`/bmad:prd`** - PRD only
+**`/bmad:architecture`** - Architecture only
+**`/bmad:epic`** - Single epic (add new or regenerate)
+**`/bmad:index`** - Story index summary
+**`/bmad:research`** - Research prompt generator
+
+### Complete Workflow
 
 ```
-Idea → /bmad:prd → /titanium:plan → /titanium:work → Done!
+Empty folder → /bmad:start → /titanium:plan → /titanium:work → Production Code
+   (0 min)        (45 min)       (2 min)          (15 hours)         (1 week)
 ```
+
+**Cost**: $0.22 (BMAD) + $0.40 (implementation) = **~$0.62 for complete MVP**
 
 ---
 
@@ -601,22 +629,26 @@ MIT License - See [LICENSE](./LICENSE) for details.
 
 ---
 
-## What's New in v2.0.0 (Coming Soon)
+## What's New in v2.1.0
 
-**Complete Workflow Orchestration**:
-- ✅ `/titanium:plan` - AI-powered planning
-- ✅ `/titanium:work` - Full workflow execution
-- ✅ `/titanium:review` - Parallel quality review
-- ✅ `/titanium:status` - Progress tracking
+**Complete Workflow Orchestration** ✅:
+- `/titanium:plan` - AI-powered planning
+- `/titanium:work` - Full workflow execution
+- `/titanium:review` - Parallel quality review
+- `/titanium:status` - Progress tracking
+- `/titanium:getting-started` - Complete workflow guide
 
-**Coming Next**:
-- 🔜 `/bmad:prd` - Generate PRDs
-- 🔜 `/bmad:epic` - Generate epics
-- 🔜 `/bmad:story` - Generate stories
+**BMAD Document Generation** ✅:
+- `/bmad:start` - Complete guided backlog generation
+- `/bmad:brief` - Product brief
+- `/bmad:prd` - Product Requirements Document
+- `/bmad:architecture` - Technical architecture
+- `/bmad:epic` - Epic files with user stories
+- `/bmad:index` - Story index summary
+- `/bmad:research` - Research prompt generator
 
-**Vision**: Complete workflow from idea → PRD → plan → implementation → review → done.
-All with voice feedback and AI quality gates.
+**Complete idea-to-code workflow**: Empty folder → Working MVP in 1 week for ~$0.62
 
 ---
 
-**Ready to orchestrate?** Install now and run `/titanium:plan "your idea here"`
+**Ready to orchestrate?** Install now and run `/bmad:start` to create your project!
