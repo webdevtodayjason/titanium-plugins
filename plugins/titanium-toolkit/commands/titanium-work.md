@@ -44,7 +44,13 @@ ls .titanium/plan.json
 - If user says create new → Continue to Phase 2 (Planning)
 
 **If plan.json does NOT exist**:
-- Continue to Phase 2 (Planning)
+- Ask user: "No plan found. Would you like to:
+  1. Create a plan now (I'll ask what to implement)
+  2. Cancel and run /titanium:plan first (recommended for complex projects)
+
+  If you have project documentation or backlog, I recommend running /titanium:plan first to review and break down the work."
+- If user chooses option 1 → Continue to Phase 2 (Planning)
+- If user chooses option 2 → Exit and suggest running /titanium:plan
 
 ### 1.3 Initialize Workflow State
 
