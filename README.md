@@ -551,9 +551,20 @@ For more help, see [Troubleshooting Guide](./docs/ORCHESTRATION_PLAN.md#troubles
 
 ## Documentation
 
+### Workflow & Architecture
+- **[Getting Started Guide](./docs/ORCHESTRATION_PLAN.md#complete-user-journey)** - Your first workflow
 - **[Complete System Architecture](./docs/ORCHESTRATION_PLAN.md)** - Full technical details
-- **[Pieces Installation Guide](./docs/PIECES_INSTALLATION.md)** - Detailed Pieces setup
-- **[BMAD Quick Start](./docs/BMAD_QUICKSTART.md)** - Creating PRDs with BMAD
+- **[Troubleshooting Guide](./docs/ORCHESTRATION_PLAN.md#troubleshooting-guide)** - Common issues
+
+### BMAD System
+- **[BMAD Generation Guide](./docs/BMAD_GENERATION_PLAN.md)** - Complete BMAD documentation system
+- **[BMAD Research System](./docs/BMAD_RESEARCH_SYSTEM.md)** - Vendor/API evaluation workflow
+- **[BMAD Quick Start](./docs/BMAD_QUICKSTART.md)** - External BMAD tool (optional, not needed)
+
+### Setup & Installation
+- **[Dependencies Guide](./docs/DEPENDENCIES.md)** - UV and Python requirements
+- **[Pieces Installation Guide](./docs/PIECES_INSTALLATION.md)** - Pieces LTM setup
+- **[Verification Script](./verify-installation.sh)** - Test your installation
 
 ---
 
