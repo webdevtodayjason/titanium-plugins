@@ -60,6 +60,14 @@ Requirements:
 7. Store result in Pieces for future reference
 8. Present summary with next steps
 
+**IMPORTANT**: Keep your summary response BRIEF (under 500 tokens). Just return:
+- Confirmation architecture is complete
+- Proposed tech stack (2-3 sentences)
+- MVP cost estimate
+- Any critical decisions made
+
+DO NOT include the full architecture content in your response - it's already saved to the file.
+
 Follow your complete architecture workflow from the bmad-methodology skill.
 
 Project path: $(pwd)",

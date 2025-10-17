@@ -179,9 +179,24 @@ async def run_bmad_generator(args: dict[str, Any]) -> list[TextContent]:
             text=f"Error: bmad_generator.py not found at {script_path}"
         )]
 
+    # For epic generation, input_path contains space-separated args: "prd_path arch_path epic_num"
+    # Split them and pass as separate arguments
+    if doc_type == "epic":
+        input_parts = input_path.split()
+        if len(input_parts) != 3:
+            return [TextContent(
+                type="text",
+                text=f"Error: Epic generation requires 3 inputs (prd_path arch_path epic_num), got {len(input_parts)}"
+            )]
+        # Pass all parts as separate arguments
+        cmd = ["uv", "run", str(script_path), doc_type] + input_parts + [project_path]
+    else:
+        # For other doc types, input_path is a single value
+        cmd = ["uv", "run", str(script_path), doc_type, input_path, project_path]
+
     # Run the script
     result = subprocess.run(
-        ["uv", "run", str(script_path), doc_type, input_path, project_path],
+        cmd,
         capture_output=True,
         text=True,
         cwd=project_path
