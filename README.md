@@ -2,673 +2,264 @@
 
 > Professional Claude Code plugins from Titanium Computing
 
-## Overview
-
-A curated marketplace of Claude Code plugins designed for professional development workflows. Features voice-enhanced AI assistance, comprehensive builder agents, and seamless context management.
-
-## Prerequisites
-
-Before using Titanium Toolkit, you'll need these installed:
-
-### Required Software
-
-<<<<<<< Updated upstream
-- **Claude Code** 2.0.14+
-- **Python** 3.11+ (for voice hooks)
-- **uv** (Python package manager) - https://docs.astral.sh/uv/
-- **Node.js** 20+ (for MCP servers)
-=======
-```
-Requirements → Plan → Implementation → Review → Done
-     ↓           ↓           ↓            ↓        ↓
-  Claude     vibe-check   Agents    3 Reviewers  Pieces
- Haiku 4.5                                    CodeRabbit
-```
->>>>>>> Stashed changes
-
-### Required API Keys
-
-Create a file at `~/.env` (full path: `/Users/yourusername/.env` on macOS/Linux, `C:\Users\yourusername\.env` on Windows):
-
-```bash
-# Create the file
-cat > ~/.env << 'EOF'
-# Required for voice announcements
-OPENAI_API_KEY=your_openai_key_here
-ELEVENLABS_API_KEY=your_elevenlabs_key_here
-
-# Optional MCP server API keys
-CONTEXT7_API_KEY=ctx7sk-your_key_here
-GEMINI_API_KEY=your_gemini_key_here
-OPENROUTER_API_KEY=your_openrouter_key_here
-EOF
-
-# Secure the file (macOS/Linux)
-chmod 600 ~/.env
-```
-
-**Required Keys:**
-- `OPENAI_API_KEY` - For GPT-5 summaries (get from https://platform.openai.com/api-keys)
-- `ELEVENLABS_API_KEY` - For voice synthesis (get from https://elevenlabs.io/app/settings/api-keys)
-
-**Optional Keys (for enhanced MCP functionality):**
-- `CONTEXT7_API_KEY` - Faster library documentation lookups (get from https://context7.com)
-
-**Note about vibe-check**: vibe-check uses a SEPARATE config file at `~/.vibe-check/.env`:
-```bash
-# Create vibe-check config
-mkdir -p ~/.vibe-check
-cat > ~/.vibe-check/.env << 'EOF'
-GEMINI_API_KEY=your_gemini_key_here
-OPENAI_API_KEY=your_openai_key_here
-OPENROUTER_API_KEY=your_openrouter_key_here
-DEFAULT_LLM_PROVIDER=gemini
-EOF
-chmod 600 ~/.vibe-check/.env
-```
-
-At least ONE of these keys is required for vibe-check to work.
-
-### MCP Server Prerequisites
-
-Each MCP server requires its underlying application to be installed:
-
-| MCP Server | Setup Required | Instructions |
-|------------|----------------|--------------|
-| **Pieces** | Pieces OS + CLI | [Pieces Installation Guide](./docs/PIECES_INSTALLATION.md) |
-| **vibe-check** | API keys in `~/.vibe-check/.env` | Create file with GEMINI_API_KEY, OPENAI_API_KEY, or OPENROUTER_API_KEY |
-| **context7** | API key as header | Configure manually: `claude mcp add context7 --scope user --transport http --header "CONTEXT7_API_KEY: your_key" -- https://mcp.context7.com/mcp` |
-
-📖 **[Detailed Pieces Installation Guide](./docs/PIECES_INSTALLATION.md)** - Step-by-step for all platforms
+A curated marketplace of Claude Code plugins designed for professional AI-powered development workflows.
 
 ## Available Plugins
 
 ### Titanium Toolkit
 
-**Voice-enhanced development toolkit with 16 specialized agents**
+**Complete AI development orchestration system**
 
-The flagship plugin featuring:
-- Real-time voice announcements via ElevenLabs
-- 16 specialized builder agents for all development tasks
-- Pieces LTM integration via `/catchup` command
-- GPT-5 powered summaries and notifications
+Transform Claude into an AI development team with 17 specialized agents, 10 comprehensive skills, and complete BMAD planning workflows.
 
-[→ Learn more about Titanium Toolkit](./plugins/titanium-toolkit/README.md)
+**Key Features**:
+- **17 Specialized Agents** - Each with deep domain expertise via skills
+- **10 Comprehensive Skills** - 9,500+ lines of best practices
+- **BMAD Methodology** - Complete project planning (Brief → PRD → Architecture → Epics)
+- **Titanium Workflows** - Implementation orchestration (Plan → Work → Review)
+- **Voice Announcements** - Real-time audio feedback via ElevenLabs
+- **Pieces Integration** - Context recovery with `/catchup`
 
-**Installation:**
+[→ Full Titanium Toolkit Documentation](./plugins/titanium-toolkit/README.md)
+
+**Version**: 2.1.3
+
+## Installation
+
+### 1. Add This Marketplace
+
 ```bash
 /plugin marketplace add webdevtodayjason/titanium-plugins
-/plugin install titanium-toolkit
 ```
+
+### 2. Install Titanium Toolkit
+
+```bash
+/plugin install titanium-toolkit@webdevtodayjason/titanium-plugins
+```
+
+### 3. Restart Claude Code
+
+Close and reopen Claude Code to activate the plugin.
+
+### 4. Verify Installation
+
+```bash
+# Check MCP servers loaded
+/mcp
+# Should see: plugin:titanium-toolkit:tt
+
+# Check agents available
+@api-developer
+# Should show 17 agents
+
+# Read orchestration guide
+/titanium:orchestration-guide
+```
+
+## Prerequisites
+
+### Required Software
+
+- **Claude Code** 2.0.14 or later
+- **Python** 3.11 or later
+- **uv** (Python package manager) - [Install uv](https://docs.astral.sh/uv/)
+- **Node.js** 20 or later (for MCP servers)
+
+### Required API Keys
+
+Create `~/.env` with:
+
+```bash
+# Required for BMAD document generation
+ANTHROPIC_API_KEY=sk-ant-your-key-here
+
+# Optional: Voice announcements
+ELEVENLABS_API_KEY=sk_your-key-here
+
+# Optional: Voice summaries
+OPENAI_API_KEY=sk-proj-your-key-here
+```
+
+**Get API keys**:
+- Anthropic: https://console.anthropic.com/settings/keys
+- ElevenLabs: https://elevenlabs.io/app/settings/api-keys
+- OpenAI: https://platform.openai.com/api-keys
+
+### Recommended MCP Servers
+
+```bash
+# vibe-check - AI quality validation (highly recommended)
+claude mcp add vibe-check --scope user --transport stdio -- npx -y @pv-bhat/vibe-check-mcp start --stdio
+
+# Create ~/.vibe-check/.env with at least one key:
+mkdir -p ~/.vibe-check
+echo 'GEMINI_API_KEY=your-key-here' >> ~/.vibe-check/.env
+```
+
+**For vibe-check, add ONE of these** to `~/.vibe-check/.env`:
+- `GEMINI_API_KEY` (recommended)
+- `OPENAI_API_KEY`
+- `OPENROUTER_API_KEY`
 
 ## Quick Start
 
-### 1. Add the Marketplace
+### Generate Complete Project Documentation
 
 ```bash
-/plugin marketplace add webdevtodayjason/titanium-plugins
+/bmad:start
 ```
 
-### 2. Browse Plugins
+Creates:
+- Product Brief
+- PRD with epics and user stories
+- Technical Architecture
+- Epic files with acceptance criteria
+- Story Index for sprint planning
+
+**Duration**: 30-45 minutes | **Cost**: ~$0.15
+
+### Implement Your First Epic
 
 ```bash
-/plugin
+# 1. Create implementation plan
+/titanium:plan bmad-backlog/epics/EPIC-001-foundation.md
+
+# 2. Execute the plan
+/titanium:work
+
+# 3. Quality review
+/titanium:review
 ```
 
-Select "Browse Plugins" to see available options.
+**Duration**: 2-6 hours | **Cost**: ~$0.10 per epic
 
-### 3. Install a Plugin
+### Complete Workflow: Idea → Production Code
 
-```bash
-/plugin install titanium-toolkit
+```
+/bmad:start → /titanium:plan → /titanium:work → /titanium:review
+  (45 min)        (2 min)         (4 hours)         (15 min)
 ```
 
-Restart Claude Code to activate.
+**Total**: 1 day from idea to reviewed, tested code
 
-### 4. Update to Latest Version
+## Documentation
 
-To get the latest features and fixes:
+- **[Titanium Toolkit README](./plugins/titanium-toolkit/README.md)** - Complete documentation
+- **[Orchestration Guide](./plugins/titanium-toolkit/commands/titanium-orchestration-guide.md)** - How the system works
+- **[Getting Started](./plugins/titanium-toolkit/commands/titanium-getting-started.md)** - Step-by-step tutorial
+- **[Agent-Skills Mapping](./.dev/AGENT_SKILLS_MAPPING.md)** - Which agents have which skills
 
-1. Run `/plugin`
-2. Select **"4. Manage marketplace"**
-3. Select **titanium-plugins**
-4. Press **`u`** to update
-5. Press **Enter** to apply changes
-6. You'll see: `✔ Updated 1 marketplace`
-7. **Restart Claude Code** to load the updates
+## The Orchestration Model
 
-Updates are pulled directly from GitHub, so you always get the latest improvements!
+Titanium Toolkit uses a **three-layer architecture**:
 
-## Complete Workflow
+**Layer 1: Orchestrator (Claude)**
+- Interprets slash commands
+- Checks prerequisites
+- Launches specialized subagents
+- Coordinates workflow
+- Presents results to user
 
-Titanium Toolkit integrates seamlessly with other development tools for a complete workflow:
+**Layer 2: Subagents (Separate Context Windows)**
+- 17 specialized agents with domain expertise
+- Each has relevant skills (500-1000 line knowledge bases)
+- Use MCP tools as instructed
+- Validate their own work
+- Store results in Pieces
 
-### End-to-End Development Process
+**Layer 3: Tools & Knowledge**
+- **MCP Tools**: tt server (plan_parser, bmad_generator, bmad_validator)
+- **10 Skills**: api-best-practices, frontend-patterns, testing-strategy, security-checklist, code-quality-standards, devops-patterns, debugging-methodology, technical-writing, project-planning, bmad-methodology
+- **Standard Tools**: Read, Write, Edit, Bash, Grep, Glob
 
-**Phase 1: Requirements & Planning (BMAD)**
-```bash
-# Install BMAD for PRD creation
-cd ~
-npx bmad-method install --directory ~/bmad --ide claude-code
-
-# Use BMAD agents to create:
-# - Product briefs
-# - PRDs (Product Requirements Documents)
-# - Epic breakdowns
-# - User stories
-```
-
-<<<<<<< Updated upstream
-📖 **[BMAD Quick Start Guide](./docs/BMAD_QUICKSTART.md)** - Complete guide to creating PRDs with BMAD
-=======
-**What it does**:
-- Uses Claude Haiku 4.5 to break down requirements
-- Assigns tasks to appropriate agents
-- Estimates time
-- Validates with vibe-check AI
-- Stores plan in Pieces LTM
-- Saves to `.titanium/plan.json`
-
-**Output**: "Plan created with 3 epics, 8 stories, 12 tasks. Estimated: 4 hours"
-
----
-
-### `/titanium:work` - Execute Workflow
-
-Orchestrates the complete implementation workflow with quality gates.
->>>>>>> Stashed changes
-
-**Phase 2: Implementation (Titanium Toolkit + compounding-engineering)**
-```bash
-# Execute the BMAD-generated PRD using compounding-engineering's /work command
-/compounding-engineering:work ~/bmad/output/project-prd.md
-
-# Titanium Toolkit's 16 builder agents handle implementation:
-# - @api-developer creates backend
-# - @frontend-developer builds UI
-# - @test-runner ensures quality
-# - Voice announcements keep you informed throughout
-```
-
-**Phase 3: Review & Quality (compounding-engineering)**
-```bash
-# Multi-agent parallel review
-/compounding-engineering:review
-
-# Specialized reviewers check:
-# - @kieran-rails-reviewer (Rails conventions)
-# - @security-sentinel (security vulnerabilities)
-# - @performance-oracle (performance issues)
-# - @architecture-strategist (system design)
-```
-
-**Phase 4: Iteration & Learning (Pieces + Voice)**
-```bash
-# Pieces captures all learnings
-# Voice summaries on session end
-# /catchup retrieves context for next session
-```
-
-### Workflow Benefits
-
-**Complete Coverage:**
-- BMAD → Requirements
-- Titanium Toolkit → Implementation
-- compounding-engineering → Quality Review
-- Pieces → Context Retention
+## Example: BMAD Workflow
 
 ```mermaid
-graph LR
-    A[BMAD<br/>Requirements] -->|PRD & User Stories| B[Titanium Toolkit<br/>Implementation]
-    B -->|Code Changes| C[compounding-engineering<br/>Quality Review]
-    C -->|Approved| D[Pieces<br/>Context Retention]
-    D -->|/catchup| A
+sequenceDiagram
+    participant User
+    participant Claude
+    participant PM as @product-manager
+    participant Arch as @architect
+    participant MCP as tt MCP Server
 
-    B -.->|Voice Feedback| E[ElevenLabs<br/>Announcements]
-    C -.->|GPT-5 Summaries| E
+    User->>Claude: /bmad:start
+    Claude->>User: What's your project idea?
+    User->>Claude: Community platform for women hackers
 
-    style A fill:#4CAF50,stroke:#2E7D32,color:#fff
-    style B fill:#2196F3,stroke:#1565C0,color:#fff
-    style C fill:#FF9800,stroke:#E65100,color:#fff
-    style D fill:#9C27B0,stroke:#6A1B9A,color:#fff
-    style E fill:#F44336,stroke:#C62828,color:#fff
+    Claude->>PM: Task(Generate brief)
+    PM->>MCP: bmad_generator(brief)
+    MCP-->>PM: product-brief.md created
+    PM-->>Claude: Brief complete
+
+    Claude->>PM: Task(Generate PRD)
+    PM->>MCP: bmad_generator(prd)
+    MCP-->>PM: prd.md created
+    PM-->>Claude: PRD complete (5 epics)
+
+    Claude->>Arch: Task(Generate architecture)
+    Arch->>MCP: bmad_generator(architecture)
+    MCP-->>Arch: architecture.md created
+    Arch-->>Claude: Architecture complete
+
+    Note over Claude,PM: Generate 5 epics (delegated to PM)
+
+    Claude->>User: Complete! 5 epics, 47 stories ready
 ```
 
-<<<<<<< Updated upstream
-**Voice-Enhanced:**
-- Real-time feedback during implementation
-- Session summaries of accomplishments
-- Smart notifications when input needed
-=======
-Cost: ~$0.05 per workflow (Claude Haiku + voice + vibe-check)
->>>>>>> Stashed changes
+## For Plugin Developers
 
-**Context-Aware:**
-- `/catchup` recovers project state
-- Pieces LTM remembers everything
-- Never lose track of work in progress
+### Contributing New Plugins
 
-## Plugin Features
-
-### Voice System
-
-All plugins in this marketplace feature intelligent voice feedback:
-
-- **ElevenLabs Integration**: High-quality "Sarah" voice
-- **GPT-5 Summaries**: Context-aware announcements
-- **Smart Notifications**: Know exactly what Claude needs
-
-```mermaid
-graph TD
-    A[Claude Tool Execution] --> B{Tool Type}
-    B -->|Write/Edit/Task| C[GPT-5 nano<br/>3-7 word summary]
-    B -->|Session End| D[GPT-5 mini<br/>1-2 sentence summary]
-    B -->|Notification| E[GPT-5 nano<br/>Context-aware alert]
-
-    C --> F[ElevenLabs Sarah Voice]
-    D --> F
-    E --> G[Alert Sound + Voice]
-    G --> F
-
-    F -->|Success| H[Audio Output]
-    F -->|Failure| I[macOS say Fallback]
-    I --> H
-
-    style C fill:#FFB74D,stroke:#F57C00,color:#000
-    style D fill:#FFB74D,stroke:#F57C00,color:#000
-    style E fill:#FFB74D,stroke:#F57C00,color:#000
-    style F fill:#E91E63,stroke:#AD1457,color:#fff
-    style H fill:#4CAF50,stroke:#2E7D32,color:#fff
-```
-
-### Builder Agents
-
-16 specialized agents organized by function:
-
-**Development (3 agents):**
-- @api-developer - Backend API development
-- @frontend-developer - Modern frontend development
-- @devops-engineer - CI/CD and deployment
-
-**Quality & Testing (5 agents):**
-- @code-reviewer - Code review specialist
-- @debugger - Error analysis
-- @test-runner - Automated testing
-- @tdd-specialist - Test-driven development
-- @security-scanner - Security vulnerabilities
-
-**Documentation (2 agents):**
-- @doc-writer - Technical documentation
-- @api-documenter - API docs (OpenAPI/Swagger)
-
-**Planning & Architecture (3 agents):**
-- @product-manager - Requirements gathering
-- @project-planner - Project breakdown
-- @meta-agent - Creates new custom agents
-
-**Specialized (3 agents):**
-- @refactor - Code refactoring
-- @marketing-writer - Marketing content
-- @shadcn-ui-builder - UI/UX with shadcn
-
-Access any agent via `@agent-name` mention
-
-### Reviewer Agents (from compounding-engineering)
-
-When you install compounding-engineering alongside titanium-toolkit, you get 17 additional specialized review agents:
-
-**Code Review (3 agents):**
-- @kieran-rails-reviewer - Strict Rails conventions and best practices
-- @kieran-python-reviewer - Strict Python conventions
-- @kieran-typescript-reviewer - Strict TypeScript conventions
-
-**Quality & Security (4 agents):**
-- @security-sentinel - Security vulnerability scanning
-- @code-simplicity-reviewer - Identifies overcomplicated code
-- @data-integrity-guardian - Database and data validation
-- @pattern-recognition-specialist - Design patterns and anti-patterns
-
-**Architecture & Performance (3 agents):**
-- @architecture-strategist - System design decisions
-- @performance-oracle - Performance optimization
-- @every-style-editor - Every.to style guide compliance
-
-**Research & Analysis (4 agents):**
-- @best-practices-researcher - Gathers external best practices
-- @framework-docs-researcher - Library and framework documentation
-- @git-history-analyzer - Code evolution and archeology
-- @repo-research-analyst - Repository structure analysis
-
-**Workflow Support (3 agents):**
-- @pr-comment-resolver - Addresses PR feedback
-- @feedback-codifier - Learns from review patterns
-- @dhh-rails-reviewer - Rails review from DHH's perspective
-
-**Total: 33 agents** (16 builders + 17 reviewers) = Complete development pipeline
-
-### Context Management
-
-**Pieces Integration:**
-- `/catchup` command for instant context recovery
-- Query your workflow history
-- Resume work seamlessly
-
-## Requirements
-
-### Software
-
-<<<<<<< Updated upstream
-- Claude Code 2.0.14+
-- Python 3.11+
-- uv (Python package manager)
-- Node.js 20+
-=======
-- **Claude Code** 2.0.14+
-- **Python** 3.11+
-- **uv** - Python package manager ([install guide](https://docs.astral.sh/uv/))
-- **Anthropic API Key** - For Claude planning and BMAD generation
-- **OpenAI API Key** - For GPT-5 voice summaries
->>>>>>> Stashed changes
-
-### API Keys
-
-Required for voice features:
-- OpenAI API key (GPT-5 models)
-- ElevenLabs API key (voice synthesis)
-
-### Bundled MCP Servers
-
-**All 8 MCP servers are automatically configured when you install titanium-toolkit!**
-
-However, some require additional setup:
-
-**No Additional Setup (Work automatically):**
-- shadcn-ui-server
-- playwright
-- ElevenLabs MCP
-- pypi
-- youtube-transcript
-
-<<<<<<< Updated upstream
-**Require Prerequisites:**
-
-| MCP Server | Required Application | Installation |
-|------------|---------------------|--------------|
-| Pieces | Pieces OS + Pieces CLI | Download from https://pieces.app |
-| vibe-check | Node.js 20+ | `npm install -g @pv-bhat/vibe-check-mcp` |
-| playwright | Node.js 20+ | Installed via npx automatically |
-| ElevenLabs | Python + uv | Installed via uvx automatically |
-| pypi | Python + uv | Installed via uvx automatically |
-| youtube-transcript | Python + uv | Installed via uvx automatically |
-| shadcn-ui | Node.js 20+ | Installed via npx automatically |
-| context7 | None (HTTP) | Just needs API key |
-=======
-### Required: Anthropic Claude (For Planning & BMAD)
-
-**What it's used for**:
-- BMAD document generation (Brief, PRD, Architecture, Epics)
-- Implementation planning (breaking down requirements)
-- Uses Claude Haiku 4.5 (2x faster, 50% cheaper than GPT-4)
-- Uses Claude Sonnet 4.5 for architecture (complex technical tasks)
-
-```bash
-# Add to ~/.env
-echo 'ANTHROPIC_API_KEY=sk-ant-your-key-here' >> ~/.env
-chmod 600 ~/.env
-```
-
-Get key: https://console.anthropic.com/settings/keys
-
-**Optional model customization**:
-```bash
-# Override default models (optional)
-echo 'ANTHROPIC_LARGE_MODEL=claude-sonnet-4-5-20250929' >> ~/.env
-echo 'ANTHROPIC_SMALL_MODEL=claude-haiku-4-5-20251001' >> ~/.env
-```
-
-### Required: OpenAI (For Voice Summaries)
-
-**What it's used for**:
-- Voice announcement text generation (GPT-5 nano/mini)
-- Creates concise summaries for voice synthesis
->>>>>>> Stashed changes
-
-```mermaid
-graph TB
-    CC[Claude Code]
-
-    CC --> P[Pieces<br/>Long-term Memory]
-    CC --> S[shadcn-ui<br/>UI Components]
-    CC --> V[vibe-check<br/>Meta-mentor]
-    CC --> PW[playwright<br/>Browser Testing]
-    CC --> E[ElevenLabs<br/>TTS Tools]
-    CC --> C7[context7<br/>Library Docs]
-    CC --> PY[pypi<br/>Python Packages]
-    CC --> YT[youtube-transcript<br/>Video Transcripts]
-
-    P -.-> |"/catchup"| TC[Titanium Toolkit]
-    S -.-> |UI Tools| TC
-    V -.-> |Oversight| TC
-
-    style CC fill:#673AB7,stroke:#4527A0,color:#fff
-    style P fill:#9C27B0,stroke:#6A1B9A,color:#fff
-    style TC fill:#2196F3,stroke:#1565C0,color:#fff
-    style V fill:#FF5722,stroke:#D84315,color:#fff
-    style E fill:#E91E63,stroke:#AD1457,color:#fff
-```
-
-#### 1. **Pieces** (Required for /catchup)
-**Purpose**: Long-term memory and workflow context
-**Source**: https://pieces.app
-
-**Prerequisites:**
-1. Download and install Pieces OS: https://pieces.app
-2. Install Pieces CLI:
-   ```bash
-   pip3 install --upgrade pieces-cli
-   ```
-3. Ensure Pieces OS is running (launch the Desktop app)
-4. Enable LTM in Pieces settings
-
-**Setup:**
-```bash
-<<<<<<< Updated upstream
-pieces mcp setup claude_code --stdio
-=======
-# Add to ~/.env
-echo 'OPENAI_API_KEY=sk-your-key-here' >> ~/.env
->>>>>>> Stashed changes
-```
-
-Verify: `claude mcp list` should show "Pieces: ✓ Connected"
-
-#### 2. **shadcn-ui-server**
-**Purpose**: UI component library integration
-**Source**: https://github.com/heilgar/shadcn-ui-mcp-server
-```bash
-claude mcp add shadcn-ui-server --scope user --transport stdio -- npx @heilgar/shadcn-ui-mcp-server
-```
-
-#### 3. **vibe-check**
-**Purpose**: Meta-mentor AI oversight, prevents tunnel vision
-**Source**: https://github.com/PV-Bhat/vibe-check-mcp-server
-```bash
-npm install -g @pv-bhat/vibe-check-mcp
-# Configure API keys in ~/.vibe-check/.env
-```
-
-#### 4. **playwright**
-**Purpose**: Browser automation and testing
-**Source**: https://github.com/microsoft/playwright
-```bash
-claude mcp add playwright --scope user --transport stdio -- npx @playwright/mcp@latest
-```
-
-#### 5. **ElevenLabs MCP**
-**Purpose**: Text-to-speech via MCP tools
-**Source**: https://elevenlabs.io
-```bash
-claude mcp add ElevenLabs --scope user --transport stdio --env ELEVENLABS_API_KEY=your_key -- uvx elevenlabs-mcp@latest
-```
-
-<<<<<<< Updated upstream
-#### 6. **context7**
-**Purpose**: Up-to-date library documentation
-**Source**: https://context7.com
-=======
-**Interactive workflow creates**:
-- Product Brief (vision and goals)
-- PRD (comprehensive requirements)
-- Architecture (technical design with code)
-- Epic files (user stories with acceptance criteria)
-- Story Index (summary for sprint planning)
-
-**Output**: Complete `bmad-backlog/` folder ready for implementation.
-
-### The BMAD Commands
-
-**`/bmad:start`** - Complete guided workflow
-- Creates all documents in one session
-- Interactive questions guide you
-- 30-45 minutes
-- Cost: ~$0.22
-
-**`/bmad:brief`** - Product brief only
-**`/bmad:prd`** - PRD only
-**`/bmad:architecture`** - Architecture only
-**`/bmad:epic`** - Single epic (add new or regenerate)
-**`/bmad:index`** - Story index summary
-**`/bmad:research`** - Research prompt generator
-
-### Complete Workflow
-
-```
-Empty folder → /bmad:start → /titanium:plan → /titanium:work → Production Code
-   (0 min)        (45 min)       (2 min)          (15 hours)         (1 week)
-```
-
-**Cost**: $0.11 (BMAD with Haiku) + $0.20 (implementation) = **~$0.31 for complete MVP**
-
-**50% cost savings** using Claude Haiku 4.5!
-
----
-
-## Troubleshooting
-
-### "uv: command not found"
-
-UV is required to run Python scripts. Install it:
-
->>>>>>> Stashed changes
-```bash
-claude mcp add context7 --scope user --transport http --header "CONTEXT7_API_KEY: your_key" -- https://mcp.context7.com/mcp
-```
-
-#### 7. **pypi**
-**Purpose**: Python package queries and information
-**Source**: https://github.com/loonghao/pypi-query-mcp-server
-```bash
-claude mcp add pypi --scope user --transport stdio -- uvx pypi-query-mcp-server
-```
-
-#### 8. **youtube-transcript**
-**Purpose**: Extract transcripts from YouTube videos
-**Source**: https://github.com/jkawamoto/mcp-youtube-transcript
-```bash
-claude mcp add youtube-transcript --scope user --transport stdio -- uvx --from git+https://github.com/jkawamoto/mcp-youtube-transcript mcp-youtube-transcript
-```
-
-**Verify MCP servers:**
-```bash
-claude mcp list
-```
-
-All should show ✓ Connected.
-
-## For Different Audiences
-
-### For Marketplace Users
-
-**Discover and use plugins:**
-- Browse the marketplace with `/plugin`
-- Install titanium-toolkit for voice-enhanced development
-- Test features before committing to workflows
-- Report issues and suggest improvements
-
-**Share with your team:**
-- Help colleagues discover voice announcements
-- Set up team-wide installations
-- Share workflows that leverage the toolkit
-
-### For Plugin Developers
-
-**Contribute to this marketplace:**
 1. Fork this repository
-2. Create your plugin in `plugins/your-plugin-name/`
-3. Follow the [plugin structure guidelines](https://docs.claude.com/en/docs/claude-code/plugins)
-4. Include comprehensive README with:
-   - Prerequisites and dependencies
-   - API key requirements
-   - Installation instructions
-   - Usage examples
-5. Submit a pull request
+2. Create plugin in `plugins/your-plugin-name/`
+3. Follow [Claude Code plugin structure](https://docs.claude.com/en/docs/claude-code/plugins)
+4. Include comprehensive README
+5. Test thoroughly
+6. Submit pull request
 
-**Best practices:**
-- Use semantic versioning
-- Document all dependencies
-- Never commit API keys
-- Test thoroughly before submitting
-- Provide clear usage examples
+### Plugin Structure
 
-### For Organizations
-
-**Private deployment:**
-- Fork titanium-plugins for internal use
-- Customize agents for your tech stack
-- Add company-specific voice preferences
-- Configure team-wide MCP servers
-
-**Governance:**
-- Establish plugin approval process
-- Review API key management policies
-- Set up internal marketplace for approved plugins
-- Create training materials for voice system adoption
-
-**Team rollout:**
-- Start with `/catchup` for context management
-- Gradually introduce voice announcements
-- Train on builder agents for common tasks
-- Monitor usage and gather feedback
+```
+plugins/your-plugin-name/
+├── .claude-plugin/
+│   ├── plugin.json        # Metadata
+│   └── mcp.json           # MCP servers (optional)
+├── commands/              # Slash commands
+├── agents/                # Specialized agents
+├── skills/                # Domain knowledge
+├── hooks/                 # Event hooks
+└── README.md              # Documentation
+```
 
 ## Support
 
 - **Issues**: https://github.com/webdevtodayjason/titanium-plugins/issues
 - **Discussions**: https://github.com/webdevtodayjason/titanium-plugins/discussions
-- **Company**: [Titanium Computing](https://titaniumcomputing.com)
-- **Discord**: Join [Claude Developers Discord](https://anthropic.com/discord)
+- **Email**: jason@webdevtoday.com
+- **Website**: [Titanium Computing](https://titaniumcomputing.com)
 
 ## Credits
 
-Created by Jason Brashear (Titanium Computing)
+**Created by**: Jason Brashear / Titanium Computing
 
-**Built upon amazing work from:**
-- [Every's Compounding Engineering](https://github.com/EveryInc/every-marketplace) - Workflow patterns and methodology
-- [BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) - Planning and requirements framework
+**Built upon and inspired by**:
+- **Anthropic** - Claude Code and Agent Skills architecture
+- **Every's Compounding Engineering** - Agent delegation patterns and workflow methodology
+- **BMAD-METHOD** - Breakthrough Method for Agile AI Driven Development framework
+- **HOLACE Project** - Voice system architecture and ElevenLabs integration
+- **Pieces for Developers** - Long-term memory and context recovery
 
-<<<<<<< Updated upstream
-Special thanks to the Claude Code team at Anthropic for building an incredible platform.
-=======
-**Powered by**:
-- [Claude Code](https://claude.ai/code) by Anthropic
-- [ElevenLabs](https://elevenlabs.io) - Voice synthesis
-- [Anthropic Claude](https://anthropic.com) - Haiku 4.5 (planning/BMAD) and Sonnet 4.5 (architecture)
-- [OpenAI GPT-5](https://openai.com) - Voice summaries
-- [Pieces](https://pieces.app) - Long-term memory
-- [vibe-check](https://github.com/PV-Bhat/vibe-check-mcp-server) - AI quality gates
-
----
->>>>>>> Stashed changes
+**Special thanks to**:
+- The Every team for pioneering AI workflow orchestration
+- The BMAD community for comprehensive planning methodology
+- Anthropic for Claude Code and MCP protocol
+- All contributors to the Claude Code ecosystem
 
 ## License
 
-MIT License - See individual plugin directories for specific license terms.
+MIT License
+
+Copyright (c) 2025 Jason Brashear / Titanium Computing
+
+See [LICENSE](LICENSE) file for details.
