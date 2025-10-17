@@ -111,7 +111,7 @@ Voice hooks announce:
 
 ## Cost
 
-Typical cost: ~$0.08 per architecture generation (GPT-4 API usage in bmad_generator tool)
+Typical cost: ~$0.08 per architecture generation (Claude Sonnet 4.5 API usage in bmad_generator tool)
 
 ---
 

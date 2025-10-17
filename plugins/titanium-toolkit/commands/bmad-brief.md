@@ -36,7 +36,7 @@ mcp__plugin_titanium-toolkit_tt__bmad_generator(
 
 This creates `bmad-backlog/product-brief.md` with all required sections.
 
-**Important**: The tool uses GPT-4 to generate comprehensive content. Requires OPENAI_API_KEY in ~/.env
+**Important**: The tool uses Claude Haiku 4.5 to generate comprehensive content. Requires ANTHROPIC_API_KEY in ~/.env
 
 ### Step 3: Review Generated Brief
 
@@ -139,18 +139,18 @@ What would you like to do?
 
 ## Error Handling
 
-### If OPENAI_API_KEY Missing
+### If ANTHROPIC_API_KEY Missing
 
 ```
-❌ Error: OPENAI_API_KEY not found
+❌ Error: ANTHROPIC_API_KEY not found
 
-The brief generation needs OpenAI GPT-4 to create comprehensive content.
+The brief generation needs Anthropic Claude to create comprehensive content.
 
 Please add your API key to ~/.env:
-  echo 'OPENAI_API_KEY=sk-your-key-here' >> ~/.env
+  echo 'ANTHROPIC_API_KEY=sk-ant-your-key-here' >> ~/.env
   chmod 600 ~/.env
 
-Get your key from: https://platform.openai.com/api-keys
+Get your key from: https://console.anthropic.com/settings/keys
 
 Then restart Claude Code and try again.
 ```
