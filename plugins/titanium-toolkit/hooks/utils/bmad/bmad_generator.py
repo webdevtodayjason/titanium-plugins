@@ -1215,7 +1215,7 @@ IMPORTANT:
 
         response = client.messages.create(
             model=model,
-            max_tokens=6000,
+            max_tokens=8000,
             temperature=0.3,
             messages=[{"role": "user", "content": prompt}]
         )
