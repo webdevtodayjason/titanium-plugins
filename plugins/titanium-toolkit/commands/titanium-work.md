@@ -92,10 +92,13 @@ This creates `.titanium/workflow-state.json` to track progress.
 
 ### 2.2 Generate Plan
 
-Use the plan_parser.py utility:
+Use the plan_parser MCP tool:
 
-```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/workflow/plan_parser.py .titanium/requirements.md "$(pwd)"
+```
+mcp__plugin_titanium-toolkit_tt__plan_parser(
+  requirements_file: ".titanium/requirements.md",
+  project_path: "$(pwd)"
+)
 ```
 
 This creates `.titanium/plan.json` with structured plan.
@@ -1029,7 +1032,7 @@ Claude:
 - Writes requirements to .titanium/requirements.md
 - Asks clarifying questions about tech stack
 User: "React frontend, Node backend, Elasticsearch"
-- Generates plan with plan_parser.py
+- Generates plan with plan_parser MCP tool
 - Validates with vibe-check
 - Presents plan
 - "Proceed with implementation?"
