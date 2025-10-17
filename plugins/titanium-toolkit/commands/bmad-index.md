@@ -4,7 +4,7 @@ description: Generate BMAD story index summary
 
 # BMAD Index - Generate Story Index
 
-You are generating a STORY-INDEX.md file that summarizes all epics and user stories in the backlog. This provides a quick overview for sprint planning and progress tracking.
+Use the product-manager subagent to generate a STORY-INDEX.md file that summarizes all epics and user stories in the backlog. This provides a quick overview for sprint planning and progress tracking.
 
 ## Purpose
 
@@ -22,6 +22,10 @@ Create a summary table showing:
 - After manually editing epic files
 - Want refreshed totals and summaries
 - Planning sprints
+
+## Task Delegation
+
+First check that epics exist, then launch the product-manager subagent to handle the complete index generation workflow.
 
 ## Process
 
@@ -42,136 +46,102 @@ Please generate epics first:
 - Or: /bmad:start (complete workflow)
 ```
 
-**If epics found**:
-- Count epic files
-- Continue
+Stop here - do not launch product-manager without epic files.
 
-### Step 2: Generate Story Index
+**If epics found**: Continue to Step 2.
 
-Use the `bmad_generator` MCP tool:
+### Step 2: Launch Product-Manager Subagent
+
+Use the Task tool to launch the product-manager subagent in its own context window:
 
 ```
-mcp__plugin_titanium-toolkit_tt__bmad_generator(
-  doc_type: "index",
-  input_path: "bmad-backlog/epics/",
-  project_path: "$(pwd)"
+Task(
+  description: "Generate BMAD story index",
+  prompt: "Create comprehensive story index summarizing all epics and user stories.
+
+Input:
+- Epic files: bmad-backlog/epics/EPIC-*.md
+
+Output:
+- Story index: bmad-backlog/STORY-INDEX.md
+
+Your workflow:
+
+1. **Generate story index** using MCP tool:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_generator(
+     doc_type: \"index\",
+     input_path: \"bmad-backlog/epics/\",
+     project_path: \"$(pwd)\"
+   )
+   ```
+
+2. **Review generated index**:
+   - Read bmad-backlog/STORY-INDEX.md
+   - Extract totals (epics, stories, story points)
+   - Extract epic breakdown
+   - Extract priority distribution
+
+3. **Present summary** with key metrics:
+   - Total epics, stories, story points
+   - Epic breakdown with story counts per epic
+   - Priority distribution (P0/P1/P2 percentages)
+   - Show sample from index (epic overview table)
+
+4. **Run vibe-check** to validate index quality
+
+5. **Store in Pieces** for future reference:
+   - Include index file
+   - Include all epic files
+   - Summarize totals and breakdown
+
+6. **Suggest next steps**:
+   - Sprint planning guidance
+   - Implementation readiness
+   - Progress tracking tips
+
+Follow your complete index workflow from the bmad-methodology skill.
+
+Project path: $(pwd)",
+  subagent_type: "product-manager"
 )
 ```
 
-This scans all EPIC-*.md files and generates `bmad-backlog/STORY-INDEX.md`.
+The product-manager subagent will handle:
+- Scanning all epic files
+- Generating story index
+- Extracting and presenting totals
+- Validation (vibe-check)
+- Pieces storage
+- Summary presentation with next steps
 
-**What it extracts**:
-- Epic numbers and names
-- Story count per epic
-- Story points (estimated or documented)
-- Story IDs, titles, priorities
-- Overall totals
+### Step 3: Return Results
 
-### Step 3: Review Generated Index
+The product-manager will return a summary when complete. Present this to the user.
 
-Read the index:
+## What the Product-Manager Creates
 
-```bash
-Read bmad-backlog/STORY-INDEX.md
-```
+The product-manager subagent generates `bmad-backlog/STORY-INDEX.md` containing:
 
-Present summary:
-
-```
-📊 Story Index Generated!
-
-📈 Backlog Summary:
-- Total Epics: {{N}}
-- Total Stories: {{M}}
-- Total Story Points: {{P}}
-
-Epic Breakdown:
-- Epic 1: {{name}} - {{X}} stories ({{Y}} points)
-- Epic 2: {{name}} - {{X}} stories ({{Y}} points)
-- Epic 3: {{name}} - {{X}} stories ({{Y}} points)
-...
-
-Priority Distribution:
-- P0 (Must Have): {{X}} stories ({{%}})
-- P1 (Should Have): {{Y}} stories ({{%}})
-- P2 (Nice to Have): {{Z}} stories ({{%}})
-
-📄 Location: bmad-backlog/STORY-INDEX.md
-
-This index provides a quick overview of your entire backlog!
-```
-
-### Step 4: Show Sample from Index
-
-Display excerpt from the generated index:
-
-```markdown
-Sample from index:
-
-## Epic Overview
-
-| Epic ID | Epic Name | Stories | Story Points | Status |
-|---------|-----------|---------|--------------|--------|
-| EPIC-001 | Foundation | {{X}} | {{Y}} | Not Started |
-| EPIC-002 | Core Features | {{X}} | {{Y}} | Not Started |
-...
-```
-
-### Step 5: Store in Pieces
-
-```
-mcp__Pieces__create_pieces_memory(
-  summary_description: "Story index for {{project}}",
-  summary: "Generated story index summary. Total: {{N}} epics, {{M}} stories, {{P}} story points. Epic breakdown: {{list each epic with counts}}. Priority distribution: {{P0 count}} must-have, {{P1 count}} should-have. Index useful for sprint planning and progress tracking.",
-  files: [
-    "bmad-backlog/STORY-INDEX.md",
-    "list all epic files"
-  ],
-  project: "$(pwd)"
-)
-```
-
-### Step 6: Suggest Next Steps
-
-```
-💡 Next Steps:
-
-Use this index to:
-1. Plan sprints (prioritize P0 stories)
-2. Track progress (update status column)
-3. Estimate timeline (total story points ÷ velocity)
-4. Communicate with stakeholders
-
-Ready to implement?
-
-Run: /titanium:plan bmad-backlog/epics/EPIC-001-*.md
-Then: /titanium:work
-```
+- **Summary Statistics**: Total epics, stories, story points
+- **Epic Overview Table**: Epic ID, name, story count, points, status
+- **Per-Epic Story Details**: All stories with IDs, titles, priorities
+- **Priority Distribution**: P0/P1/P2 breakdown with percentages
+- **Development Phases**: Logical grouping of epics
+- **Quick Reference**: Key metrics for sprint planning
 
 ## Error Handling
 
 ### If No Epics Found
 
-```
-❌ No epic files found in bmad-backlog/epics/
-
-Cannot generate index without epic files.
-
-Please generate epics first:
-- Run: /bmad:epic 1 (for single epic)
-- Or: /bmad:start (for complete backlog)
-```
+Handled in Step 1 - command exits gracefully with helpful message.
 
 ### If Epic Files Malformed
 
-```
-⚠️  Some epic files couldn't be parsed:
-- {{filename}}: {{issue}}
-
-The index was generated from parseable epics only.
-
-Would you like me to fix the malformed epics? (yes/no)
-```
+The product-manager subagent will:
+- Report which files couldn't be parsed
+- Generate index from parseable epics only
+- Offer to help fix malformed files
 
 ## Voice Feedback
 
@@ -189,7 +159,7 @@ User: /bmad:epic 2
 [Epic 2 generated]
 User: /bmad:index
 
-Claude:
+Product-Manager:
 - Scans epics/
 - Finds 2 epics
 - Counts stories
@@ -202,7 +172,7 @@ Claude:
 User: [Edits EPIC-003.md, adds more stories]
 User: /bmad:index
 
-Claude:
+Product-Manager:
 - Rescans all epics
 - Updates totals
 - "Index updated: 5 epics, 52 stories (was 45), 210 points (was 180)"
@@ -212,13 +182,10 @@ Claude:
 ```
 User: /bmad:index
 
-Claude:
+Product-Manager:
 - Generates index
 - "Total: 148 stories, 634 points"
 - "P0 stories: 98 (65%)"
-
-User: "How many P0 stories in Epic 1?"
-Claude: [Reads index] "Epic 1 has 12 P0 stories out of 15 total"
 ```
 
 ## Integration
@@ -237,8 +204,10 @@ Claude: [Reads index] "Epic 1 has 12 P0 stories out of 15 total"
 - Developers for understanding scope
 - Stakeholders for status updates
 
-**Cost**: ~$0.01 (minimal - just parsing, no GPT-4 needed for index generation)
+## Cost
+
+Typical cost: ~$0.01 (minimal - just parsing and formatting, using Claude Haiku 4.5)
 
 ---
 
-**This command provides the 30,000-foot view of your entire backlog!**
+**This command delegates to the product-manager subagent who creates the 30,000-foot view of your entire backlog!**
