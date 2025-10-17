@@ -78,6 +78,14 @@ Your workflow:
 
 8. **Present summary** with epic list, research needs, and next steps
 
+**IMPORTANT**: Keep your summary response BRIEF (under 500 tokens). Just return:
+- Confirmation PRD is complete
+- Epic count and list (just titles)
+- Total user stories count
+- Total features count
+
+DO NOT include the full PRD content in your response - it's already saved to the file.
+
 Follow your complete PRD workflow from the bmad-methodology skill.
 
 Project path: $(pwd)",
