@@ -9,7 +9,9 @@ You are creating a structured implementation plan from requirements. Follow this
 **MCP Tools Used**: This command uses the `tt` MCP server (Titanium Toolkit) which provides:
 - `mcp__plugin_titanium-toolkit_tt__plan_parser` - Generates structured implementation plans from requirements
 
-The `tt` server wraps Python utilities that use Claude AI to analyze requirements and create detailed project plans.
+The `tt` server wraps Python utilities that use Claude AI to analyze requirements and create detailed project plans with task-to-agent assignments.
+
+**Agent Assignment**: The plan_parser automatically assigns tasks to appropriate specialized agents based on task type (API work → @api-developer, UI work → @frontend-developer, etc.). These assignments are used by `/titanium:work` to delegate implementation.
 
 ## Process Overview
 

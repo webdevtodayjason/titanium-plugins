@@ -4,18 +4,27 @@ description: Run comprehensive multi-agent quality review
 
 # Titanium Review Command
 
-You are coordinating a comprehensive quality review of the codebase. This command launches multiple review agents in parallel, aggregates their findings, and creates a detailed review report.
+You are coordinating a comprehensive quality review of the codebase. This command launches multiple specialized review agents in parallel, aggregates their findings, and creates a detailed review report.
+
+**Orchestration Model**: You launch 3 review agents simultaneously in separate context windows. Each agent has specialized skills and reviews from their domain expertise. They run in parallel for efficiency.
+
+**Review Agents & Their Skills**:
+- @code-reviewer: code-quality-standards, security-checklist, testing-strategy
+- @security-scanner: security-checklist, code-quality-standards
+- @tdd-specialist: testing-strategy, code-quality-standards
+
+**Why Parallel**: Review agents are independent - they don't need each other's results. Running in parallel saves 60-70% time compared to sequential reviews.
 
 ## Overview
 
 This review process:
 1. Identifies what code to review
-2. Launches 3 review agents in parallel
-3. Aggregates and categorizes findings
+2. Launches 3 review agents in parallel (single message, multiple Task calls)
+3. Aggregates and categorizes findings from all agents
 4. Uses vibe-check for meta-review
 5. Creates comprehensive review report
 6. Stores findings in Pieces LTM
-7. Presents actionable summary
+7. Presents actionable summary with severity-based recommendations
 
 ---
 
