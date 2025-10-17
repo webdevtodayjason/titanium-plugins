@@ -88,9 +88,26 @@ OPENAI_API_KEY=your_openai_key_here
 ELEVENLABS_API_KEY=your_elevenlabs_key_here
 ```
 
+### Required MCP Servers
+
+**IMPORTANT**: The Titanium Toolkit MCP server is automatically configured via the plugin's `.mcp.json` file. No manual installation needed!
+
+The `tt` MCP server provides core BMAD document generation tools used by:
+- `/titanium:plan` - Requirements to implementation plan
+- `/bmad:start` - Complete BMAD workflow (Brief → PRD → Architecture → Epics)
+- `/bmad:brief`, `/bmad:prd`, `/bmad:architecture`, `/bmad:epic` - Individual document generation
+
+**Verify it's loaded**: After plugin installation, restart Claude Code and check:
+```bash
+# List MCP servers - you should see "tt" in the list
+claude mcp list
+```
+
+If `tt` is missing, the plugin may not have loaded correctly. Try reinstalling the plugin.
+
 ### Recommended MCP Servers
 
-**Pieces MCP is included automatically** when you install this plugin!
+**Pieces MCP** is highly recommended for the `/catchup` command:
 
 For additional functionality, install these optional MCP servers:
 
@@ -98,7 +115,7 @@ For additional functionality, install these optional MCP servers:
 # Optional but recommended
 claude mcp add playwright --scope user --transport stdio -- npx @playwright/mcp@latest
 claude mcp add pypi --scope user --transport stdio -- uvx pypi-query-mcp-server
-claude mcp add vibe-check --scope user --transport stdio -- node /path/to/vibe-check-mcp
+claude mcp add vibe-check --scope user --transport stdio -- npx -y @pv-bhat/vibe-check-mcp start --stdio
 ```
 
 **Note**: Pieces MCP requires Pieces OS to be running and the Pieces CLI to be installed:

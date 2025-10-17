@@ -6,6 +6,12 @@ description: Complete guided BMAD backlog generation workflow
 
 You are orchestrating complete BMAD backlog generation from idea to implementation-ready documentation. This guided workflow creates Product Brief, PRD, Architecture, all Epic files, and Story Index in one comprehensive session.
 
+**MCP Tools Used**: This command uses the `tt` MCP server (Titanium Toolkit) which provides:
+- `mcp__plugin_titanium-toolkit_tt__bmad_generator` - Generates BMAD documents (brief, PRD, architecture, epics, index)
+- `mcp__plugin_titanium-toolkit_tt__bmad_validator` - Validates BMAD document structure and completeness
+
+The `tt` server wraps Python utilities that use Claude AI to generate comprehensive project documentation following the BMAD methodology.
+
 ## Purpose
 
 Take user from empty folder to complete project backlog (30-45 minutes):

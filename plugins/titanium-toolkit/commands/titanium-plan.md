@@ -6,11 +6,16 @@ description: Analyze requirements and create detailed implementation plan
 
 You are creating a structured implementation plan from requirements. Follow this systematic process to break down work into actionable tasks with agent assignments.
 
+**MCP Tools Used**: This command uses the `tt` MCP server (Titanium Toolkit) which provides:
+- `mcp__plugin_titanium-toolkit_tt__plan_parser` - Generates structured implementation plans from requirements
+
+The `tt` server wraps Python utilities that use Claude AI to analyze requirements and create detailed project plans.
+
 ## Process Overview
 
 This command will:
 1. Gather and validate requirements
-2. Use Claude to generate structured plan
+2. Use Claude (via `plan_parser` MCP tool) to generate structured plan
 3. Validate plan with vibe-check
 4. Create human-readable documentation
 5. Store plan in Pieces for future reference
