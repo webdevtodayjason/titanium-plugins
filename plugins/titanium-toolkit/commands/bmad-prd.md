@@ -4,11 +4,11 @@ description: Generate BMAD Product Requirements Document
 
 # BMAD PRD - Generate Product Requirements Document
 
-You are generating a comprehensive Product Requirements Document (PRD) following BMAD methodology. The PRD is the complete specification of product requirements, features, user stories, and technical needs.
+Use the product-manager subagent to create a comprehensive Product Requirements Document (PRD) following BMAD methodology.
 
-## Purpose
+## Task Delegation
 
-Create a detailed PRD that defines all product requirements, organizes features into epics, documents user stories, and establishes technical specifications. This document guides architecture and implementation.
+First check for product brief, then launch the product-manager subagent to handle the complete PRD generation workflow.
 
 ## Process
 
@@ -18,31 +18,89 @@ Create a detailed PRD that defines all product requirements, organizes features 
 ls bmad-backlog/product-brief.md 2>/dev/null || echo "No brief found"
 ```
 
-**If brief exists**:
-- Read it with Read tool
-- Use brief content as foundation
+**If brief NOT found**:
+```
+❌ Error: Product Brief not found at bmad-backlog/product-brief.md
 
-**If no brief**:
-- Ask user: "No product brief found. Would you like to:
-  1. Create a brief first with `/bmad:brief` (recommended)
-  2. Provide requirements directly
-  3. Cancel"
+PRD generation requires a product brief to work from.
 
-If user chooses option 2, gather requirements through questions.
+Please run: /titanium-toolkit:bmad-brief first
+(Or /titanium-toolkit:bmad-start for complete guided workflow)
+```
 
-### Step 2: Generate PRD
+Stop here - do not launch product-manager without brief.
 
-Use the `bmad_generator` MCP tool:
+**If brief exists**: Continue to Step 2.
+
+### Step 2: Launch Product-Manager Subagent
+
+Use the Task tool to launch the product-manager subagent in its own context window:
 
 ```
-mcp__plugin_titanium-toolkit_tt__bmad_generator(
-  doc_type: "prd",
-  input_path: "bmad-backlog/product-brief.md",
-  project_path: "$(pwd)"
+Task(
+  description: "Generate BMAD PRD",
+  prompt: "Create comprehensive Product Requirements Document following BMAD methodology.
+
+Input:
+- Product Brief: bmad-backlog/product-brief.md
+
+Output:
+- PRD: bmad-backlog/prd/prd.md
+
+Your workflow:
+
+1. **Read the product brief** to understand the project vision
+
+2. **Generate PRD** using the MCP tool:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_generator(
+     doc_type: \"prd\",
+     input_path: \"bmad-backlog/product-brief.md\",
+     project_path: \"$(pwd)\"
+   )
+   ```
+
+3. **Review epic structure** - Ensure Epic 1 is \"Foundation\" and epic sequence is logical
+
+4. **Detect research needs** - Scan for API, vendor, data source, payment, hosting keywords
+
+5. **Validate PRD** using:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_validator(
+     doc_type: \"prd\",
+     document_path: \"bmad-backlog/prd/prd.md\"
+   )
+   ```
+
+6. **Run vibe-check** to validate PRD quality and completeness
+
+7. **Store in Pieces** for future reference
+
+8. **Present summary** with epic list, research needs, and next steps
+
+Follow your complete PRD workflow from the bmad-methodology skill.
+
+Project path: $(pwd)",
+  subagent_type: "product-manager"
 )
 ```
 
-This generates `bmad-backlog/prd/prd.md` with complete PRD structure (500-1000 lines).
+The product-manager subagent will handle:
+- Reading product brief
+- Generating comprehensive PRD (500-1000 lines)
+- Epic structure review
+- Research needs detection
+- Validation (structural and vibe-check)
+- Pieces storage
+- Summary presentation
+
+### Step 3: Return Results
+
+The product-manager will return a summary when complete. Present this to the user.
+
+## What the Product-Manager Creates
+
+The product-manager subagent generates `bmad-backlog/prd/prd.md` containing:
 
 **Sections generated**:
 1. Executive Summary (Vision, Mission)
