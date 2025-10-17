@@ -169,7 +169,7 @@ I'll ask follow-up questions to flesh it out.
 Your idea:
 ```
 
-Wait for user response.
+Wait for user response. Store as user_idea.
 
 ### Step 2.2: Interactive Questions (if Interactive mode)
 
@@ -182,61 +182,69 @@ Ask clarifying questions:
 6. "Any technical preferences (language, framework, hosting)?"
 7. "Budget and timeline constraints?"
 
-### Step 2.3: Generate Product Brief
+Append answers to user_idea context.
+
+### Step 2.3: Launch Product-Manager Subagent for Brief
+
+Use the Task tool to launch the product-manager subagent:
 
 ```
-Generating Product Brief...
-```
+Task(
+  description: "Generate BMAD product brief",
+  prompt: "Create comprehensive product brief following BMAD methodology.
 
-Run:
-```bash
-mcp__plugin_titanium-toolkit_tt__bmad_generator(
-  doc_type: "brief",
-  input_path: "{{user_idea}}",
-  project_path: "$(pwd)"
+User's Project Idea:
+{{user_idea}}
+
+Your workflow:
+
+1. **Generate product brief** using MCP tool:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_generator(
+     doc_type: \"brief\",
+     input_path: \"{{user_idea}}\",
+     project_path: \"$(pwd)\"
+   )
+   ```
+
+2. **Review and present** key sections to user:
+   - Executive Summary
+   - Problem Statement
+   - MVP Scope
+   - Ask for approval or refinements
+
+3. **Validate the brief** using:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_validator(
+     doc_type: \"brief\",
+     document_path: \"bmad-backlog/product-brief.md\"
+   )
+   ```
+
+4. **Run vibe-check** to validate brief quality
+
+5. **Store in Pieces** for future reference
+
+6. **Present summary** confirming brief is complete
+
+Follow your complete brief workflow from the bmad-methodology skill.
+
+Project path: $(pwd)",
+  subagent_type: "product-manager"
 )
 ```
 
-Creates: `bmad-backlog/product-brief.md`
+The product-manager subagent will handle brief generation, review, validation, and storage.
 
-### Step 2.4: Review Brief with User
+### Step 2.4: Confirm Completion
 
-Read and show key sections:
-
-```
-✅ Product Brief Generated!
-
-{{Show Executive Summary}}
-
-{{Show Problem Statement (first paragraph)}}
-
-{{Show MVP Scope - core features}}
-
-Full brief: bmad-backlog/product-brief.md
-
-Approve brief, or refine specific sections? (approve/refine/regenerate)
-```
-
-**If refine**: Ask which sections, regenerate with additions
-**If regenerate**: Ask for more context, run utility again
-**If approve**: Continue
-
-### Step 2.5: Validate Brief
-
-```bash
-mcp__plugin_titanium-toolkit_tt__bmad_validator(
-  doc_type: "brief",
-  document_path: "bmad-backlog/product-brief.md"
-)
-```
-
-If invalid, fix and regenerate.
+Wait for product-manager to return summary. Confirm brief is ready before continuing to PRD.
 
 ---
 
 ## Phase 3: PRD Generation
 
-### Step 3.1: Generate PRD
+### Step 3.1: Launch Product-Manager Subagent for PRD
 
 ```
 Generating comprehensive Product Requirements Document...
@@ -244,72 +252,68 @@ Generating comprehensive Product Requirements Document...
 This will take about 1-2 minutes (large document).
 ```
 
-Run:
-```bash
-mcp__plugin_titanium-toolkit_tt__bmad_generator(
-  doc_type: "prd",
-  input_path: "bmad-backlog/product-brief.md",
-  project_path: "$(pwd)"
+Use the Task tool to launch the product-manager subagent:
+
+```
+Task(
+  description: "Generate BMAD PRD",
+  prompt: "Create comprehensive Product Requirements Document following BMAD methodology.
+
+Input:
+- Product Brief: bmad-backlog/product-brief.md
+
+Output:
+- PRD: bmad-backlog/prd/prd.md
+
+Your workflow:
+
+1. **Read product brief** to understand context
+
+2. **Generate PRD** using MCP tool:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_generator(
+     doc_type: \"prd\",
+     input_path: \"bmad-backlog/product-brief.md\",
+     project_path: \"$(pwd)\"
+   )
+   ```
+
+3. **Review epic structure**:
+   - Read generated PRD
+   - Extract epic list
+   - Count epics, user stories, features
+   - Verify Epic 1 is Foundation/Infrastructure
+   - Present structure to user for approval
+
+4. **Validate PRD** using:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_validator(
+     doc_type: \"prd\",
+     document_path: \"bmad-backlog/prd/prd.md\"
+   )
+   ```
+
+5. **Run vibe-check** with:
+   - Goal: Create comprehensive PRD
+   - Plan: Generated PRD with N epics, M stories
+   - Uncertainties: Epic structure, requirement completeness, missing features
+
+6. **Store in Pieces** for future reference
+
+7. **Present summary** with epic list and totals
+
+Follow your complete PRD workflow from the bmad-methodology skill.
+
+Project path: $(pwd)",
+  subagent_type: "product-manager"
 )
 ```
 
-Creates: `bmad-backlog/prd/prd.md` (500-1000 lines)
+The product-manager subagent will handle PRD generation, epic structure review, validation, and storage.
 
-### Step 3.2: Review Epic Structure
+### Step 3.2: Confirm Completion
 
-Read PRD and extract epic list:
-
-```
-✅ PRD Generated!
-
-📊 PRD Structure:
-- {{N}} Epics
-- {{M}} User Stories
-- {{F}} V1 MVP Features
-- Technical requirements defined
-- Success metrics set
-
-Epic List:
-1. Epic 1: {{name}} - {{description}}
-2. Epic 2: {{name}} - {{description}}
-3. Epic 3: {{name}} - {{description}}
-...
-
-⚠️  IMPORTANT: Epic 1 should be "Foundation" or "Infrastructure"
-{{If Epic 1 is not foundation: Alert and suggest reordering}}
-
-Epic structure look good? (yes/refine)
-```
-
-**If refine**: Adjust epic list, regenerate PRD
-**If yes**: Continue
-
-### Step 3.3: Validate PRD
-
-```bash
-mcp__plugin_titanium-toolkit_tt__bmad_validator(
-  doc_type: "prd",
-  document_path: "bmad-backlog/prd/prd.md"
-)
-```
-
-Check validation, fix if needed.
-
-### Step 3.4: vibe-check Validation
-
-```
-mcp__vibe-check__vibe_check(
-  goal: "Create comprehensive PRD for {{project}}",
-  plan: "Generated PRD with {{N}} epics, {{M}} user stories, technical requirements, success metrics",
-  uncertainties: [
-    "Is epic structure logical?",
-    "Are requirements complete?",
-    "Any critical features missing?"
-  ]
-)
-```
-
-Present vibe-check feedback, adjust if needed.
+Wait for product-manager to return summary. Confirm PRD is ready and epic structure approved before continuing to research/architecture.
 
 ---
 
@@ -366,7 +370,7 @@ Ready to continue after research? (yes/skip)
 
 ## Phase 5: Architecture Generation
 
-### Step 5.1: Generate Architecture
+### Step 5.1: Launch Architect Subagent
 
 ```
 Generating Technical Architecture...
@@ -374,53 +378,66 @@ Generating Technical Architecture...
 This will take 2-3 minutes (comprehensive document with code examples).
 ```
 
-Run:
-```bash
-mcp__plugin_titanium-toolkit_tt__bmad_generator(
-  doc_type: "architecture",
-  input_path: "bmad-backlog/prd/prd.md",
-  project_path: "$(pwd)"
+Use the Task tool to launch the architect subagent:
+
+```
+Task(
+  description: "Generate BMAD architecture",
+  prompt: "Create comprehensive technical architecture document following BMAD methodology.
+
+Input:
+- PRD: bmad-backlog/prd/prd.md
+- Research findings: bmad-backlog/research/*.md (if any exist)
+
+Output:
+- Architecture document: bmad-backlog/architecture/architecture.md
+
+Your workflow:
+
+1. **Read PRD** to understand requirements
+
+2. **Check for research findings** and incorporate recommendations if they exist
+
+3. **Generate architecture** using MCP tool:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_generator(
+     doc_type: \"architecture\",
+     input_path: \"bmad-backlog/prd/prd.md\",
+     project_path: \"$(pwd)\"
+   )
+   ```
+
+4. **Review tech stack with user**:
+   - Present proposed tech stack
+   - Note research-based decisions if applicable
+   - Get user approval or note requested changes
+
+5. **Validate architecture** using:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_validator(
+     doc_type: \"architecture\",
+     document_path: \"bmad-backlog/architecture/architecture.md\"
+   )
+   ```
+
+6. **Run vibe-check** to validate architectural decisions
+
+7. **Store in Pieces** for future reference
+
+8. **Present summary** with tech stack and cost estimates
+
+Follow your complete architecture workflow from the bmad-methodology skill.
+
+Project path: $(pwd)",
+  subagent_type: "architect"
 )
 ```
 
-Creates: `bmad-backlog/architecture/architecture.md` (1000-1500 lines)
+The architect subagent will handle architecture generation, tech stack review, validation, and storage.
 
-### Step 5.2: Review Tech Stack
+### Step 5.2: Confirm Completion
 
-Present proposed tech stack:
-
-```
-✅ Architecture Generated!
-
-🏗️  Proposed Tech Stack:
-- Frontend: {{framework}}
-- Backend: {{framework}}
-- Database: {{database}}
-- Cache: {{Redis/etc}}
-- Hosting MVP: {{platform}}
-- Hosting Production: {{platform}}
-
-{{If research completed:}}
-✅ Based on your research:
-- {{Research-based decision 1}}
-- {{Research-based decision 2}}
-
-Tech stack approval? (yes/changes)
-```
-
-**If changes**: Note changes, can regenerate or user edits manually
-**If yes**: Continue
-
-### Step 5.3: Validate Architecture
-
-```bash
-mcp__plugin_titanium-toolkit_tt__bmad_validator(
-  doc_type: "architecture",
-  document_path: "bmad-backlog/architecture/architecture.md"
-)
-```
-
-Ensure all sections present, fix if needed.
+Wait for architect to return summary. Confirm architecture is ready before continuing to epic generation.
 
 ---
 
@@ -441,19 +458,64 @@ Found {{N}} epics in PRD:
 Generating all {{N}} epic files...
 ```
 
-### Step 6.2: Generate All Epics
+### Step 6.2: Generate All Epics (Delegated to Product-Manager)
 
-For each epic (sequential):
+For each epic, launch product-manager subagent (sequential):
 
 ```
-mcp__plugin_titanium-toolkit_tt__bmad_generator(
-  doc_type: "epic",
-  input_path: "bmad-backlog/prd/prd.md bmad-backlog/architecture/architecture.md {{epic_num}}",
-  project_path: "$(pwd)"
+Task(
+  description: "Generate BMAD epic {{epic_num}}: {{epic_name}}",
+  prompt: "Create comprehensive epic file following BMAD methodology.
+
+Epic to Generate: {{epic_num}}
+
+Input:
+- PRD: bmad-backlog/prd/prd.md
+- Architecture: bmad-backlog/architecture/architecture.md
+
+Output:
+- Epic file: bmad-backlog/epics/EPIC-{num:03d}-{slug}.md
+
+Your workflow:
+
+1. **Read inputs** to understand context
+
+2. **Generate epic** using MCP tool:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_generator(
+     doc_type: \"epic\",
+     input_path: \"bmad-backlog/prd/prd.md bmad-backlog/architecture/architecture.md {{epic_num}}\",
+     project_path: \"$(pwd)\"
+   )
+   ```
+
+3. **Present brief summary**:
+   - Epic title
+   - Story count
+   - Story points
+
+4. **Validate epic** using:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_validator(
+     doc_type: \"epic\",
+     document_path: \"bmad-backlog/epics/EPIC-{num}-{name}.md\"
+   )
+   ```
+
+5. **Run vibe-check** to validate epic quality
+
+6. **Store in Pieces** for future reference
+
+7. **Return summary** (brief - we're in batch mode)
+
+Follow your complete epic workflow from the bmad-methodology skill.
+
+Project path: $(pwd)",
+  subagent_type: "product-manager"
 )
 ```
 
-Show progress:
+Show progress after each:
 ```
 Generating epics...
 ✅ Epic 1: {{name}} ({{X}} stories)
@@ -462,15 +524,47 @@ Generating epics...
 ⏳ Epic 4: {{name}} (generating...)
 ```
 
-### Step 6.3: Generate Story Index
+### Step 6.3: Generate Story Index (Delegated to Product-Manager)
 
-After all epics:
+After all epics, launch product-manager subagent for index:
 
-```bash
-mcp__plugin_titanium-toolkit_tt__bmad_generator(
-  doc_type: "index",
-  input_path: "bmad-backlog/epics/",
-  project_path: "$(pwd)"
+```
+Task(
+  description: "Generate BMAD story index",
+  prompt: "Create comprehensive story index summarizing all epics and user stories.
+
+Input:
+- Epic files: bmad-backlog/epics/EPIC-*.md
+
+Output:
+- Story index: bmad-backlog/STORY-INDEX.md
+
+Your workflow:
+
+1. **Generate story index** using MCP tool:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_generator(
+     doc_type: \"index\",
+     input_path: \"bmad-backlog/epics/\",
+     project_path: \"$(pwd)\"
+   )
+   ```
+
+2. **Extract totals**:
+   - Total epics, stories, story points
+   - Epic breakdown
+   - Priority distribution
+
+3. **Run vibe-check** to validate index quality
+
+4. **Store in Pieces** for future reference
+
+5. **Return summary** with totals
+
+Follow your complete index workflow from the bmad-methodology skill.
+
+Project path: $(pwd)",
+  subagent_type: "product-manager"
 )
 ```
 
@@ -480,38 +574,22 @@ Creates: `bmad-backlog/STORY-INDEX.md`
 
 ## Phase 7: Final Review & Summary
 
-### Step 7.1: Validate Complete Backlog
+### Step 7.1: Confirm All Documents Created
 
-Run validator for each document type:
+Verify all expected documents exist:
 
-```
-# Validate brief
-mcp__plugin_titanium-toolkit_tt__bmad_validator(
-  doc_type: "brief",
-  document_path: "bmad-backlog/product-brief.md"
-)
+```bash
+# Check core documents
+ls bmad-backlog/product-brief.md
+ls bmad-backlog/prd/prd.md
+ls bmad-backlog/architecture/architecture.md
+ls bmad-backlog/STORY-INDEX.md
 
-# Validate PRD
-mcp__plugin_titanium-toolkit_tt__bmad_validator(
-  doc_type: "prd",
-  document_path: "bmad-backlog/prd/prd.md"
-)
-
-# Validate architecture
-mcp__plugin_titanium-toolkit_tt__bmad_validator(
-  doc_type: "architecture",
-  document_path: "bmad-backlog/architecture/architecture.md"
-)
-
-# Validate each epic
-for each EPIC-*.md in bmad-backlog/epics/:
-  mcp__plugin_titanium-toolkit_tt__bmad_validator(
-    doc_type: "epic",
-    document_path: "bmad-backlog/epics/EPIC-{num}.md"
-  )
+# Count epic files
+ls bmad-backlog/epics/EPIC-*.md | wc -l
 ```
 
-Check all documents valid.
+Note: Each subagent already validated their documents during generation. This is just a final check that all files were created.
 
 ### Step 7.2: Final vibe-check
 

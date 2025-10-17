@@ -4,7 +4,7 @@ description: Generate single BMAD epic with user stories
 
 # BMAD Epic - Generate Epic File
 
-You are generating a single epic file with user stories following BMAD methodology. This command is used to add NEW epics to existing backlog or regenerate existing epics.
+Use the product-manager subagent to create a single epic file with user stories following BMAD methodology. This command is used to add NEW epics to existing backlog or regenerate existing epics.
 
 ## When to Use This Command
 
@@ -23,6 +23,10 @@ You are generating a single epic file with user stories following BMAD methodolo
 
 **NOT used during `/bmad:start`** - guided workflow generates all epics automatically.
 
+## Task Delegation
+
+First check prerequisites, determine which epic to generate, then launch the product-manager subagent to handle the complete epic generation workflow.
+
 ## Process
 
 ### Step 1: Check Prerequisites
@@ -39,6 +43,8 @@ If not found:
 Please run: /bmad:prd
 (Or /bmad:start for complete workflow)
 ```
+
+Stop here - do not launch product-manager without PRD.
 
 **Check for Architecture** (recommended):
 ```bash
@@ -59,255 +65,150 @@ Would you like to:
 Choose:
 ```
 
-###  Step 2: Determine Epic to Generate
+If user chooses 1: Run `/bmad:architecture` first, then continue
+If user chooses 2: Continue to Step 2
+If user chooses 3: Exit gracefully
+
+### Step 2: Determine Epic to Generate
 
 **If user provided epic number**:
 ```bash
 # User ran: /bmad:epic 3
 ```
 - Epic number = 3
-- Read PRD to find Epic 3 definition
-- Generate EPIC-003
+- Store epic_identifier = "3"
 
 **If user provided epic name**:
 ```bash
 # User ran: /bmad:epic "Mobile App"
 ```
-- Determine next epic number (count existing epics + 1)
-- Generate new epic with this name
-- Save as EPIC-{next_num}-mobile-app.md
+- Epic name = "Mobile App"
+- Store epic_identifier = "Mobile App"
 
 **If user provided nothing**:
 - Ask: "Which epic would you like to generate?
   - Provide epic number (e.g., 1, 2, 3)
   - Or epic name for NEW epic (e.g., 'Mobile App')
   - Or 'all' to generate all epics from PRD"
+- Wait for response
+- Store epic_identifier
 
-### Step 3: Read PRD and Architecture
+### Step 3: Launch Product-Manager Subagent
 
-```bash
-Read bmad-backlog/prd/prd.md
-Read bmad-backlog/architecture/architecture.md
-```
-
-**Extract from PRD**:
-- Epic definition from User Stories section
-- Related feature requirements
-- User stories for this epic
-
-**Extract from Architecture**:
-- Relevant tech stack details
-- Database schemas for epic entities
-- Security implementation for epic features
-- Infrastructure notes
-
-### Step 4: Generate Epic
-
-Use the `bmad_generator` MCP tool:
+Use the Task tool to launch the product-manager subagent in its own context window:
 
 ```
-mcp__plugin_titanium-toolkit_tt__bmad_generator(
-  doc_type: "epic",
-  input_path: "bmad-backlog/prd/prd.md bmad-backlog/architecture/architecture.md {{epic_number}}",
-  project_path: "$(pwd)"
+Task(
+  description: "Generate BMAD epic with user stories",
+  prompt: "Create comprehensive epic file following BMAD methodology.
+
+Epic to Generate: {{epic_identifier}}
+
+Input:
+- PRD: bmad-backlog/prd/prd.md
+- Architecture: bmad-backlog/architecture/architecture.md (if exists)
+
+Output:
+- Epic file: bmad-backlog/epics/EPIC-{num:03d}-{slug}.md
+- Updated index: bmad-backlog/STORY-INDEX.md
+
+Your workflow:
+
+1. **Read inputs** to understand context:
+   - Read bmad-backlog/prd/prd.md
+   - Read bmad-backlog/architecture/architecture.md (if exists)
+   - Extract epic definition and user stories
+
+2. **Generate epic** using MCP tool:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_generator(
+     doc_type: \"epic\",
+     input_path: \"bmad-backlog/prd/prd.md bmad-backlog/architecture/architecture.md {{epic_identifier}}\",
+     project_path: \"$(pwd)\"
+   )
+   ```
+
+3. **Review and present** epic summary:
+   - Read generated epic file
+   - Present title, priority, story count, story points
+   - Show story list
+   - Note if technical notes included/minimal
+
+4. **Validate epic** using:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_validator(
+     doc_type: \"epic\",
+     document_path: \"bmad-backlog/epics/EPIC-{num}-{name}.md\"
+   )
+   ```
+
+5. **Update story index**:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_generator(
+     doc_type: \"index\",
+     input_path: \"bmad-backlog/epics/\",
+     project_path: \"$(pwd)\"
+   )
+   ```
+
+6. **Run vibe-check** to validate epic quality
+
+7. **Store in Pieces** for future reference
+
+8. **Present summary** with next steps:
+   - If more epics in PRD: offer to generate next
+   - If this was last epic: show completion status
+   - If new epic not in PRD: suggest updating PRD
+
+Follow your complete epic workflow from the bmad-methodology skill.
+
+Project path: $(pwd)",
+  subagent_type: "product-manager"
 )
 ```
 
-This creates: `bmad-backlog/epics/EPIC-{num:03d}-{slug}.md`
+The product-manager subagent will handle:
+- Reading PRD and Architecture
+- Generating epic file (300-500 lines)
+- Presenting epic summary
+- Validation (structural and vibe-check)
+- Updating story index
+- Pieces storage
+- Summary presentation with next steps
 
-**Generated content** (300-500 lines):
-- Epic header (Owner, Priority, Sprint, Status, Effort)
-- Epic Description (what and why)
-- Business Value
-- Success Criteria (checkboxes)
-- User Stories (STORY-{epic}-{num} format)
+### Step 4: Return Results
+
+The product-manager will return a summary when complete. Present this to the user.
+
+## What the Product-Manager Creates
+
+The product-manager subagent generates `bmad-backlog/epics/EPIC-{num:03d}-{slug}.md` containing:
+
+- **Epic Header**: Owner, Priority, Sprint, Status, Effort
+- **Epic Description**: What and why
+- **Business Value**: Why this epic matters
+- **Success Criteria**: Checkboxes for completion
+- **User Stories**: STORY-{epic}-{num} format
   - Each with "As a... I want... so that..."
   - Acceptance criteria (checkboxes)
   - Technical notes (code examples from architecture)
-- Dependencies (blocks/blocked by)
-- Risks & Mitigation
-- Related Epics
-- Definition of Done
+- **Dependencies**: Blocks/blocked by relationships
+- **Risks & Mitigation**: Potential issues and solutions
+- **Related Epics**: Cross-references
+- **Definition of Done**: Completion checklist
 
-### Step 5: Review Generated Epic
-
-Read and present summary:
-
-```bash
-Read bmad-backlog/epics/EPIC-{num}-{name}.md
-```
-
-```
-✅ Epic {{num}} Generated!
-
-📄 Location: bmad-backlog/epics/EPIC-{{num}}-{{name}}.md
-
-📊 Epic Summary:
-- Title: {{epic title}}
-- Priority: {{P0/P1/P2}}
-- Stories: {{count}}
-- Estimated Effort: {{points}} story points
-
-Stories Included:
-1. STORY-{{epic}}-01: {{title}}
-2. STORY-{{epic}}-02: {{title}}
-3. STORY-{{epic}}-03: {{title}}
-...
-
-{{If technical notes present:}}
-✅ Technical notes from architecture included
-
-{{If architecture missing:}}
-⚠️  Technical notes minimal (no architecture document)
-
-Review epic? (yes/no)
-```
-
-**If user wants to review**:
-- Show key stories
-- Show acceptance criteria examples
-- Ask for refinements
-
-**If user approves**:
-- Continue
-
-### Step 6: Validate Epic
-
-```
-mcp__plugin_titanium-toolkit_tt__bmad_validator(
-  doc_type: "epic",
-  document_path: "bmad-backlog/epics/EPIC-{{num}}-{{name}}.md"
-)
-```
-
-Check:
-- Required fields present (Owner, Priority, Status, Effort)
-- Required sections present
-- Stories in correct format (STORY-XXX-YY)
-- Acceptance criteria present
-- User story format ("As a... I want... so that...")
-
-If validation fails, regenerate.
-
-### Step 7: Update Story Index
-
-**If STORY-INDEX.md exists**:
-```
-I'll update the story index with this new epic.
-
-Regenerating index...
-```
-
-Run:
-```
-mcp__plugin_titanium-toolkit_tt__bmad_generator(
-  doc_type: "index",
-  input_path: "bmad-backlog/epics/",
-  project_path: "$(pwd)"
-)
-```
-
-Show:
-```
-✅ Story index updated!
-
-Total: {{N}} epics, {{M}} stories, {{P}} story points
-```
-
-**If no index exists**:
-- Create new one
-- Show totals
-
-### Step 8: Store in Pieces
-
-```
-mcp__Pieces__create_pieces_memory(
-  summary_description: "Epic {{num}}: {{name}}",
-  summary: "Generated epic file for {{name}}. Contains {{story count}} user stories with acceptance criteria and technical notes. Priority: {{priority}}. Estimated effort: {{points}} story points. Epic focuses on: {{brief description}}. Dependencies: {{blocks/blocked by}}. Ready for implementation with /titanium:plan.",
-  files: [
-    "bmad-backlog/epics/EPIC-{{num}}-{{name}}.md",
-    "bmad-backlog/STORY-INDEX.md" (if updated)
-  ],
-  project: "$(pwd)"
-)
-```
-
-### Step 9: Suggest Next Steps
-
-**If more epics in PRD**:
-```
-📋 More epics to generate?
-
-Your PRD has {{total}} epics:
-{{List all epics with status}}
-
-Generate next epic? (yes/epic number/no)
-```
-
-**If this was the last epic**:
-```
-🎉 All epics complete!
-
-Your backlog is now complete:
-- Product Brief ✅
-- PRD ✅
-- Architecture ✅
-- {{N}} Epics ✅
-- Story Index ✅
-
-Total: {{M}} user stories ready for implementation
-
-Ready to implement?
-
-Run: /titanium:plan bmad-backlog/epics/EPIC-001-*.md
-Then: /titanium:work
-```
-
-**If adding NEW epic** (not in PRD):
-```
-✅ New epic added to backlog!
-
-This epic was added as EPIC-{{num}}.
-
-Consider:
-1. Update PRD to include this epic in the epic list
-2. Update STORY-INDEX.md (already done ✅)
-3. Start implementing: /titanium:plan bmad-backlog/epics/EPIC-{{num}}-{{name}}.md
-```
-
-## Important Guidelines
-
-**Always**:
-- ✅ Require PRD (cannot generate epic without it)
-- ✅ Check for architecture (improves technical notes quality)
-- ✅ Use bmad_generator.py utility
-- ✅ Validate with bmad_validator.py
-- ✅ Update story index after generation
-- ✅ Validate with vibe-check
-- ✅ Store in Pieces
-- ✅ Suggest next steps clearly
-
-**Never**:
-- ❌ Generate epic manually
-- ❌ Skip validation
-- ❌ Forget to update story index
-- ❌ Generate epic without PRD context
+Also updates `bmad-backlog/STORY-INDEX.md` with new epic totals.
 
 ## Epic Numbering
 
 **If adding new epic**:
-```bash
-# Count existing epics
-EXISTING=$(ls bmad-backlog/epics/EPIC-*.md 2>/dev/null | wc -l)
-NEXT_NUM=$((EXISTING + 1))
-
-# New epic becomes EPIC-{NEXT_NUM}
-```
+- Determines next epic number by counting existing epics
+- New epic becomes EPIC-{next_num}-{slug}.md
 
 **If regenerating**:
-- Use existing epic number
-- Overwrite file
-- Preserve filename
+- Uses existing epic number
+- Overwrites file
+- Preserves filename
 
 ## Integration
 
@@ -332,8 +233,16 @@ NEXT_NUM=$((EXISTING + 1))
 # → Ready to implement
 ```
 
-**Cost**: ~$0.01 per epic (Claude Haiku 4.5 generation)
+## Voice Feedback
+
+Voice announces:
+- "Generating epic" (when starting)
+- "Epic {{num}} complete: {{story count}} stories" (when done)
+
+## Cost
+
+Typical cost: ~$0.01 per epic (Claude Haiku 4.5 API usage in bmad_generator tool)
 
 ---
 
-**This command enables incremental backlog growth and epic refinement!**
+**This command delegates to the product-manager subagent who creates complete epic files with user stories!**

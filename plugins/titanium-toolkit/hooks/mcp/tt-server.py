@@ -223,14 +223,16 @@ async def run_bmad_validator(args: dict[str, Any]) -> list[TextContent]:
         cwd=str(document_parent)
     )
 
-    if result.returncode != 0:
+    # Validator returns non-zero for validation failures (expected behavior)
+    # Only treat it as an error if there's stderr output (actual script error)
+    if result.returncode != 0 and result.stderr and "Traceback" in result.stderr:
         error_msg = f"Error running bmad_validator:\n\nSTDOUT:\n{result.stdout}\n\nSTDERR:\n{result.stderr}"
         return [TextContent(type="text", text=error_msg)]
 
-    # Return validation results
+    # Return validation results (includes both pass and fail cases)
     return [TextContent(
         type="text",
-        text=f"✅ BMAD {doc_type} validation complete!\n\n{result.stdout}"
+        text=f"BMAD {doc_type} validation results:\n\n{result.stdout}"
     )]
 
 

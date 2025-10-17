@@ -4,115 +4,114 @@ description: Generate BMAD product brief from project idea
 
 # BMAD Brief - Generate Product Brief
 
-You are generating a Product Brief following BMAD methodology. This is the first document in the BMAD workflow, capturing the high-level vision and goals.
+Use the product-manager subagent to create a comprehensive Product Brief following BMAD methodology. The brief captures the high-level vision and goals.
 
-## Purpose
+## Task Delegation
 
-Create a comprehensive product brief that serves as the foundation for PRD generation. The brief captures the project idea, problem statement, target users, and MVP scope.
+First gather the project idea, then launch the product-manager subagent to handle the complete brief generation workflow.
 
 ## Process
 
 ### Step 1: Gather Project Idea
 
 **If user provided description**:
-- Use their description directly
+- Store their description
 
 **If user said just `/bmad:brief`**:
 - Ask: "What's your project idea at a high level?"
 - Wait for response
 - Ask follow-up if needed: "What problem does it solve? Who is it for?"
 
-### Step 2: Generate Product Brief
+### Step 2: Launch Product-Manager Subagent
 
-Use the `bmad_generator` MCP tool:
+Use the Task tool to launch the product-manager subagent in its own context window:
 
 ```
-mcp__plugin_titanium-toolkit_tt__bmad_generator(
-  doc_type: "brief",
-  input_path: "{{user_idea}}",
-  project_path: "$(pwd)"
+Task(
+  description: "Generate BMAD product brief",
+  prompt: "Create comprehensive product brief following BMAD methodology.
+
+User's Project Idea:
+{{user_idea}}
+
+Your workflow:
+
+1. **Generate product brief** using the MCP tool:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_generator(
+     doc_type: \"brief\",
+     input_path: \"{{user_idea}}\",
+     project_path: \"$(pwd)\"
+   )
+   ```
+
+2. **Review generated brief** - Read bmad-backlog/product-brief.md and present key sections to user
+
+3. **Validate the brief** using:
+   ```
+   mcp__plugin_titanium-toolkit_tt__bmad_validator(
+     doc_type: \"brief\",
+     document_path: \"bmad-backlog/product-brief.md\"
+   )
+   ```
+
+4. **Run vibe-check** to validate the brief quality
+
+5. **Store in Pieces** for future reference
+
+6. **Present summary** to user with next steps
+
+Follow your complete brief workflow from the bmad-methodology skill.
+
+Project path: $(pwd)",
+  subagent_type: "product-manager"
 )
 ```
 
-This creates `bmad-backlog/product-brief.md` with all required sections.
+The product-manager subagent will handle:
+- Generating product brief
+- Reviewing and presenting key sections
+- Validation (structural and vibe-check)
+- Pieces storage
+- Summary presentation
 
-**Important**: The tool uses Claude Haiku 4.5 to generate comprehensive content. Requires ANTHROPIC_API_KEY in ~/.env
+### Step 3: Return Results
 
-### Step 3: Review Generated Brief
+The product-manager will return a summary when complete. Present this to the user.
 
-Read the generated brief:
+## What the Product-Manager Creates
 
-```bash
-Read bmad-backlog/product-brief.md
-```
+The product-manager subagent generates `bmad-backlog/product-brief.md` containing:
 
-Present key sections to user:
+- **Executive Summary**: Project concept, problem, target market, value proposition
+- **Problem Statement**: Current state, pain points, urgency
+- **Proposed Solution**: Core concept, differentiators
+- **Target Users**: Primary and secondary user segments with detailed profiles
+- **Goals & Success Metrics**: Business objectives, user success metrics, KPIs
+- **MVP Scope**: Core features and what's out of scope
+- **Technical Considerations**: Platform requirements, tech preferences
+- **Constraints & Assumptions**: Budget, timeline, resources
+- **Risks & Open Questions**: Key risks and areas needing research
+- **Next Steps**: Immediate actions and PM handoff
 
-```
-📄 Product Brief Generated
+## Integration with Research
 
-Project: {{project name}}
+The product-manager may identify research needs during brief generation and suggest running `/bmad:research` for topics like:
+- Data vendors or APIs
+- Technology comparisons
+- Market research
 
-Key Sections:
-- Executive Summary: {{first paragraph}}
-- Problem Statement: {{brief summary}}
-- Target Users: {{primary segment}}
-- MVP Scope: {{core features count}}
+## Voice Feedback
 
-Full brief saved to: bmad-backlog/product-brief.md
+Voice hooks announce:
+- "Generating product brief" (when starting)
+- "Product brief complete" (when finished)
 
-Would you like to:
-1. Approve and continue to PRD
-2. Refine specific sections
-3. Regenerate with more details
-```
+## Cost
 
-### Step 4: Handle User Response
+Typical cost: ~$0.01 per brief generation (Claude Haiku 4.5 API usage in bmad_generator tool)
 
-**If user wants refinements**:
-- Ask which sections to refine
-- Regenerate brief with additional context
-- Show updated content
-
-**If user approves**:
-- Continue to Step 5
-
-**If user wants to regenerate**:
-- Ask for more details
-- Re-run the `bmad_generator` tool with enhanced prompt
-
-### Step 5: Validate with vibe-check
-
-```
-mcp__vibe-check__vibe_check(
-  goal: "Create product brief for {{project}}",
-  plan: "Generated brief with: Executive Summary, Problem Statement, Solution, Target Users, MVP Scope, Technical Considerations",
-  uncertainties: [
-    "Is the problem statement clear enough?",
-    "Are target users well-defined?",
-    "Is MVP scope realistic?"
-  ]
-)
-```
-
-**Handle vibe-check response**:
-- If concerns raised → Present to user, refine as needed
-- If approved → Continue
-
-### Step 6: Store in Pieces
-
-```
-mcp__Pieces__create_pieces_memory(
-  summary_description: "Product brief for {{project name}}",
-  summary: "Created product brief for {{project}}. Problem: {{problem summary}}. Target users: {{users}}. MVP scope: {{features}}. Tech stack preferences: {{stack}}. Ready for PRD generation.",
-  files: [
-    "bmad-backlog/product-brief.md"
-  ],
-  project: "$(pwd)"
-)
-```
-
-### Step 7: Present Summary and Next Steps
+### Step 4: Present Summary and Next Steps
 
 ```
 ✅ Product Brief Complete!

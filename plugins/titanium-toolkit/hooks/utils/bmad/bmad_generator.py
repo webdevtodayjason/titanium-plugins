@@ -621,9 +621,10 @@ IMPORTANT GUIDELINES:
         # Use Haiku for PRD generation (documentation task)
         model = get_claude_model("default")
 
+        # Haiku 4.5 supports up to 16384 output tokens
         response = client.messages.create(
             model=model,
-            max_tokens=4000,
+            max_tokens=16000,
             temperature=0.3,
             messages=[{"role": "user", "content": prompt}]
         )
@@ -869,9 +870,10 @@ Generate this first part comprehensively. Include specific tech stack based on P
         # Use Sonnet for architecture (complex technical task with code examples)
         model = get_claude_model("complex")
 
+        # Sonnet 4.5 supports up to 16384 output tokens
         response = client.messages.create(
             model=model,
-            max_tokens=4000,
+            max_tokens=16000,
             temperature=0.3,
             messages=[{"role": "user", "content": prompt}]
         )
@@ -1014,10 +1016,10 @@ CREATE TABLE embeddings (
 
 Be comprehensive. Include real code examples. Be specific with costs."""
 
-        # Use same model for part 2
+        # Use same model for part 2 (Sonnet supports 16384 output tokens)
         response_part2 = client.messages.create(
             model=model,
-            max_tokens=4000,
+            max_tokens=16000,
             temperature=0.3,
             messages=[{"role": "user", "content": prompt_part2}]
         )
@@ -1213,9 +1215,10 @@ IMPORTANT:
         # Use Haiku for epic generation (documentation)
         model = get_claude_model("default")
 
+        # Haiku 4.5 supports up to 16384 output tokens
         response = client.messages.create(
             model=model,
-            max_tokens=4000,
+            max_tokens=16000,
             temperature=0.3,
             messages=[{"role": "user", "content": prompt}]
         )
