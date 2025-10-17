@@ -148,7 +148,7 @@ Creates:
 - **[Titanium Toolkit README](./plugins/titanium-toolkit/README.md)** - Complete documentation
 - **[Orchestration Guide](./plugins/titanium-toolkit/commands/titanium-orchestration-guide.md)** - How the system works
 - **[Getting Started](./plugins/titanium-toolkit/commands/titanium-getting-started.md)** - Step-by-step tutorial
-- **[Agent-Skills Mapping](./.dev/AGENT_SKILLS_MAPPING.md)** - Which agents have which skills
+- **[Agent-Skills Mapping](./docs/AGENT_SKILLS_MAPPING.md)** - Which agents have which skills
 
 ## The Orchestration Model
 
