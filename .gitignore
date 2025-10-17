@@ -33,3 +33,6 @@ htmlcov/
 tmp/
 temp/
 *.tmp
+
+# Development files (testing, notes, scripts)
+.dev/
