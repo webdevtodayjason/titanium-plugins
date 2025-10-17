@@ -623,7 +623,7 @@ IMPORTANT GUIDELINES:
 
         response = client.messages.create(
             model=model,
-            max_tokens=4000,
+            max_tokens=8000,
             temperature=0.3,
             messages=[{"role": "user", "content": prompt}]
         )
@@ -871,7 +871,7 @@ Generate this first part comprehensively. Include specific tech stack based on P
 
         response = client.messages.create(
             model=model,
-            max_tokens=4000,
+            max_tokens=8000,
             temperature=0.3,
             messages=[{"role": "user", "content": prompt}]
         )
@@ -1017,7 +1017,7 @@ Be comprehensive. Include real code examples. Be specific with costs."""
         # Use same model for part 2
         response_part2 = client.messages.create(
             model=model,
-            max_tokens=4000,
+            max_tokens=8000,
             temperature=0.3,
             messages=[{"role": "user", "content": prompt_part2}]
         )
@@ -1215,7 +1215,7 @@ IMPORTANT:
 
         response = client.messages.create(
             model=model,
-            max_tokens=4000,
+            max_tokens=6000,
             temperature=0.3,
             messages=[{"role": "user", "content": prompt}]
         )
