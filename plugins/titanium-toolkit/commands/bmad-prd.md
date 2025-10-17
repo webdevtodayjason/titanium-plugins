@@ -32,10 +32,14 @@ If user chooses option 2, gather requirements through questions.
 
 ### Step 2: Generate PRD
 
-Use the bmad_generator.py utility:
+Use the `bmad_generator` MCP tool:
 
-```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py prd "bmad-backlog/product-brief.md" "$(pwd)"
+```
+mcp__plugin_titanium-toolkit_tt__bmad_generator(
+  doc_type: "prd",
+  input_path: "bmad-backlog/product-brief.md",
+  project_path: "$(pwd)"
+)
 ```
 
 This generates `bmad-backlog/prd/prd.md` with complete PRD structure (500-1000 lines).
@@ -136,17 +140,24 @@ Generate research prompts? (yes/no/specific topics)
 - Or user can manually edit the file
 
 **To regenerate**:
-```bash
+```
 # Add context to brief or provide directly
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py prd "bmad-backlog/product-brief.md" "$(pwd)"
+mcp__plugin_titanium-toolkit_tt__bmad_generator(
+  doc_type: "prd",
+  input_path: "bmad-backlog/product-brief.md",
+  project_path: "$(pwd)"
+)
 ```
 
 ### Step 6: Validate PRD Structure
 
-Use validator to check completeness:
+Use the `bmad_validator` MCP tool to check completeness:
 
-```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_validator.py prd "bmad-backlog/prd/prd.md"
+```
+mcp__plugin_titanium-toolkit_tt__bmad_validator(
+  doc_type: "prd",
+  document_path: "bmad-backlog/prd/prd.md"
+)
 ```
 
 **Check results**:
@@ -232,9 +243,9 @@ What would you like to do?
 
 **Always**:
 - ✅ Check for product brief first
-- ✅ Use bmad_generator.py utility (don't generate manually)
+- ✅ Use `bmad_generator` MCP tool (don't generate manually)
 - ✅ Detect research needs from requirements
-- ✅ Validate with bmad_validator.py
+- ✅ Validate with `bmad_validator` MCP tool
 - ✅ Validate with vibe-check
 - ✅ Store in Pieces
 - ✅ Present epic structure clearly
