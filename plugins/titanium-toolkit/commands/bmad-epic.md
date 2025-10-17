@@ -103,10 +103,14 @@ Read bmad-backlog/architecture/architecture.md
 
 ### Step 4: Generate Epic
 
-Use utility:
+Use the `bmad_generator` MCP tool:
 
-```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py epic "bmad-backlog/prd/prd.md" "bmad-backlog/architecture/architecture.md" {{epic_number}} "$(pwd)"
+```
+mcp__plugin_titanium-toolkit_tt__bmad_generator(
+  doc_type: "epic",
+  input_path: "bmad-backlog/prd/prd.md bmad-backlog/architecture/architecture.md {{epic_number}}",
+  project_path: "$(pwd)"
+)
 ```
 
 This creates: `bmad-backlog/epics/EPIC-{num:03d}-{slug}.md`
@@ -169,8 +173,11 @@ Review epic? (yes/no)
 
 ### Step 6: Validate Epic
 
-```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_validator.py epic "bmad-backlog/epics/EPIC-{{num}}-{{name}}.md"
+```
+mcp__plugin_titanium-toolkit_tt__bmad_validator(
+  doc_type: "epic",
+  document_path: "bmad-backlog/epics/EPIC-{{num}}-{{name}}.md"
+)
 ```
 
 Check:
@@ -192,8 +199,12 @@ Regenerating index...
 ```
 
 Run:
-```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py index "bmad-backlog/epics/" "$(pwd)"
+```
+mcp__plugin_titanium-toolkit_tt__bmad_generator(
+  doc_type: "index",
+  input_path: "bmad-backlog/epics/",
+  project_path: "$(pwd)"
+)
 ```
 
 Show:

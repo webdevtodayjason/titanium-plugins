@@ -1,5 +1,9 @@
 {
   "mcpServers": {
+    "tt": {
+      "type": "stdio",
+      "command": "${CLAUDE_PLUGIN_ROOT}/hooks/mcp/tt-server.py"
+    },
     "Pieces": {
       "command": "pieces",
       "args": [

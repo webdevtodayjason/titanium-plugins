@@ -48,10 +48,14 @@ Please generate epics first:
 
 ### Step 2: Generate Story Index
 
-Use utility:
+Use the `bmad_generator` MCP tool:
 
-```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py index "bmad-backlog/epics/" "$(pwd)"
+```
+mcp__plugin_titanium-toolkit_tt__bmad_generator(
+  doc_type: "index",
+  input_path: "bmad-backlog/epics/",
+  project_path: "$(pwd)"
+)
 ```
 
 This scans all EPIC-*.md files and generates `bmad-backlog/STORY-INDEX.md`.

@@ -184,7 +184,11 @@ Generating Product Brief...
 
 Run:
 ```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py brief "{{user_idea}}" "$(pwd)"
+mcp__plugin_titanium-toolkit_tt__bmad_generator(
+  doc_type: "brief",
+  input_path: "{{user_idea}}",
+  project_path: "$(pwd)"
+)
 ```
 
 Creates: `bmad-backlog/product-brief.md`
@@ -214,7 +218,10 @@ Approve brief, or refine specific sections? (approve/refine/regenerate)
 ### Step 2.5: Validate Brief
 
 ```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_validator.py brief "bmad-backlog/product-brief.md"
+mcp__plugin_titanium-toolkit_tt__bmad_validator(
+  doc_type: "brief",
+  document_path: "bmad-backlog/product-brief.md"
+)
 ```
 
 If invalid, fix and regenerate.
@@ -233,7 +240,11 @@ This will take about 1-2 minutes (large document).
 
 Run:
 ```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py prd "bmad-backlog/product-brief.md" "$(pwd)"
+mcp__plugin_titanium-toolkit_tt__bmad_generator(
+  doc_type: "prd",
+  input_path: "bmad-backlog/product-brief.md",
+  project_path: "$(pwd)"
+)
 ```
 
 Creates: `bmad-backlog/prd/prd.md` (500-1000 lines)
@@ -270,7 +281,10 @@ Epic structure look good? (yes/refine)
 ### Step 3.3: Validate PRD
 
 ```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_validator.py prd "bmad-backlog/prd/prd.md"
+mcp__plugin_titanium-toolkit_tt__bmad_validator(
+  doc_type: "prd",
+  document_path: "bmad-backlog/prd/prd.md"
+)
 ```
 
 Check validation, fix if needed.
@@ -356,7 +370,11 @@ This will take 2-3 minutes (comprehensive document with code examples).
 
 Run:
 ```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py architecture "bmad-backlog/prd/prd.md" "$(pwd)"
+mcp__plugin_titanium-toolkit_tt__bmad_generator(
+  doc_type: "architecture",
+  input_path: "bmad-backlog/prd/prd.md",
+  project_path: "$(pwd)"
+)
 ```
 
 Creates: `bmad-backlog/architecture/architecture.md` (1000-1500 lines)
@@ -390,7 +408,10 @@ Tech stack approval? (yes/changes)
 ### Step 5.3: Validate Architecture
 
 ```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_validator.py architecture "bmad-backlog/architecture/architecture.md"
+mcp__plugin_titanium-toolkit_tt__bmad_validator(
+  doc_type: "architecture",
+  document_path: "bmad-backlog/architecture/architecture.md"
+)
 ```
 
 Ensure all sections present, fix if needed.
@@ -436,7 +457,11 @@ Generating epics...
 After all epics:
 
 ```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py index "bmad-backlog/epics/" "$(pwd)"
+mcp__plugin_titanium-toolkit_tt__bmad_generator(
+  doc_type: "index",
+  input_path: "bmad-backlog/epics/",
+  project_path: "$(pwd)"
+)
 ```
 
 Creates: `bmad-backlog/STORY-INDEX.md`

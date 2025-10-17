@@ -39,10 +39,13 @@ This command will:
 
 ## Step 2: Generate Structured Plan
 
-Use the plan_parser.py utility to generate the plan:
+Use the `plan_parser` MCP tool to generate the plan:
 
-```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/workflow/plan_parser.py .titanium/requirements.md "$(pwd)"
+```
+mcp__plugin_titanium-toolkit_tt__plan_parser(
+  requirements_file: ".titanium/requirements.md",
+  project_path: "$(pwd)"
+)
 ```
 
 This will:
@@ -55,9 +58,9 @@ This will:
   - Time estimates
   - Task dependencies
 - Save to `.titanium/plan.json`
-- Output JSON to stdout
+- Return the JSON plan directly to Claude
 
-**Important**: The plan_parser.py script needs OPENAI_API_KEY environment variable. If it fails with an API key error, inform the user they need to add it to ~/.env
+**Important**: The plan_parser tool needs ANTHROPIC_API_KEY environment variable. If it fails with an API key error, inform the user they need to add it to ~/.env
 
 ## Step 3: Review the Generated Plan
 
@@ -85,7 +88,7 @@ Check that the plan:
 
 If the plan needs adjustments:
 - Edit `.titanium/requirements.md` to add clarifications
-- Re-run plan_parser.py
+- Re-run the `plan_parser` tool
 - Review again
 
 ## Step 4: Validate Plan with vibe-check
@@ -121,7 +124,7 @@ mcp__vibe-check__vibe_check(
 - If vibe-check raises **concerns**:
   - Review the concerns carefully
   - Update requirements or plan approach
-  - Re-run plan_parser.py with adjustments
+  - Re-run the `plan_parser` tool with adjustments
   - Validate again with vibe-check
 - If vibe-check **approves**:
   - Continue to next step
@@ -253,7 +256,7 @@ with voice announcements and quality gates throughout.
 ## Important Guidelines
 
 **Always:**
-- ✅ Use the utility scripts (don't try to generate plans manually)
+- ✅ Use the `plan_parser` MCP tool (don't try to generate plans manually)
 - ✅ Validate with vibe-check before finalizing
 - ✅ Store the plan in Pieces
 - ✅ Create both JSON (for machines) and Markdown (for humans)
@@ -262,19 +265,19 @@ with voice announcements and quality gates throughout.
 
 **Never:**
 - ❌ Skip vibe-check validation
-- ❌ Generate plans without using plan_parser.py
+- ❌ Generate plans without using the `plan_parser` tool
 - ❌ Proceed to implementation without user approval
 - ❌ Ignore vibe-check concerns
 - ❌ Create plans without clear task assignments
 
 ## Error Handling
 
-**If OPENAI_API_KEY is missing:**
+**If ANTHROPIC_API_KEY is missing:**
 ```
-Error: The plan_parser.py utility needs an OpenAI API key to generate plans.
+Error: The plan_parser tool needs an Anthropic API key to generate plans.
 
 Please add your API key to ~/.env:
-  echo 'OPENAI_API_KEY=sk-your-key-here' >> ~/.env
+  echo 'ANTHROPIC_API_KEY=sk-ant-your-key-here' >> ~/.env
   chmod 600 ~/.env
 
 Then restart Claude Code and try again.
@@ -320,7 +323,7 @@ User: /titanium:plan ~/bmad/output/user-auth-prd.md
 
 Claude:
 - Reads PRD file
-- Calls plan_parser.py
+- Calls plan_parser tool
 - Reviews generated plan
 - Validates with vibe-check
 - Creates plan.md
@@ -340,7 +343,7 @@ Claude:
 - Writes description to .titanium/requirements.md
 - Asks: "What's your tech stack?"
 User: "React frontend, Node.js backend with PostgreSQL"
-- Calls plan_parser.py with complete requirements
+- Calls plan_parser tool with complete requirements
 - Generates plan with appropriate tech stack
 - Validates with vibe-check
 - Presents plan to user

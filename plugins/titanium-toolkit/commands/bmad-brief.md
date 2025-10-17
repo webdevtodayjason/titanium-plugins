@@ -24,15 +24,19 @@ Create a comprehensive product brief that serves as the foundation for PRD gener
 
 ### Step 2: Generate Product Brief
 
-Use the bmad_generator.py utility:
+Use the `bmad_generator` MCP tool:
 
-```bash
-uv run ${CLAUDE_PLUGIN_ROOT}/hooks/utils/bmad/bmad_generator.py brief "{{user_idea}}" "$(pwd)"
+```
+mcp__plugin_titanium-toolkit_tt__bmad_generator(
+  doc_type: "brief",
+  input_path: "{{user_idea}}",
+  project_path: "$(pwd)"
+)
 ```
 
 This creates `bmad-backlog/product-brief.md` with all required sections.
 
-**Important**: The utility uses GPT-4 to generate comprehensive content. Requires OPENAI_API_KEY in ~/.env
+**Important**: The tool uses GPT-4 to generate comprehensive content. Requires OPENAI_API_KEY in ~/.env
 
 ### Step 3: Review Generated Brief
 
@@ -75,7 +79,7 @@ Would you like to:
 
 **If user wants to regenerate**:
 - Ask for more details
-- Re-run bmad_generator.py with enhanced prompt
+- Re-run the `bmad_generator` tool with enhanced prompt
 
 ### Step 5: Validate with vibe-check
 
@@ -230,14 +234,14 @@ User: "Busy professionals"
 ## Important Guidelines
 
 **Always**:
-- ✅ Use bmad_generator.py utility (don't generate manually)
+- ✅ Use `bmad_generator` MCP tool (don't generate manually)
 - ✅ Validate with vibe-check
 - ✅ Store in Pieces
 - ✅ Present clear summary
 - ✅ Suggest next steps
 
 **Never**:
-- ❌ Generate brief content manually (use utility)
+- ❌ Generate brief content manually (use the tool)
 - ❌ Skip vibe-check validation
 - ❌ Forget to store in Pieces
 - ❌ Leave user uncertain about next steps
