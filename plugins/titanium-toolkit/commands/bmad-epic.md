@@ -332,7 +332,7 @@ NEXT_NUM=$((EXISTING + 1))
 # → Ready to implement
 ```
 
-**Cost**: ~$0.01 per epic (GPT-4 generation)
+**Cost**: ~$0.01 per epic (Claude Haiku 4.5 generation)
 
 ---
 

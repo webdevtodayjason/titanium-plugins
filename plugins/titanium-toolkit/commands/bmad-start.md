@@ -26,7 +26,7 @@ Take user from empty folder to complete project backlog (30-45 minutes):
 6. **Epics & Index** - All epic files and summary
 
 **Duration**: 30-45 minutes
-**Cost**: ~$0.22 (GPT-4 for all documents)
+**Cost**: ~$0.15 (Claude Haiku 4.5 + Sonnet 4.5 for all documents)
 **Output**: Complete bmad-backlog/ folder
 
 ---
@@ -48,7 +48,7 @@ This workflow will create complete project documentation:
 ✅ Story Index - Summary of all stories for sprint planning
 
 ⏱️  Duration: 30-45 minutes
-💰 Cost: ~$0.22 (GPT-4 for document generation)
+💰 Cost: ~$0.15 (Claude for document generation)
 📁 Output: bmad-backlog/ folder with all documentation
 
 Ready to start? (yes/no)
@@ -761,20 +761,20 @@ What would you like to do next?
 
 ## Error Handling
 
-### If OPENAI_API_KEY Missing
+### If ANTHROPIC_API_KEY Missing
 
 ```
-❌ Error: OPENAI_API_KEY required
+❌ Error: ANTHROPIC_API_KEY required
 
-This workflow uses GPT-4 to generate comprehensive documentation.
+This workflow uses Claude (Haiku 4.5 + Sonnet 4.5) to generate comprehensive documentation.
 
 Add your key to ~/.env:
-  echo 'OPENAI_API_KEY=sk-your-key' >> ~/.env
+  echo 'ANTHROPIC_API_KEY=sk-ant-your-key' >> ~/.env
   chmod 600 ~/.env
 
 Restart Claude Code and try again.
 
-Cost: ~$0.22 for complete backlog (less than a coffee!)
+Cost: ~$0.15 for complete backlog (less than a coffee!)
 ```
 
 ### If Generation Fails Mid-Workflow

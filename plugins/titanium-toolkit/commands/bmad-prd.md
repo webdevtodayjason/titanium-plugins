@@ -286,7 +286,7 @@ If Epic 1 is not foundation:
 - Uses brief automatically
 - Continues to architecture
 
-**Cost**: ~$0.06 (GPT-4 for PRD generation)
+**Cost**: ~$0.03 (Claude Haiku 4.5 for PRD generation)
 
 ---
 

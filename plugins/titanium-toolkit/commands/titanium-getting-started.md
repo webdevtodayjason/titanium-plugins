@@ -165,7 +165,7 @@ Ready to execute? Run: /titanium:work
 
 **Step 1: Planning** (if no plan exists)
 - Asks what to implement
-- Generates plan with GPT-4
+- Generates plan with Claude
 - Shows you the plan
 - **Waits for your approval**
 
@@ -929,7 +929,7 @@ Can use review without running full workflow.
 ## Understanding Cost
 
 **Per workflow** (~4 hour implementation):
-- Plan generation (GPT-4): $0.01
+- Plan generation (Claude): $0.01
 - vibe-check gates (5x): $0.0005
 - Voice announcements (10x): $0.09
 - **Total: ~$0.10**
@@ -940,7 +940,7 @@ Very affordable! Less than a cup of coffee per feature.
 - Skip voice (use macOS say): Save $0.09
 - Skip vibe-check: Save $0.0005 (but lose quality gates)
 
-**Minimum cost**: $0.01 per workflow (GPT-4 planning only)
+**Minimum cost**: $0.01 per workflow (Claude planning only)
 
 ---
 

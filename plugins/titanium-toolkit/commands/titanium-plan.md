@@ -10,7 +10,7 @@ You are creating a structured implementation plan from requirements. Follow this
 
 This command will:
 1. Gather and validate requirements
-2. Use GPT-4 to generate structured plan
+2. Use Claude to generate structured plan
 3. Validate plan with vibe-check
 4. Create human-readable documentation
 5. Store plan in Pieces for future reference
@@ -49,7 +49,7 @@ mcp__plugin_titanium-toolkit_tt__plan_parser(
 ```
 
 This will:
-- Call GPT-4 with the requirements
+- Call Claude with the requirements
 - Generate structured JSON plan with:
   - Epics (major features)
   - Stories (user-facing functionality)
