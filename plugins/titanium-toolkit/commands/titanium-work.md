@@ -4,14 +4,29 @@ description: Execute a multi-phase development workflow with agent orchestration
 
 # Titanium Work Command
 
-You are orchestrating a complete development workflow. This command coordinates multiple agents, manages state transitions, validates quality at each step, and stores progress in Pieces LTM.
+You are orchestrating a complete development workflow. This command coordinates multiple specialized subagents, manages state transitions, validates quality at each step, and stores progress in Pieces LTM.
+
+**Orchestration Model**: You delegate implementation tasks to specialized development agents (api-developer, frontend-developer, devops-engineer, etc.) who each have deep domain knowledge via skills. Each agent works in a separate context window with access to relevant expertise.
+
+**Agents & Their Skills**:
+- @api-developer: api-best-practices, testing-strategy, security-checklist
+- @frontend-developer: frontend-patterns, testing-strategy, technical-writing
+- @devops-engineer: devops-patterns, security-checklist
+- @code-reviewer: code-quality-standards, security-checklist, testing-strategy
+- @security-scanner: security-checklist, code-quality-standards
+- @tdd-specialist: testing-strategy, code-quality-standards
+- @test-runner: testing-strategy, debugging-methodology
+- @debugger: debugging-methodology, testing-strategy
+
+**MCP Tools Used**: This command uses the `tt` MCP server for plan generation:
+- `mcp__plugin_titanium-toolkit_tt__plan_parser` - Requirements → Implementation plan
 
 ## Overview
 
 This workflow has 5 phases:
 1. **Pre-Flight**: Validate setup and check for existing plan
 2. **Planning**: Create plan if needed (or use existing)
-3. **Implementation**: Execute tasks sequentially with agents
+3. **Implementation**: Execute tasks sequentially with specialized agents
 4. **Review**: Quality check with parallel review agents
 5. **Completion**: Finalize and summarize
 
