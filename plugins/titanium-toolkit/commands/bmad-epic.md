@@ -160,7 +160,7 @@ Your workflow:
    - If this was last epic: show completion status
    - If new epic not in PRD: suggest updating PRD
 
-**IMPORTANT**: Keep your summary response BRIEF (under 300 tokens). Just return:
+**IMPORTANT**: Keep your summary response VERY BRIEF (under 200 tokens). Just return:
 - Confirmation epic is complete
 - Epic title and number
 - Story count
