@@ -144,13 +144,13 @@ Guidelines:
 Return ONLY valid JSON, no markdown code blocks, no explanations."""
 
     try:
-        # Get model (configurable via env var, defaults to Haiku)
-        model = get_claude_model("default")  # Use small model for planning (fast)
+        # Get model (configurable via env var, defaults to Sonnet for complex epics)
+        model = get_claude_model("complex")  # Use large model for complex epics
 
         # Call Claude
         response = client.messages.create(
             model=model,
-            max_tokens=2000,
+            max_tokens=8192,  # Increased for large epics with many stories
             temperature=0.3,  # Lower temperature for deterministic planning
             messages=[{"role": "user", "content": prompt}]
         )
