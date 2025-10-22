@@ -227,6 +227,14 @@ Your workflow:
 
 6. **Present summary** confirming brief is complete
 
+**IMPORTANT**: Keep your summary response BRIEF (under 300 tokens). The orchestrator just needs:
+- Confirmation brief is complete
+- 1-2 sentence project description
+- Primary user segment
+- MVP feature count
+
+DO NOT include the full brief content in your response - it's already saved to the file.
+
 Follow your complete brief workflow from the bmad-methodology skill.
 
 Project path: $(pwd)",
@@ -301,6 +309,14 @@ Your workflow:
 6. **Store in Pieces** for future reference
 
 7. **Present summary** with epic list and totals
+
+**IMPORTANT**: Keep your summary response BRIEF (under 500 tokens). The orchestrator just needs:
+- Confirmation PRD is complete
+- Epic count and list (just titles)
+- Total user stories count
+- Total features count
+
+DO NOT include the full PRD content in your response - it's already saved to the file.
 
 Follow your complete PRD workflow from the bmad-methodology skill.
 
@@ -426,6 +442,14 @@ Your workflow:
 
 8. **Present summary** with tech stack and cost estimates
 
+**IMPORTANT**: Keep your summary response BRIEF (under 500 tokens). The orchestrator just needs:
+- Confirmation architecture is complete
+- Proposed tech stack (2-3 sentences)
+- MVP cost estimate
+- Any critical decisions made
+
+DO NOT include the full architecture content in your response - it's already saved to the file.
+
 Follow your complete architecture workflow from the bmad-methodology skill.
 
 Project path: $(pwd)",
@@ -507,6 +531,11 @@ Your workflow:
 6. **Store in Pieces** for future reference
 
 7. **Return summary** (brief - we're in batch mode)
+
+**IMPORTANT**: Keep your summary response VERY BRIEF (under 200 tokens). Just return:
+- "Epic {{num}} complete: {{title}} ({{story_count}} stories)"
+
+DO NOT include full epic content - it's already saved. We're generating multiple epics so be concise.
 
 Follow your complete epic workflow from the bmad-methodology skill.
 

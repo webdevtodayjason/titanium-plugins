@@ -160,6 +160,14 @@ Your workflow:
    - If this was last epic: show completion status
    - If new epic not in PRD: suggest updating PRD
 
+**IMPORTANT**: Keep your summary response VERY BRIEF (under 200 tokens). Just return:
+- Confirmation epic is complete
+- Epic title and number
+- Story count
+- Story points total
+
+DO NOT include the full epic content in your response - it's already saved to the file.
+
 Follow your complete epic workflow from the bmad-methodology skill.
 
 Project path: $(pwd)",

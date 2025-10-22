@@ -61,6 +61,14 @@ Your workflow:
 
 6. **Present summary** to user with next steps
 
+**IMPORTANT**: Keep your summary response BRIEF (under 300 tokens). Just return:
+- Confirmation brief is complete
+- 1-2 sentence project description
+- Primary user segment
+- MVP feature count
+
+DO NOT include the full brief content in your response - it's already saved to the file.
+
 Follow your complete brief workflow from the bmad-methodology skill.
 
 Project path: $(pwd)",
