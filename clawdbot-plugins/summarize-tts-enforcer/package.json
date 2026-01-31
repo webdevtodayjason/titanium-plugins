@@ -1,0 +1,11 @@
+{
+  "name": "@titanium/summarize-tts-enforcer",
+  "version": "1.0.0",
+  "description": "Clawdbot plugin to enforce TTS output for summarize tool",
+  "main": "index.ts",
+  "author": "Titanium Computing",
+  "license": "MIT",
+  "clawdbot": {
+    "extensions": ["./index.ts"]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "summarize-tts-enforcer",
+  "name": "Summarize TTS Enforcer",
+  "description": "Forces voice output when summarize tool is used",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "voice": {
+        "type": "string",
+        "description": "ElevenLabs voice ID to use (defaults to Jessica)"
+      },
+      "enabled": {
+        "type": "boolean",
+        "description": "Enable/disable enforcement"
+      }
+    }
+  }
+}
