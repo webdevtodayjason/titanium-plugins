@@ -1,0 +1,11 @@
+{
+  "name": "@titanium/response-validator",
+  "version": "1.0.0",
+  "description": "Clawdbot plugin to enforce response format requirements",
+  "main": "index.ts",
+  "author": "Titanium Computing",
+  "license": "MIT",
+  "clawdbot": {
+    "extensions": ["./index.ts"]
+  }
+}

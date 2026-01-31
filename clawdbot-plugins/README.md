@@ -2,9 +2,75 @@
 
 Custom Clawdbot plugins for Titanium Computing. These plugins enforce best practices and behavioral patterns for the Argent assistant.
 
+## 🚨 Important: Two Types of Enforcement
+
+### Weak Enforcement (Prompts)
+- `summarize-tts-enforcer` - Modifies tool results
+- `canvas-docs-enforcer` - Injects instructions
+- **Problem:** Agent can still ignore these
+
+### Strong Enforcement (Blocking)
+- `response-validator` - **BLOCKS messages** that violate rules
+- **Solution:** Uses `message_sending` hook to prevent bad responses from reaching you
+
 ## Plugins
 
-### 1. Summarize TTS Enforcer
+### 1. ⚡ Response Validator (RECOMMENDED)
+
+**ID:** `response-validator`  
+**Purpose:** Actually BLOCKS responses that violate formatting rules
+
+**What it enforces:**
+1. **Report requests** → Must use `Write` + `canvas` tools
+2. **Documentation** → Must use `canvas` for presentation
+3. **Audio mode** → Long responses must use TTS
+4. **Long structured content** → Must use canvas
+
+**How it works:**
+- Uses `api.on('message_sending')` hook
+- Runs BEFORE message is sent
+- Returns `{ cancel: true }` to block violations
+- Forces agent to retry with correct tooling
+
+**Installation:**
+```bash
+clawdbot plugins install /Users/sem/titanium-plugins/clawdbot-plugins/response-validator
+clawdbot gateway restart
+```
+
+**Configuration:**
+```json
+{
+  "plugins": {
+    "entries": {
+      "response-validator": {
+        "enabled": true,
+        "config": {
+          "reportKeywords": ["report", "document", "write up", "summarize to file"],
+          "docKeywords": ["documentation", "guide", "tutorial", "spec"],
+          "audioMaxLength": 300
+        }
+      }
+    }
+  }
+}
+```
+
+**Testing:**
+```bash
+# Should be blocked (no Write tool)
+"Give me a report on X"
+
+# Should be allowed (uses Write + canvas)
+"Give me a report on X" → agent calls Write, then canvas
+
+# Should be blocked if audio enabled
+Long response without TTS when [AUDIO_ENABLED]
+```
+
+---
+
+### 2. Summarize TTS Enforcer (DEPRECATED)
 
 **ID:** `summarize-tts-enforcer`  
 **Purpose:** Forces voice output when the `summarize` tool is used
