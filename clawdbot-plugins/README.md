@@ -48,13 +48,21 @@ clawdbot gateway restart
         "config": {
           "reportKeywords": ["report", "document", "write up", "summarize to file"],
           "docKeywords": ["documentation", "guide", "tutorial", "spec"],
-          "audioMaxLength": 300
+          "audioMaxLength": 300,
+          "enabledChannels": ["webchat"],  // Only enforce in dashboard
+          "logContext": false               // Enable to debug channel detection
         }
       }
     }
   }
 }
 ```
+
+**Channel Options:**
+- `["webchat"]` - Only Argent dashboard (default)
+- `["*"]` - All channels (TUI, Discord, Telegram, etc.)
+- `["webchat", "discord"]` - Specific channels only
+- `[]` - Disabled everywhere
 
 **Testing:**
 ```bash

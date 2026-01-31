@@ -10,18 +10,38 @@ export default function register(api: any) {
         "documentation", "guide", "tutorial", "reference", "manual", 
         "readme", "wiki", "spec", "specification"
       ],
-      audioMaxLength: config.audioMaxLength || 300
+      audioMaxLength: config.audioMaxLength || 300,
+      enabledChannels: config.enabledChannels || ["webchat"], // Only enforce in dashboard by default
+      logContext: config.logContext || false // Debug mode to see what's available
     };
   };
 
   // Register message_sending hook (runs BEFORE message is sent, can BLOCK)
   api.on('message_sending', async (event: any, ctx: any) => {
+    const config = getConfig();
+    
+    // Debug logging to see what context is available
+    if (config.logContext) {
+      api.logger.info('[response-validator] Context keys:', Object.keys(ctx || {}));
+      api.logger.info('[response-validator] Event keys:', Object.keys(event || {}));
+    }
+    
+    // Try to detect channel
+    const channel = ctx?.channel || ctx?.session?.channel || ctx?.source || 'unknown';
+    
+    // Skip validation if not in enabled channels
+    if (!config.enabledChannels.includes(channel) && !config.enabledChannels.includes('*')) {
+      if (config.logContext) {
+        api.logger.info(`[response-validator] Skipping validation - channel '${channel}' not in enabledChannels`);
+      }
+      return { cancel: false };
+    }
+    
     const userMsg = ctx?.triggeringMessage?.text || ctx?.originalMessage?.text || '';
     const response = event.content?.text || event.text || '';
     const toolCalls = ctx?.toolCalls || [];
     const audioEnabled = ctx?.session?.audioEnabled || ctx?.audioEnabled;
     
-    const config = getConfig();
     const toolNames = toolCalls.map((t: any) => t.name || t.tool || t.toolName);
 
     // Rule 1: Report/Document Detection
