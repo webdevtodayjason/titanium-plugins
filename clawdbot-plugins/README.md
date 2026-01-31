@@ -16,18 +16,11 @@ Custom Clawdbot plugins for Titanium Computing. These plugins enforce best pract
 
 **Installation:**
 ```bash
-# Link to workspace hooks (per-agent)
-ln -s /Users/sem/titanium-plugins/clawdbot-plugins/summarize-tts-enforcer \
-      ~/clawd/.clawdbot/extensions/summarize-tts-enforcer
+# Install from local path
+clawdbot plugins install /Users/sem/titanium-plugins/clawdbot-plugins/summarize-tts-enforcer
 
-# Or link to global extensions (all workspaces)
-ln -s /Users/sem/titanium-plugins/clawdbot-plugins/summarize-tts-enforcer \
-      ~/.clawdbot/extensions/summarize-tts-enforcer
-
-# Enable the plugin
-clawdbot plugins enable summarize-tts-enforcer
-
-# Restart gateway
+# Plugins are enabled by default after install
+# Restart gateway to load
 clawdbot gateway restart
 ```
 
@@ -61,18 +54,11 @@ clawdbot gateway restart
 
 **Installation:**
 ```bash
-# Link to workspace extensions (per-agent)
-ln -s /Users/sem/titanium-plugins/clawdbot-plugins/canvas-docs-enforcer \
-      ~/clawd/.clawdbot/extensions/canvas-docs-enforcer
+# Install from local path
+clawdbot plugins install /Users/sem/titanium-plugins/clawdbot-plugins/canvas-docs-enforcer
 
-# Or link to global extensions (all workspaces)
-ln -s /Users/sem/titanium-plugins/clawdbot-plugins/canvas-docs-enforcer \
-      ~/.clawdbot/extensions/canvas-docs-enforcer
-
-# Enable the plugin
-clawdbot plugins enable canvas-docs-enforcer
-
-# Restart gateway
+# Plugins are enabled by default after install
+# Restart gateway to load
 clawdbot gateway restart
 ```
 
