@@ -1,7 +1,4 @@
-import type { ClawdbotPluginApi } from "../../../.nvm/versions/node/v22.22.0/lib/node_modules/clawdbot/src/plugins/types.js";
-import type { HookHandler } from "../../../.nvm/versions/node/v22.22.0/lib/node_modules/clawdbot/src/hooks/hooks.js";
-
-const handler: HookHandler = async (event) => {
+const handler = async (event: any) => {
   // Only run on agent:bootstrap events
   if (event.type !== "agent" || event.action !== "bootstrap") {
     return;
@@ -55,7 +52,7 @@ This ensures proper formatting, readability, and professional presentation.`;
   }
 };
 
-export default function register(api: ClawdbotPluginApi) {
+export default function register(api: any) {
   // Register the bootstrap hook
   api.registerHook("agent:bootstrap", handler);
 

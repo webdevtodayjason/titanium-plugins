@@ -1,6 +1,4 @@
-import type { ClawdbotPluginApi } from "../../../.nvm/versions/node/v22.22.0/lib/node_modules/clawdbot/src/plugins/types.js";
-
-export default function register(api: ClawdbotPluginApi) {
+export default function register(api: any) {
   // Register tool result transform hook
   api.registerHook("tool_result_persist", (toolResult) => {
     // Check if this is the summarize tool
